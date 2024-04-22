@@ -1,4 +1,5 @@
-import { SPLASH_SCREEN } from "./Screen"
+import {INTERMEDIATELY_SCREEN, SPLASH_SCREEN} from './Screen';
 
-export const INITIAL_SCREEN = SPLASH_SCREEN
-export const SERVER_ADDRESS = 'http://34.125.226.160:8080/'
+// export const INITIAL_SCREEN = INTERMEDIATELY_SCREEN;
+export const INITIAL_SCREEN = SPLASH_SCREEN;
+export const SERVER_ADDRESS = 'http://34.125.226.160:8080/';
