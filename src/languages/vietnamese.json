@@ -1,0 +1,15 @@
+{
+  "ERROR_MESSAGES": {
+    "userNameRequired": "Tên không được để trống",
+    "userNameLength": "Tên có độ dài tối thiểu là 6 tối đa là 30",
+    "usernameSpecialChar": "Tên không được chứa các ký tự đặc biệt",
+    "emailRequired": "Email không được để trống",
+    "emailFormat": "Email không đúng định dạng",
+    "passwordRequired": "Mật khẩu không được để trống",
+    "passwordSpecialChar": "Mật khẩu không được chứa các ký tự đặc biệt",
+    "passwordLength": "Mật khẩu từ 6 ký tự trở lên",
+    "passwordMinLength": "Độ dài mật khẩu tối thiểu là 6 tối đa là 30",
+    "confirmPasswordNotMatch": "Mật khẩu không giống nhau",
+    "confirmPasswordRequire": "Mật khẩu xác nhận không được để trống"
+  }
+}

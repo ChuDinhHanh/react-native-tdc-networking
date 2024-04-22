@@ -1,15 +1,16 @@
-import { useNavigation } from '@react-navigation/native'
-import { NativeStackNavigationProp } from '@react-navigation/native-stack'
-import React, { useEffect } from 'react'
-import { Image, View } from 'react-native'
-import { RootStackParamList } from '../../App'
-import { LOGIN_SCREEN, TOP_TAB_NAVIGATOR } from '../../constants/Screen'
-import { globalStyles } from '../../types/GlobalStyles'
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { KeyValue } from '../../constants/KeyValue'
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import React, {useEffect} from 'react';
+import {Image, View} from 'react-native';
+import {RootStackParamList} from '../../App';
+import {LOGIN_SCREEN, TOP_TAB_NAVIGATOR} from '../../constants/Screen';
+import {globalStyles} from '../../styles/GlobalStyles';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {KeyValue} from '../../constants/KeyValue';
 
 const SplashScreen = () => {
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   useEffect(() => {
     setTimeout(() => {
@@ -27,16 +28,21 @@ const SplashScreen = () => {
         } catch (error) {
           console.log(error);
         }
-      }
+      };
       getData();
-    }, 3000)
-  }, [])
+    }, 3000);
+  }, []);
 
   return (
-    <View style={[globalStyles.center, globalStyles.container, { backgroundColor: '#fff' }]}>
+    <View
+      style={[
+        globalStyles.center,
+        globalStyles.container,
+        {backgroundColor: '#fff'},
+      ]}>
       <Image source={require('../../assets/image/splash/splash.png')} />
     </View>
-  )
-}
+  );
+};
 
-export default SplashScreen
+export default SplashScreen;

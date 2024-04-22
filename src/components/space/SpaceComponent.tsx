@@ -1,14 +1,14 @@
 import React from 'react';
-import { View } from 'react-native';
+import {View} from 'react-native';
 
 interface Props {
-    width?: number;
-    height?: number;
+  width?: number;
+  height?: number;
 }
 
 const SpaceComponent = (props: Props) => {
-    const { height, width } = props;
-    return <View style={{ height, width }} />;
-}
+  const {height, width} = props;
+  return <View style={{height, width}} />;
+};
 
-export default SpaceComponent
+export default SpaceComponent;
