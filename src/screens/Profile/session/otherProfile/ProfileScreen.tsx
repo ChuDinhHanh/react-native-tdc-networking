@@ -2,11 +2,7 @@ import {View, Text} from 'react-native';
 import React from 'react';
 
 const ProfileScreen = () => {
-  return (
-    <View>
-      <Text>ProfileScreen</Text>
-    </View>
-  );
+  return <View></View>;
 };
 
 export default ProfileScreen;

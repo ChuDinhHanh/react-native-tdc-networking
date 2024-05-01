@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.7,
   },
   btnRegister: {
-    backgroundColor: '#1e90ff',
+    backgroundColor: Colors.COLOR_BTN_BLUE_PRIMARY,
     alignItems: 'center',
     marginTop: 30,
     marginBottom: 10,
@@ -20,37 +20,37 @@ const styles = StyleSheet.create({
   },
   form: {marginTop: 10},
   header: {
-    backgroundColor: '#1e90ff',
+    backgroundColor: Colors.COLOR_BTN_BLUE_PRIMARY,
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center',
   },
   txtHeader: {
-    color: '#ffffff',
+    color: Colors.WHITE,
     paddingVertical: 10,
     fontSize: 20,
     fontWeight: 'bold',
   },
   textInput: {
-    borderColor: '#228b22',
+    borderColor: Colors.DROPDOWN_COLOR,
     borderWidth: 2,
   },
   ip: {
     fontSize: 16,
     borderWidth: 2,
-    borderColor: '#97A1B0',
+    borderColor: Colors.GREY1,
     paddingLeft: 10,
     borderRadius: 10,
     marginTop: 10,
   },
   txt: {
-    color: '#000000',
+    color: Colors.WHITE,
     fontWeight: 'bold',
     fontSize: 16,
   },
   dropdown: {
     height: 50,
-    borderColor: '#97A1B0',
+    borderColor: Colors.GREY1,
     borderWidth: 2,
     paddingLeft: 10,
     borderRadius: 10,
@@ -61,12 +61,12 @@ const styles = StyleSheet.create({
   },
   selectedTextStyle: {
     fontSize: 16,
-    color: '#000000',
+    color: Colors.WHITE,
   },
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
-    color: '#000000',
+    color: Colors.WHITE,
   },
   iconStyle: {
     width: 30,

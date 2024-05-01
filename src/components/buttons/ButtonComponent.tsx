@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, {ReactNode} from 'react';
 import {
   DimensionValue,
   FlexAlignType,
@@ -8,7 +8,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import { globalStyles } from '../../styles/GlobalStyles';
+import {globalStyles} from '../../styles/GlobalStyles';
 import SpaceComponent from '../space/SpaceComponent';
 
 interface Props {
@@ -74,7 +74,7 @@ const ButtonComponent = (props: Props) => {
       {title}
       <SpaceComponent width={spaceBehind ?? 0} />
       {type && type === 'primary' ? (
-        <View style={{ position: 'absolute', right: 14 }}>{suffix}</View>
+        <View style={{position: 'absolute', right: 14}}>{suffix}</View>
       ) : (
         suffix
       )}

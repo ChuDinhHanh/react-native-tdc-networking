@@ -1,39 +1,43 @@
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useState } from 'react';
-import { setDefaultLanguage, setTranslations, useTranslation } from 'react-multi-lang';
-import { Alert, Image, SafeAreaView, View } from 'react-native';
-import { Dropdown } from 'react-native-element-dropdown';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import React, {useState} from 'react';
+import {
+  setDefaultLanguage,
+  setTranslations,
+  useTranslation,
+} from 'react-multi-lang';
+import {Alert, Image, SafeAreaView, View} from 'react-native';
+import {Dropdown} from 'react-native-element-dropdown';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { RootStackParamList } from '../../App';
+import {RootStackParamList} from '../../App';
 import ButtonComponent from '../../components/buttons/ButtonComponent';
 import RowComponent from '../../components/row/RowComponent';
 import SessionComponent from '../../components/session/SessionComponent';
 import SpaceComponent from '../../components/space/SpaceComponent';
 import TextComponent from '../../components/text/TextComponent';
-import { Colors } from '../../constants/Colors';
+import {Colors} from '../../constants/Colors';
+import en from '../../languages/en.json';
+import jp from '../../languages/jp.json';
+import vi from '../../languages/vi.json';
+import {globalStyles} from '../../styles/GlobalStyles';
+import ContainerComponent from '../container/ContainerComponent';
+import styles from './IntermediationScreen.style';
 import {
   BUSINESS_REGISTER_SCREEN,
   STUDENT_REGISTER_SCREEN,
 } from '../../constants/Screen';
-import en from '../../languages/en.json';
-import jp from '../../languages/jp.json';
-import vi from '../../languages/vi.json';
-import { globalStyles } from '../../styles/GlobalStyles';
-import ContainerComponent from '../container/ContainerComponent';
-import styles from './IntermediationScreen.style';
 
-setTranslations({ en, vi, jp })
-setDefaultLanguage('jp')
+setTranslations({en, vi, jp});
+setDefaultLanguage('jp');
 
 const IntermediationScreen = () => {
-  const t = useTranslation()
+  const t = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [value, setValue] = useState('');
   const data = [
-    { name: t('RegisterComponent.typeStudent'), value: '1' },
-    { name: t('RegisterComponent.typeBusiness'), value: '2' }
+    {name: t('RegisterComponent.typeStudent'), value: '1'},
+    {name: t('RegisterComponent.typeBusiness'), value: '2'},
   ];
   const onChange = () => {
     if (value === '1') {
@@ -41,7 +45,10 @@ const IntermediationScreen = () => {
     } else if (value === '2') {
       navigation.navigate(BUSINESS_REGISTER_SCREEN);
     } else {
-      Alert.alert(t('RegisterComponent.titleNotification'), t('RegisterComponent.warningSelectedType'))
+      Alert.alert(
+        t('RegisterComponent.titleNotification'),
+        t('RegisterComponent.warningSelectedType'),
+      );
     }
   };
 
@@ -102,7 +109,10 @@ const IntermediationScreen = () => {
                 }
                 onPress={onChange}
                 title={
-                  <TextComponent style={styles.txtRegister} text={t('RegisterComponent.continue')} />
+                  <TextComponent
+                    style={styles.txtRegister}
+                    text={t('RegisterComponent.continue')}
+                  />
                 }
               />
             </RowComponent>

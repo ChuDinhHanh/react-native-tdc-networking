@@ -1,7 +1,7 @@
 import {View, Text, StyleProp, TextStyle, StyleSheet} from 'react-native';
 import React from 'react';
-import TextComponent from '../text/TextComponent';
-import {Colors} from '../../constants/Colors';
+import TextComponent from '../../text/TextComponent';
+import {Colors} from '../../../constants/Colors';
 
 interface TextValidateProps {
   textError: string;

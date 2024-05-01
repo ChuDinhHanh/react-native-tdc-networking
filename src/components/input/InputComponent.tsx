@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import React, {ReactNode, useEffect, useMemo, useRef, useState} from 'react';
 import {
   KeyboardType,
   KeyboardTypeOptions,
@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { Colors } from '../../constants/Colors';
+import {Colors} from '../../constants/Colors';
 import ButtonComponent from '../buttons/ButtonComponent';
 import SpaceComponent from '../space/SpaceComponent';
 import TextComponent from '../text/TextComponent';
@@ -32,8 +32,8 @@ interface Props {
   onBlur?: () => void;
   defaultValue?: string;
   keyboardType?: KeyboardTypeOptions;
-  validateVisible: boolean,
-  validateTextError: string,
+  validateVisible: boolean;
+  validateTextError: string;
   isError?: boolean;
 }
 const InputComponent = (props: Props) => {
@@ -113,7 +113,7 @@ const InputComponent = (props: Props) => {
           autoCapitalize="none"
           onEndEditing={onEnd}
           onBlur={onBlur}
-          style={{ flex: 1, marginHorizontal: 10 }}
+          style={{flex: 1, marginHorizontal: 10}}
         />
         {typePassword ? (
           <View style={styles.affixAndSuffix}>

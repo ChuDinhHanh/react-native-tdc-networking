@@ -1,6 +1,7 @@
-import React from 'react';
-import {FlexAlignType, StyleProp, Text, ViewStyle} from 'react-native';
+import React, {ReactNode} from 'react';
+import {FlexAlignType, StyleProp, Text, View, ViewStyle} from 'react-native';
 import {globalStyles} from '../../styles/GlobalStyles';
+import SpaceComponent from '../space/SpaceComponent';
 
 interface Props {
   fontFamily?: string;
@@ -27,6 +28,9 @@ interface Props {
   marginBottom?: number;
   marginVertical?: number;
   style?: StyleProp<ViewStyle>;
+  marginTop?: number;
+  suffix?: ReactNode;
+  spaceSuffix?: number;
 }
 
 const TextComponent = (props: Props) => {
@@ -42,9 +46,13 @@ const TextComponent = (props: Props) => {
     upperCase,
     marginBottom,
     marginVertical,
+    marginTop,
     style,
+    suffix,
+    spaceSuffix,
   } = props;
-  return (
+
+  const textContainer = (
     <Text
       style={[
         globalStyles.text,
@@ -58,11 +66,29 @@ const TextComponent = (props: Props) => {
           textTransform: upperCase ? 'uppercase' : undefined,
           marginBottom,
           marginVertical,
+          marginTop: suffix ? 0 : marginTop,
         },
         style,
       ]}>
       {text}
     </Text>
+  );
+  return (
+    <>
+      {suffix ? (
+        <View
+          style={[
+            globalStyles.row,
+            {alignItems: 'center', marginTop, width: '95%'},
+          ]}>
+          {suffix}
+          <SpaceComponent width={spaceSuffix ?? 0} />
+          {textContainer}
+        </View>
+      ) : (
+        textContainer
+      )}
+    </>
   );
 };
 

@@ -127,5 +127,52 @@
         "requestLogin": "すでにアカウントをお持ちですか？",
         "titleNotification": "お知らせ",
         "textAccountAuthor": "アカウントの認証"
+    },
+    "Post": {
+        "normalPostIdentifyAuthorCompany": "企業",
+        "normalPostIdentifyAuthorFaculty": "学部",
+        "normalPostIdentifyAuthorStudent": "",
+        "typePostRecruitment": "求人",
+        "typePostSurvey": "アンケート",
+        "normalPostLikeBy": "いいね！",
+        "normalPostSeeMoreContent": "いいね！",
+        "normalPostHiddentContent": "非表示"
+    },
+    "DrawerContentComponent": {
+        "userGroup": "あなたのグループ",
+        "userJobApplyProfile": "求人応募プロフィール",
+        "approvingPost": "投稿を承認",
+        "peddingPost": "保留中の投稿",
+        "option": "オプション",
+        "logout": "ログアウト"
+    },
+    "MenuOption": {
+        "menuOptionSaveArticle": "記事を保存",
+        "menuOptionUnSaveArticle": "保存を解除",
+        "menuOptionDeleteArticle": "記事を削除",
+        "menuOptionViewResumeList": "履歴書のリストを見る",
+        "menuOptionViewSurveyResults": "アンケート結果を見る",
+        "menuOptionViewSurveyUpdateNormalPost": "記事を編集"
+    },
+    "CommentContainer": {
+        "commentContainerComponentSeeMore": "もっと見る",
+        "commentContainerComponentHidden": "非表示"
+    },
+    "Profile": {
+        "profileOperatingHours": "営業時間",
+        "profileTaxID": "税金番号",
+        "profileRepresentative": "代表者",
+        "profileAddress": "住所",
+        "profilePhone": "電話番号",
+        "profileEmail": "メール",
+        "profileArticles": "記事",
+        "profilePosition": "役職",
+        "profileRole": "学生",
+        "chat": "チャット",
+        "call": "電話",
+        "unFollow": "フォロー解除",
+        "follow": "フォロー",
+        "updateProfile": "プロフィールを更新",
+        "unUpdate": "未更新"
     }
 }
