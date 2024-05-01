@@ -1,51 +1,58 @@
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useMemo, useState } from 'react';
-import {
-  ActivityIndicator,
-  Image,
-  SafeAreaView,
-  ScrollView,
-} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import React, {useMemo, useState} from 'react';
+import {ActivityIndicator, Image, SafeAreaView, ScrollView} from 'react-native';
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { RootStackParamList } from '../../App';
+import {RootStackParamList} from '../../App';
 import ButtonComponent from '../../components/buttons/ButtonComponent';
 import InputComponent from '../../components/input/InputComponent';
 import RowComponent from '../../components/row/RowComponent';
 import SessionComponent from '../../components/session/SessionComponent';
 import SpaceComponent from '../../components/space/SpaceComponent';
 import TextComponent from '../../components/text/TextComponent';
-import { Colors } from '../../constants/Colors';
+import {Colors} from '../../constants/Colors';
 import {
   FORGOTTEN_PASSWORD_SCREEN,
   INTERMEDIATELY_SCREEN,
+  TOP_TAB_NAVIGATOR,
 } from '../../constants/Screen';
-import { ERROR_MESSAGES } from '../../languages/vietnamese.json';
-import { loginType } from '../../types/loginType';
+import {ERROR_MESSAGES} from '../../languages/vietnamese.json';
 import {
   InputTextValidate,
   isBlank,
   isEmail,
-  isPassword
+  isPassword,
 } from '../../utils/ValidateUtils';
 import ContainerComponent from '../container/ContainerComponent';
 import styles from './LoginScreen.style';
 
 // Language
-import { setDefaultLanguage, setTranslations, useTranslation } from 'react-multi-lang';
-import { appInfo } from '../../constants/Infos';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios, {AxiosResponse} from 'axios';
+import {
+  setDefaultLanguage,
+  setTranslations,
+  useTranslation,
+} from 'react-multi-lang';
+import {Alert} from 'react-native';
+import {appInfo} from '../../constants/Infos';
+import {KeyValue} from '../../constants/KeyValue';
+import {SERVER_ADDRESS} from '../../constants/SystemConstant';
 import en from '../../languages/en.json';
 import jp from '../../languages/jp.json';
 import vi from '../../languages/vi.json';
+import {useAppDispatch} from '../../redux/Hook';
+import {setUserLogin} from '../../redux/Slice';
+import {Business} from '../../types/Business';
+import {Data} from '../../types/Data';
+import {Faculty} from '../../types/Faculty';
+import {UserLoginRequest} from '../../types/request/UserLoginRequest';
+import {Student} from '../../types/Student';
+import {Token} from '../../types/Token';
 
-setTranslations({ vi, jp, en })
-setDefaultLanguage('jp')
-
-const initialValue: loginType = {
-  email: '',
-  password: '',
-};
+setTranslations({vi, jp, en});
+setDefaultLanguage('jp');
 
 interface Validate {
   email: InputTextValidate;
@@ -54,11 +61,15 @@ interface Validate {
 
 const LoginScreen = () => {
   const t = useTranslation();
+  const dispatch = useAppDispatch();
   const heightOfImage = appInfo.sizes.HEIGHT * 0.4;
   const [isLoading, setIsLoading] = useState(false);
-  const [loginData, setLoginData] = useState<loginType>(initialValue);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const [userLoginRequest, setUserLoginRequest] = useState<UserLoginRequest>({
+    email: '',
+    password: '',
+  });
   const [loginValidate, setLoginValidate] = useState<Validate>({
     email: {
       textError: ERROR_MESSAGES.emailRequired,
@@ -89,8 +100,8 @@ const LoginScreen = () => {
   }
 
   const handleOnTextChangeEvent = (key: string, val: string | boolean) => {
-    const data = { ...loginData, [key]: val };
-    setLoginData(data);
+    const data = {...userLoginRequest, [key]: val};
+    setUserLoginRequest(data);
   };
 
   const handleValidateActions = (key: string, val: string) => {
@@ -117,14 +128,45 @@ const LoginScreen = () => {
 
   const isBtnDisabled = useMemo(() => {
     return (
-      loginData.email === '' ||
-      loginData.password === '' ||
+      userLoginRequest.email === '' ||
+      userLoginRequest.password === '' ||
       loginValidate.email.isError ||
       loginValidate.password.isError
     );
-  }, [loginData, loginValidate]);
+  }, [userLoginRequest, loginValidate]);
 
   const onSubmit = () => {
+    axios
+      .post<UserLoginRequest, AxiosResponse<Data<Token>>>(
+        `${SERVER_ADDRESS}` + 'api/login',
+        userLoginRequest,
+      )
+      .then(loginResponse => {
+        const token = loginResponse.data.data.token;
+        axios
+          .get<void, AxiosResponse<Data<Student | Faculty | Business>>>(
+            SERVER_ADDRESS + `api/users/token/${token}`,
+          )
+          .then(Response => {
+            if (Response.status === 200) {
+              setIsLoading(false);
+              AsyncStorage.setItem(KeyValue.TOKEN_KEY, JSON.stringify(token));
+              AsyncStorage.setItem(
+                KeyValue.USER_LOGIN_KEY,
+                JSON.stringify(Response.data.data),
+              );
+              dispatch(setUserLogin(Response.data.data));
+              navigation.navigate(TOP_TAB_NAVIGATOR);
+            }
+          });
+      })
+      .catch(error => {
+        Alert.alert(
+          t('LoginComponent.loginFail'),
+          t('LoginComponent.alertLoginFail'),
+        );
+        setIsLoading(false);
+      });
     setIsLoading(true);
   };
 
@@ -133,16 +175,22 @@ const LoginScreen = () => {
       <SafeAreaView>
         <SessionComponent padding={0} marginHorizontal={30}>
           {/* Banner */}
-          <RowComponent height={heightOfImage} justifyContent='center' alignItems='center'>
+          <RowComponent
+            height={heightOfImage}
+            justifyContent="center"
+            alignItems="center">
             <Image
               style={styles.imageLogin}
               source={require('../../assets/image/login/login.png')}
             />
           </RowComponent>
           {/* Form */}
-          <TextComponent style={styles.txtLogin} text={t('LoginComponent.titleLogin')} />
+          <TextComponent
+            style={styles.txtLogin}
+            text={t('LoginComponent.titleLogin')}
+          />
           <InputComponent
-            value={loginData.email}
+            value={userLoginRequest.email}
             affix={
               <MaterialIcons name={'email'} size={30} color={Colors.GREY1} />
             }
@@ -150,25 +198,23 @@ const LoginScreen = () => {
             typePassword={false}
             onChange={val => handleOnTextChangeEvent('email', val)}
             onEnd={() =>
-              Boolean(loginData.email) &&
-              handleValidateActions('email', loginData.email)
+              Boolean(userLoginRequest.email) &&
+              handleValidateActions('email', userLoginRequest.email)
             }
             isError={loginValidate.email.isError}
             validateTextError={loginValidate.email.textError}
             validateVisible={loginValidate.email.isError ?? false}
           />
           <InputComponent
-            value={loginData.password}
-            affix={
-              <IconEntypo name={'lock'} size={30} color={Colors.GREY1} />
-            }
+            value={userLoginRequest.password}
+            affix={<IconEntypo name={'lock'} size={30} color={Colors.GREY1} />}
             placeholder={t('LoginComponent.password')}
             typePassword={true}
             isHidePass={true}
             onChange={val => handleOnTextChangeEvent('password', val)}
             onEnd={() =>
-              Boolean(loginData.password) &&
-              handleValidateActions('password', loginData.password)
+              Boolean(userLoginRequest.password) &&
+              handleValidateActions('password', userLoginRequest.password)
             }
             isError={loginValidate.password.isError}
             validateTextError={loginValidate.password.textError}
@@ -192,12 +238,17 @@ const LoginScreen = () => {
               suffix={
                 <ActivityIndicator
                   color={Colors.WHITE}
-                  style={{ display: isLoading ? 'flex' : 'none' }}
+                  style={{display: isLoading ? 'flex' : 'none'}}
                 />
               }
-              style={[styles.btnLogin, { opacity: isBtnDisabled ? 0.5 : 1 }]}
+              style={[styles.btnLogin, {opacity: isBtnDisabled ? 0.5 : 1}]}
               onPress={() => onSubmit()}
-              title={<TextComponent style={styles.txtB} text={t('LoginComponent.titleLogin')} />}
+              title={
+                <TextComponent
+                  style={styles.txtB}
+                  text={t('LoginComponent.titleLogin')}
+                />
+              }
             />
             <RowComponent>
               <TextComponent text={t('LoginComponent.requestRegister')} />

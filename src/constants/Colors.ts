@@ -22,5 +22,7 @@ export const Colors = {
   GREEN: '#008000',
   GREY4: '#E4DFDF',
   GREY1: '#97A1B0',
+  GREY_DIVIDER: '#e0e0e0',
   DROPDOWN_COLOR: '#228b22',
+  GREY_FEEBLE: 'rgb(228 230 235)',
 };

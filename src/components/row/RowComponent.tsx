@@ -1,25 +1,40 @@
-import React, { ReactNode } from 'react';
-import { FlexAlignType, View, TouchableOpacity, Falsy, ViewStyle, RegisteredStyle, RecursiveArray } from 'react-native';
-import { globalStyles } from '../../styles/GlobalStyles';
+import React, {ReactNode} from 'react';
+import {
+  FlexAlignType,
+  View,
+  TouchableOpacity,
+  Falsy,
+  ViewStyle,
+  RegisteredStyle,
+  RecursiveArray,
+} from 'react-native';
+import {globalStyles} from '../../styles/GlobalStyles';
 
 interface Props {
   alignItems?: FlexAlignType | undefined;
   children: ReactNode;
-  height?: number
+  height?: number;
   onPress?: () => void;
   marginVertical?: number;
   justifyContent?:
-  | 'flex-start'
-  | 'flex-end'
-  | 'center'
-  | 'space-between'
-  | 'space-around'
-  | 'space-evenly'
-  | undefined;
+    | 'flex-start'
+    | 'flex-end'
+    | 'center'
+    | 'space-between'
+    | 'space-around'
+    | 'space-evenly'
+    | undefined;
 }
 
 const RowComponent = (props: Props) => {
-  const { children, alignItems, justifyContent, onPress, marginVertical, height } = props;
+  const {
+    children,
+    alignItems,
+    justifyContent,
+    onPress,
+    marginVertical,
+    height,
+  } = props;
   return (
     <React.Fragment>
       {onPress ? (
@@ -27,14 +42,13 @@ const RowComponent = (props: Props) => {
       ) : (
         <View
           style={[
-            { alignItems, justifyContent, marginVertical, height },
+            {alignItems, justifyContent, marginVertical, height},
             globalStyles.row,
           ]}>
           {children}
         </View>
-      )
-      }
-    </React.Fragment >
+      )}
+    </React.Fragment>
   );
 };
 

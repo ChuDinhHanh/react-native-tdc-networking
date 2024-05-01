@@ -127,5 +127,52 @@
         "requestLogin": "Already have an account?",
         "titleNotification": "Notification",
         "textAccountAuthor": "Account authentication"
+    },
+    "Post": {
+        "normalPostIdentifyAuthorCompany": "Company",
+        "normalPostIdentifyAuthorFaculty": "Faculty",
+        "normalPostIdentifyAuthorStudent": "",
+        "typePostRecruitment": "Recruitment",
+        "typePostSurvey": "Survey",
+        "normalPostLikeBy": "Liked by",
+        "normalPostSeeMoreContent": "Liked by",
+        "normalPostHiddenContent": "Hidden"
+    },
+    "DrawerContentComponent": {
+        "userGroup": "Your group",
+        "userJobApplyProfile": "Job Application Profile",
+        "approvingPost": "Approving posts",
+        "peddingPost": "Pending posts",
+        "option": "Options",
+        "logout": "Logout"
+    },
+    "MenuOption": {
+        "menuOptionSaveArticle": "Save post",
+        "menuOptionUnSaveArticle": "Unsave post",
+        "menuOptionDeleteArticle": "Delete post",
+        "menuOptionViewResumeList": "View CV list",
+        "menuOptionViewSurveyResults": "View survey results",
+        "menuOptionViewSurveyUpdateNormalPost": "Edit post"
+    },
+    "CommentContainer": {
+        "commentContainerComponentSeeMore": "See more",
+        "commentContainerComponentHidden": "Show less"
+    },
+    "Profile": {
+        "profileOperatingHours": "Operating Hours",
+        "profileTaxID": "Tax ID",
+        "profileRepresentative": "Representative",
+        "profileAddress": "Address",
+        "profilePhone": "Phone",
+        "profileEmail": "Email",
+        "profileArticles": "Posts",
+        "profilePosition": "Position",
+        "profileRole": "Student",
+        "chat": "Chat",
+        "call": "Call",
+        "unFollow": "Unfollow",
+        "follow": "Follow",
+        "updateProfile": "Update personal information",
+        "unUpdate": "Not updated yet"
     }
 }

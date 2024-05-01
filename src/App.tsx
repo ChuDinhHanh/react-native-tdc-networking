@@ -1,4 +1,4 @@
-import {createDrawerNavigator, DrawerContent} from '@react-navigation/drawer';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -8,8 +8,11 @@ import {PaperProvider} from 'react-native-paper';
 import {MenuProvider} from 'react-native-popup-menu';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import {Provider} from 'react-redux';
+import BottomSheetModalWrapper from './components/bottomSheet/BottomSheetModalWrapper';
+import DrawerContent from './components/drawer/DrawerContent';
 import ToolBar from './components/toolbars/ToolBar';
 import {
+  ACCEPT_SCREEN,
   ADD_QUESTION_SCREEN,
   APPLICATION_OPTION_SCREEN,
   BUSINESS_DASHBOARD_SCREEN,
@@ -20,7 +23,6 @@ import {
   CREATE_SURVEY_SCREEN,
   DETAIL_JOB_APPLY,
   FACULTY_DASHBOARD_SCREEN,
-  FOLLOWING_SCREEN,
   FORGOTTEN_PASSWORD_SCREEN,
   IMAGE_VIEW_SCREEN,
   INTERMEDIATELY_SCREEN,
@@ -30,6 +32,7 @@ import {
   LIST_POST_SAVED_SCREEN,
   LOGIN_SCREEN,
   MESSENGER_SCREEN,
+  MY_PROFILE_SCREEN,
   NOTIFICATION_SCREEN,
   OPTION_SCREEN,
   PROFILE_SCREEN,
@@ -45,10 +48,12 @@ import {
 } from './constants/Screen';
 import {INITIAL_SCREEN} from './constants/SystemConstant';
 import {store} from './redux/Store';
+import AcceptScreen from './screens/Censorship/AcceptScreen';
 import ConversationScreen from './screens/Converstation/ConversationScreen';
 import DetailJobApplyScreen from './screens/Details/Post/Job/DetailJobApplyScreen';
 import RecruitmentDetailScreen from './screens/Details/Post/Recruitment/RecruitmentDetailScreen';
 import ListFollowScreen from './screens/Follow/ListFollowScreen';
+import ForgottenPasswordScreen from './screens/ForgotPass/ForgottenPasswordScreen';
 import ImageViewScreen from './screens/Image/ImageViewScreen';
 import IntermediationScreen from './screens/Intermediate/IntermediationScreen';
 import SplashScreen from './screens/Intro/SplashScreen';
@@ -56,6 +61,7 @@ import JobApplyScreen from './screens/JobApply/JobApplyScreen';
 import ListJobApplyScreen from './screens/JobApply/ListJobApplyScreen';
 import LoginScreen from './screens/Login/LoginScreen';
 import MessengerScreen from './screens/Messager/MessengerScreen';
+import NotificationScreen from './screens/Notification/NotificationScreen';
 import ApplicationOptionScreen from './screens/Options/ApplicationOptionScreen';
 import OptionScreen from './screens/Options/OptionScreen';
 import BusinessDashboardScreen from './screens/Post/Bussiness/BusinessDashboardScreen';
@@ -64,7 +70,8 @@ import CreateRecruitmentScreen from './screens/Post/CreatePost/Recruitment/Creat
 import CreateSurveyPostScreen from './screens/Post/CreatePost/Survey/CreateSurveyPostScreen';
 import FacultyDashboardScreen from './screens/Post/Faculty/FacultyDashboardScreen';
 import ListPostSavedScreen from './screens/Post/SavePost/ListPostSavedScreen';
-import ProfileScreen from './screens/Profile/ProfileScreen';
+import StudentDiscussionDashboardScreen from './screens/Post/StudentAndFaculty/StudentDiscussionDashboardScreen';
+import MyProfileScreen from './screens/Profile/session/myProfile/MyProfileScreen';
 import SearchScreen from './screens/Search/SearchScreen';
 import BusinessRegistrationScreen from './screens/SignUp/Business/BusinessRegistrationScreen';
 import StudentRegistrationScreen from './screens/SignUp/Student/StudentRegistrationScreen';
@@ -72,7 +79,8 @@ import AddQuestionScreen from './screens/Survey/AddQuestionScreen';
 import ReviewSurveyPostScreen from './screens/Survey/ReviewSurveyPostScreen';
 import SurveyConductScreen from './screens/Survey/SurveyConductScreen';
 import SurveyResultScreen from './screens/Survey/SurveyResultScreen';
-import ForgottenPasswordScreen from './screens/ForgotPass/ForgottenPasswordScreen';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import ProfileScreen from './screens/Profile/session/otherProfile/ProfileScreen';
 
 export type RootStackParamList = {
   CONVERSATION_SCREEN: undefined;
@@ -110,6 +118,7 @@ export type RootStackParamList = {
   CREATE_SURVEY_SCREEN: undefined;
   LIST_JOB_APPLY_SCREEN: undefined;
   FORGOTTEN_PASSWORD_SCREEN: undefined;
+  ACCEPT_SCREEN: undefined;
 };
 
 const TopTab = createMaterialTopTabNavigator();
@@ -335,6 +344,11 @@ export function StackNavigator(): JSX.Element {
         options={{header: () => false}}
         component={ForgottenPasswordScreen}
       />
+      <RootStack.Screen
+        name={ACCEPT_SCREEN}
+        options={{header: () => false}}
+        component={AcceptScreen}
+      />
     </RootStack.Navigator>
   );
 }
@@ -354,7 +368,7 @@ function TopTabNavigator(): JSX.Element {
             iconName = 'school';
           } else if (route.name === NOTIFICATION_SCREEN) {
             iconName = 'bell';
-          } else if (route.name === FOLLOWING_SCREEN) {
+          } else if (route.name === MY_PROFILE_SCREEN) {
             iconName = 'user';
           }
           return (
@@ -375,31 +389,32 @@ function TopTabNavigator(): JSX.Element {
       />
       <TopTab.Screen
         name={STUDENT_DISCUSSION_DASHBOARD_SCREEN}
-        component={BusinessDashboardScreen}
+        component={StudentDiscussionDashboardScreen}
       />
       <TopTab.Screen
         name={NOTIFICATION_SCREEN}
-        component={BusinessDashboardScreen}
+        component={NotificationScreen}
       />
-      <TopTab.Screen
-        name={FOLLOWING_SCREEN}
-        component={BusinessDashboardScreen}
-      />
+      <TopTab.Screen name={MY_PROFILE_SCREEN} component={MyProfileScreen} />
     </TopTab.Navigator>
   );
 }
 
 const App = () => {
   return (
-    <MenuProvider>
-      <Provider store={store}>
-        <PaperProvider>
-          <NavigationContainer>
-            <DrawerNavigator />
-          </NavigationContainer>
-        </PaperProvider>
-      </Provider>
-    </MenuProvider>
+    <GestureHandlerRootView>
+      <MenuProvider>
+        <Provider store={store}>
+          <BottomSheetModalWrapper>
+            <PaperProvider>
+              <NavigationContainer>
+                <DrawerNavigator />
+              </NavigationContainer>
+            </PaperProvider>
+          </BottomSheetModalWrapper>
+        </Provider>
+      </MenuProvider>
+    </GestureHandlerRootView>
   );
 };
 

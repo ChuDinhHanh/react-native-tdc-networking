@@ -61,7 +61,7 @@
         "errorStudentCodeNotSpecial": "Mã số sinh viên không được chứa ký tự đặc biệt",
         "errorStudentNameNotLengthMax": "Tên sinh viên không vượt quá 255 ký tự",
         "errorStudentCodeNotFormat": "Mã số sinh viên sai định dạng",
-        "errorConfimPassNotMatch": "Xác nhận mật khẩu sai",
+        "errorConfirmPassNotMatch": "Xác nhận mật khẩu sai",
         "titleEmail": "Email ID",
         "placeholderEmail": "Nhập email ID...",
         "errorEmailEmpty": "Email không được để trống",
@@ -127,5 +127,52 @@
         "requestLogin": "Đã có tài khoản?",
         "titleNotification": "Thông báo",
         "textAccountAuthen": "Xác thực tài khoản"
+    },
+    "Post": {
+        "normalPostIdentifyAuthorCompany": "Doanh nghiệp",
+        "normalPostIdentifyAuthorFaculty": "Khoa",
+        "normalPostIdentifyAuthorStudent": "",
+        "typePostRecruitment": "Tuyển dụng",
+        "typePostSurvey": "Khảo sát",
+        "normalPostLikeBy": "Thích bởi",
+        "normalPostSeeMoreContent": "Thích bởi",
+        "normalPostHiddentContent": "Ẩn bớt"
+    },
+    "DrawerContentComponent": {
+        "userGroup": "Nhóm của bạn",
+        "userJobApplyProfile": "Hồ sơ ứng tuyển",
+        "approvingPost": "Duyệt bài viết",
+        "peddingPost": "Bài viết đang chờ",
+        "option": "Tùy chọn",
+        "logout": "Đăng xuất"
+    },
+    "MenuOption": {
+        "menuOptionSaveArticle": "Lưu bài viết",
+        "menuOptionUnSaveArticle": "Hủy lưu bài viết",
+        "menuOptionDeleteArticle": "Xóa bài viết",
+        "menuOptionViewResumeList": "Xem danh sách CV",
+        "menuOptionViewSurveyResults": "Xem kết quả khảo sát",
+        "menuOptionViewSurveyUpdateNormalPost": "Chỉnh sửa bài viết"
+    },
+    "CommentContainer": {
+        "commentContainerComponentSeeMore": "Xem thêm",
+        "commentContainerComponentHidden": "Ẩn bớt"
+    },
+    "Profile": {
+        "profileOperatingHours": "Giờ làm việc",
+        "profileTaxID": "Mã số thuế",
+        "profileRepresentative": "Đại diện",
+        "profileAddress": "Địa chỉ",
+        "profilePhone": "Điện thoại",
+        "profileEmail": "Email",
+        "profileArticles": "Bài viết",
+        "profilePosition": "Vị trí",
+        "profileRole": "Sinh viên",
+        "chat": "Nhắn tin",
+        "call": "Gọi điện",
+        "unFollow": "Hủy theo dõi",
+        "follow": "Theo dõi",
+        "updateProfile": "Cập nhật thông tin cá nhân",
+        "unUpdate": "chưa được cập nhật "
     }
 }

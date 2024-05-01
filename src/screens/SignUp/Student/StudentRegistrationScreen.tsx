@@ -1,30 +1,31 @@
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import axios from 'axios';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   ActivityIndicator,
+  Alert,
   Image,
   SafeAreaView,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import { Dropdown } from 'react-native-element-dropdown';
-import { Asset } from 'react-native-image-picker';
+import {Dropdown} from 'react-native-element-dropdown';
+import {Asset} from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { RootStackParamList } from '../../../App';
+import {RootStackParamList} from '../../../App';
 import ButtonComponent from '../../../components/buttons/ButtonComponent';
-import TextValidateTypeSecond from '../../../components/common/TextValidateTypeSecond';
+import TextValidateTypeSecond from '../../../components/common/textValidate/TextValidateTypeSecond';
 import TextInputWithTitle from '../../../components/input/TextInputWithTitle';
 import RowComponent from '../../../components/row/RowComponent';
 import SessionComponent from '../../../components/session/SessionComponent';
 import SpaceComponent from '../../../components/space/SpaceComponent';
 import TextComponent from '../../../components/text/TextComponent';
 import ImagePicker from '../../../components/upload/ImagePicker';
-import { Colors } from '../../../constants/Colors';
-import { LOGIN_SCREEN } from '../../../constants/Screen';
-import { SERVER_ADDRESS } from '../../../constants/SystemConstant';
-import { StudentRequest } from '../../../types/request/StudentRequest';
+import {Colors} from '../../../constants/Colors';
+import {ACCEPT_SCREEN, LOGIN_SCREEN} from '../../../constants/Screen';
+import {SERVER_ADDRESS} from '../../../constants/SystemConstant';
+import {StudentRequest} from '../../../types/request/StudentRequest';
 import {
   InputTextValidate,
   isBlank,
@@ -37,13 +38,19 @@ import {
 import styles from './StudentRegistrationScreen.style';
 
 // Language
-import { setDefaultLanguage, setTranslations, useTranslation } from 'react-multi-lang';
+import {
+  setDefaultLanguage,
+  setTranslations,
+  useTranslation,
+} from 'react-multi-lang';
 import en from '../../../languages/en.json';
 import jp from '../../../languages/jp.json';
 import vi from '../../../languages/vi.json';
+import {useAddStudentMutation} from '../../../redux/Service';
+import {handleUploadImage} from '../../../utils/ImageHelper';
 
-setTranslations({ vi, jp, en })
-setDefaultLanguage('jp')
+setTranslations({vi, jp, en});
+setDefaultLanguage('vi');
 
 interface RegisterStudent {
   name: InputTextValidate;
@@ -73,7 +80,8 @@ const StudentRegistrationScreen = () => {
   const [imagePicker, setImagePicker] = useState<Asset[]>();
   const [imagePickerOption, setImagePickerOption] =
     useState<ActionSheet | null>();
-  // const [saveStudent, saveStudentResponse] = useAddStudentMutation();
+  const [saveStudent, saveStudentResponse] = useAddStudentMutation();
+  const [facultyHadChoiceId, setFacultyHadChoiceId] = useState(-1);
   const [student, setStudent] = useState<StudentRequest>({
     id: 0,
     password: '',
@@ -103,7 +111,7 @@ const StudentRegistrationScreen = () => {
     },
   ]);
 
-  const [dataMajorRequest, setDataMajorRequest] = useState([{ id: 0, name: '' }]);
+  const [dataMajorRequest, setDataMajorRequest] = useState([{id: 0, name: ''}]);
   const [isLoading, setIsLoading] = useState(false);
   const [validate, setValidate] = useState<RegisterStudent>({
     name: {
@@ -147,12 +155,16 @@ const StudentRegistrationScreen = () => {
       isError: true,
     },
   });
-  const [value, setValue] = useState(t('RegisterStudentComponent.placeholderFaculty'))
-  const [item, setItem] = useState(t('RegisterStudentComponent.placeholderMajor'))
+  const [value, setValue] = useState(
+    t('RegisterStudentComponent.placeholderFaculty'),
+  );
+  const [item, setItem] = useState(
+    t('RegisterStudentComponent.placeholderMajor'),
+  );
 
   const handleStudentNameChange = useCallback(
     (value: string) => {
-      setStudent({ ...student, name: value });
+      setStudent({...student, name: value});
       if (isBlank(value)) {
         setValidate({
           ...validate,
@@ -160,7 +172,7 @@ const StudentRegistrationScreen = () => {
             ...validate.name,
             isError: true,
             isVisible: true,
-            textError: t('RegisterStudentComponent.errorStudentNameEmpty')
+            textError: t('RegisterStudentComponent.errorStudentNameEmpty'),
           },
         });
       } else if (isContainSpecialCharacter(value)) {
@@ -179,7 +191,9 @@ const StudentRegistrationScreen = () => {
           name: {
             ...validate.name,
             isError: true,
-            textError: t('RegisterStudentComponent.errorStudentNameNotLengthMax'),
+            textError: t(
+              'RegisterStudentComponent.errorStudentNameNotLengthMax',
+            ),
             isVisible: true,
           },
         });
@@ -202,7 +216,7 @@ const StudentRegistrationScreen = () => {
     (value: string) => {
       // Example 21211tt1013 ..etc..
       const stCode = new RegExp(/^[0-9]{5}[a-zA-Z]{2}[0-9]{4}$/);
-      setStudent({ ...student, studentCode: value });
+      setStudent({...student, studentCode: value});
       if (isBlank(value)) {
         setValidate({
           ...validate,
@@ -210,7 +224,7 @@ const StudentRegistrationScreen = () => {
             ...validate.studentCode,
             isError: true,
             isVisible: true,
-            textError: t('RegisterStudentComponent.errorStudentCodeEmpty')
+            textError: t('RegisterStudentComponent.errorStudentCodeEmpty'),
           },
         });
       } else if (isContainSpecialCharacter(value)) {
@@ -220,7 +234,7 @@ const StudentRegistrationScreen = () => {
             ...validate.studentCode,
             isError: true,
             isVisible: true,
-            textError: t('RegisterStudentComponent.errorStudentCodeNotSpecial')
+            textError: t('RegisterStudentComponent.errorStudentCodeNotSpecial'),
           },
         });
       } else if (!stCode.test(value)) {
@@ -230,7 +244,7 @@ const StudentRegistrationScreen = () => {
             ...validate.studentCode,
             isError: true,
             isVisible: true,
-            textError: t('RegisterStudentComponent.errorStudentCodeNotFormat')
+            textError: t('RegisterStudentComponent.errorStudentCodeNotFormat'),
           },
         });
       } else {
@@ -249,7 +263,7 @@ const StudentRegistrationScreen = () => {
 
   const handlePhoneChange = useCallback(
     (value: string) => {
-      setStudent({ ...student, phone: value });
+      setStudent({...student, phone: value});
       if (isBlank(value)) {
         setValidate({
           ...validate,
@@ -285,9 +299,11 @@ const StudentRegistrationScreen = () => {
   );
 
   const handleCheckEmail = useCallback(() => {
+    const path = `${SERVER_ADDRESS}api/users/check?email=${student.email}`;
     axios
-      .post(SERVER_ADDRESS + `api/user/check?email=${student.email}`)
+      .post(path)
       .then(Response => {
+        console.log(Response.data.data);
         if (Response.data.data === 0) {
           setValidate({
             ...validate,
@@ -303,11 +319,11 @@ const StudentRegistrationScreen = () => {
       .catch(error => {
         console.log(error);
       });
-  }, [validate]);
+  }, [student.email]);
 
   const handleEmailChange = useCallback(
     (value: string) => {
-      setStudent({ ...student, email: value });
+      setStudent({...student, email: value});
       if (isBlank(value)) {
         setValidate({
           ...validate,
@@ -315,7 +331,7 @@ const StudentRegistrationScreen = () => {
             ...validate.email,
             isError: true,
             isVisible: true,
-            textError: t('RegisterStudentComponent.errorEmailEmpty')
+            textError: t('RegisterStudentComponent.errorEmailEmpty'),
           },
         });
       } else if (!isLengthInRange(value, 1, 255)) {
@@ -325,7 +341,7 @@ const StudentRegistrationScreen = () => {
             ...validate.email,
             isError: true,
             isVisible: true,
-            textError: t('RegisterStudentComponent.errorEmailNotLengthMax')
+            textError: t('RegisterStudentComponent.errorEmailNotLengthMax'),
           },
         });
       } else if (!isEmail(value)) {
@@ -335,7 +351,7 @@ const StudentRegistrationScreen = () => {
             ...validate.email,
             isError: true,
             isVisible: true,
-            textError: t('RegisterStudentComponent.errorEmailNotFormat')
+            textError: t('RegisterStudentComponent.errorEmailNotFormat'),
           },
         });
       } else {
@@ -354,7 +370,7 @@ const StudentRegistrationScreen = () => {
 
   const handlePasswordChange = useCallback(
     (value: string) => {
-      setStudent({ ...student, password: value });
+      setStudent({...student, password: value});
       if (isBlank(value)) {
         setValidate({
           ...validate,
@@ -362,7 +378,7 @@ const StudentRegistrationScreen = () => {
             ...validate.password,
             isVisible: true,
             isError: true,
-            textError: t('RegisterStudentComponent.errorPasswordEmpty')
+            textError: t('RegisterStudentComponent.errorPasswordEmpty'),
           },
         });
       } else if (!isLengthInRange(value, 1, 8)) {
@@ -372,7 +388,7 @@ const StudentRegistrationScreen = () => {
             ...validate.password,
             isVisible: true,
             isError: true,
-            textError: t('RegisterStudentComponent.errorPassNotLengthMax')
+            textError: t('RegisterStudentComponent.errorPassNotLengthMax'),
           },
         });
       } else if (!isPassword(value)) {
@@ -382,7 +398,7 @@ const StudentRegistrationScreen = () => {
             ...validate.password,
             isVisible: true,
             isError: true,
-            textError: t('RegisterStudentComponent.errorPassNotFormat')
+            textError: t('RegisterStudentComponent.errorPassNotFormat'),
           },
         });
       } else {
@@ -401,7 +417,7 @@ const StudentRegistrationScreen = () => {
 
   const handleConfirmPasswordChange = useCallback(
     (value: string) => {
-      setStudent({ ...student, confirmPassword: value });
+      setStudent({...student, confirmPassword: value});
       if (isBlank(value)) {
         setValidate({
           ...validate,
@@ -409,7 +425,7 @@ const StudentRegistrationScreen = () => {
             ...validate.confirmPassword,
             isVisible: true,
             isError: true,
-            textError: t('RegisterStudentComponent.errorConfirmPasswordEmpty')
+            textError: t('RegisterStudentComponent.errorConfirmPasswordEmpty'),
           },
         });
       } else if (value != student.password) {
@@ -419,7 +435,7 @@ const StudentRegistrationScreen = () => {
             ...validate.confirmPassword,
             isVisible: true,
             isError: true,
-            textError: t('RegisterStudentComponent.errorConfirmPassNotMatch')
+            textError: t('RegisterStudentComponent.errorConfirmPassNotMatch'),
           },
         });
       } else {
@@ -438,7 +454,7 @@ const StudentRegistrationScreen = () => {
 
   const handleMajorNameChange = useCallback(
     (value: any) => {
-      setStudent({ ...student, majorId: value });
+      setStudent({...student, majorId: value});
       if (value == null) {
         setValidate({
           ...validate,
@@ -446,7 +462,7 @@ const StudentRegistrationScreen = () => {
             ...validate.major,
             isError: true,
             isVisible: true,
-            textError: t('RegisterStudentComponent.errorMajorEmpty')
+            textError: t('RegisterStudentComponent.errorMajorEmpty'),
           },
         });
       } else {
@@ -465,7 +481,13 @@ const StudentRegistrationScreen = () => {
 
   const handleFacultyNameChange = useCallback(
     (value: any) => {
-      setStudent({ ...student, facultyId: value.id });
+      setStudent({
+        ...student,
+        facultyId: value.id,
+        majorId: value.majors[0].id,
+      });
+      facultyHadChoiceId !== value.id && setItem(value.majors[0].name);
+      setFacultyHadChoiceId(value.id);
       setDataMajorRequest(value.majors);
       if (value == null) {
         setValidate({
@@ -474,7 +496,7 @@ const StudentRegistrationScreen = () => {
             ...validate.facultyName,
             isVisible: true,
             isError: true,
-            textError: t('RegisterStudentComponent.errorFacultyEmpty')
+            textError: t('RegisterStudentComponent.errorFacultyEmpty'),
           },
         });
       } else {
@@ -502,59 +524,53 @@ const StudentRegistrationScreen = () => {
       });
   }, [student]);
 
-
-  // useEffect(() => {
-  //   if (saveStudentResponse.data) {
-  //     setIsLoading(false)
-  //     navigation.navigate(ACCEPT_SCREEN, {
-  //       email: student.email,
-  //       subject: t('AuthenticateRegistraion.textSubjectAuthenRegistration'),
-  //       title: t('AuthenticateRegistraion.titleSubjectAuthenRegistration'),
-  //       url: 'api/users/get/email/authen/register'
-  //     })
-  //   }
-  // }, [saveStudentResponse])
-
   const onSubmit = useCallback(() => {
     if (isAllFieldsValid(validate)) {
       setIsLoading(true);
-      // if (imagePicker) {
-      //   handleUploadImage(imagePicker, (data) => {
-      //     saveStudent({
-      //       ...student,
-      //       image: data[0]
-      //     })
-      //   })
-      // } else {
-      //   saveStudent(student)
-      // }
+      if (imagePicker) {
+        handleUploadImage(imagePicker, data => {
+          saveStudent({
+            ...student,
+            image: data[0],
+          });
+        });
+      } else {
+        saveStudent(student);
+      }
     } else {
       let key: keyof RegisterStudent;
-
       for (key in validate) {
         if (validate[key].isError) {
           validate[key].isVisible = true;
         }
       }
-
-      setValidate({ ...validate });
+      setValidate({...validate});
     }
   }, [validate, imagePicker]);
+
+  useEffect(() => {
+    if (!saveStudentResponse.isUninitialized) {
+      if (saveStudentResponse.data) {
+        setIsLoading(false);
+        navigation.navigate(ACCEPT_SCREEN);
+        Alert.alert(
+          'Thông báo',
+          'Tài khoản của bạn đã được đăng ký thành công!',
+        );
+      } else if (saveStudentResponse.data === null) {
+        setIsLoading(false);
+        Alert.alert(
+          'Cảnh báo',
+          'Không thể đăng ký tài khoản, vui lòng kiểm tra lại các thông tin hoặc mã sinh viên đã được đăng ký!',
+        );
+      }
+    }
+  }, [saveStudentResponse]);
 
   return (
     <ScrollView style={styles.container}>
       <SafeAreaView>
         <SessionComponent padding={10}>
-          {/* <View style={styles.header}>
-          <TouchableOpacity
-            style={{ left: -100 }}
-            onPress={() => navigation.goBack()}>
-            <Icon name="chevron-left" size={20} color={'#ffff'} />
-          </TouchableOpacity>
-          <View style={{ alignItems: 'center' }}>
-            <Text style={styles.txtHeader}>{'titleRegisterStudent'}</Text>
-          </View>
-        </View> */}
           <TextInputWithTitle
             defaultValue={student.name}
             title={t('RegisterStudentComponent.titleStudentName')}
@@ -597,7 +613,7 @@ const StudentRegistrationScreen = () => {
             title={t('RegisterStudentComponent.titleEmail')}
             placeholder={t('RegisterStudentComponent.placeholderEmail')}
             onChangeText={value => handleEmailChange(value)}
-            onBlur={() => handleCheckEmail()}
+            onBlur={handleCheckEmail}
             textInputStyle={
               !validate.email?.isError ? styles.textInput : styles.ip
             }
@@ -606,6 +622,7 @@ const StudentRegistrationScreen = () => {
             isVisible={validate.email?.isVisible}
           />
           <TextComponent
+            marginTop={20}
             color={Colors.BLACK}
             fontSize={16}
             fontWeight={'bold'}
@@ -642,6 +659,7 @@ const StudentRegistrationScreen = () => {
             isVisible={validate.facultyName?.isVisible}
           />
           <TextComponent
+            marginTop={20}
             color={Colors.BLACK}
             fontSize={16}
             fontWeight={'bold'}
@@ -651,7 +669,7 @@ const StudentRegistrationScreen = () => {
             style={[
               styles.dropdown,
               {
-                borderColor: !validate.facultyName?.isError
+                borderColor: !validate.major?.isError
                   ? Colors.DROPDOWN_COLOR
                   : Colors.GREY1,
               },
@@ -660,16 +678,16 @@ const StudentRegistrationScreen = () => {
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
-            data={dataRequest}
+            data={dataMajorRequest}
             search
             labelField="name"
             valueField="id"
-            placeholder={value}
+            placeholder={item}
             searchPlaceholder={t('RegisterStudentComponent.placeholderSearch')}
-            value={value}
+            value={item}
             onChange={item => {
-              setValue(item.name);
-              handleFacultyNameChange(item);
+              setItem(item.name);
+              handleMajorNameChange(item.id);
             }}
           />
           <TextValidateTypeSecond
@@ -710,11 +728,18 @@ const StudentRegistrationScreen = () => {
             isVisible={validate.confirmPassword?.isVisible}
           />
           <SpaceComponent height={15} />
-          <RowComponent justifyContent='space-between'>
-            <TextComponent fontWeight='bold' fontSize={16} color={Colors.BLACK} text={t('RegisterStudentComponent.avatar')} />
+          <RowComponent justifyContent="space-between">
+            <TextComponent
+              fontWeight="bold"
+              fontSize={16}
+              color={Colors.BLACK}
+              text={t('RegisterStudentComponent.avatar')}
+            />
             <ButtonComponent
               style={styles.wrapperIconCamera}
-              onPress={() => { imagePickerOption?.show() }}
+              onPress={() => {
+                imagePickerOption?.show();
+              }}
               suffix={<Icon name="camera-retro" size={25} />}
             />
             <ImagePicker
@@ -725,7 +750,7 @@ const StudentRegistrationScreen = () => {
               }}
             />
           </RowComponent>
-          <RowComponent alignItems='center' justifyContent='center'>
+          <RowComponent alignItems="center" justifyContent="center">
             {imagePicker && imagePicker.length > 0 && (
               <Image
                 style={styles.img}
@@ -741,15 +766,18 @@ const StudentRegistrationScreen = () => {
           {/* Button */}
           <ButtonComponent
             isDisable={isLoading}
-            style={[styles.btnRegister, { opacity: isLoading ? 0.5 : 1 }]}
+            style={[styles.btnRegister, {opacity: isLoading ? 0.5 : 1}]}
             onPress={onSubmit}
             title={
-              <TextComponent style={styles.txtRegister} text={t('RegisterStudentComponent.titleRegister')} />
+              <TextComponent
+                style={styles.txtRegister}
+                text={t('RegisterStudentComponent.titleRegister')}
+              />
             }
             suffix={
               <ActivityIndicator
                 color={'#fff'}
-                style={{ display: isLoading ? 'flex' : 'none' }}
+                style={{display: isLoading ? 'flex' : 'none'}}
               />
             }
           />

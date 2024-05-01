@@ -1,32 +1,32 @@
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import axios from 'axios';
 import moment from 'moment';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   ActivityIndicator,
   Image,
   SafeAreaView,
   ScrollView,
-  TextInput
+  TextInput,
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import DatePicker from 'react-native-date-picker';
-import { Asset } from 'react-native-image-picker';
+import {Asset} from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import { RootStackParamList } from '../../../App';
+import {RootStackParamList} from '../../../App';
 import ButtonComponent from '../../../components/buttons/ButtonComponent';
-import TextValidateTypeSecond from '../../../components/common/TextValidateTypeSecond';
+import TextValidateTypeSecond from '../../../components/common/textValidate/TextValidateTypeSecond';
 import TextInputWithTitle from '../../../components/input/TextInputWithTitle';
 import RowComponent from '../../../components/row/RowComponent';
 import SessionComponent from '../../../components/session/SessionComponent';
 import SpaceComponent from '../../../components/space/SpaceComponent';
 import TextComponent from '../../../components/text/TextComponent';
 import ImagePicker from '../../../components/upload/ImagePicker';
-import { Colors } from '../../../constants/Colors';
-import { LOGIN_SCREEN } from '../../../constants/Screen';
-import { SERVER_ADDRESS } from '../../../constants/SystemConstant';
-import { BusinessRequest } from '../../../types/request/BusinessRequest';
+import {Colors} from '../../../constants/Colors';
+import {LOGIN_SCREEN} from '../../../constants/Screen';
+import {SERVER_ADDRESS} from '../../../constants/SystemConstant';
+import {BusinessRequest} from '../../../types/request/BusinessRequest';
 import {
   InputTextValidate,
   isBlank,
@@ -43,11 +43,14 @@ import styles from './BusinessRegistrationScreen.style';
 import en from '../../../languages/en.json';
 import jp from '../../../languages/jp.json';
 import vi from '../../../languages/vi.json';
-import { setDefaultLanguage, setTranslations, useTranslation } from 'react-multi-lang';
+import {
+  setDefaultLanguage,
+  setTranslations,
+  useTranslation,
+} from 'react-multi-lang';
 
-setTranslations({ vi, jp, en })
-setDefaultLanguage('jp')
-
+setTranslations({vi, jp, en});
+setDefaultLanguage('jp');
 
 interface RegisterBusiness {
   name: InputTextValidate;
@@ -154,7 +157,7 @@ const BusinessRegistrationScreen = () => {
 
   const handleNameChange = useCallback(
     (value: string) => {
-      setBusiness({ ...business, name: value });
+      setBusiness({...business, name: value});
       if (isBlank(value)) {
         setValidate({
           ...validate,
@@ -162,7 +165,7 @@ const BusinessRegistrationScreen = () => {
             ...validate.name,
             isError: true,
             isVisible: true,
-            textError: t('RegisterBusinessComponent.errorNameEmpty')
+            textError: t('RegisterBusinessComponent.errorNameEmpty'),
           },
         });
       } else if (isContainSpecialCharacter(value)) {
@@ -201,7 +204,7 @@ const BusinessRegistrationScreen = () => {
 
   const handleRepresentorChange = useCallback(
     (value: string) => {
-      setBusiness({ ...business, representor: value });
+      setBusiness({...business, representor: value});
       if (isBlank(value)) {
         setValidate({
           ...validate,
@@ -209,7 +212,7 @@ const BusinessRegistrationScreen = () => {
             ...validate.representor,
             isError: true,
             isVisible: true,
-            textError: t('RegisterBusinessComponent.errorRepresentEmpty')
+            textError: t('RegisterBusinessComponent.errorRepresentEmpty'),
           },
         });
       } else if (isContainSpecialCharacter(value)) {
@@ -229,7 +232,9 @@ const BusinessRegistrationScreen = () => {
             ...validate.representor,
             isError: true,
             isVisible: true,
-            textError: t('RegisterBusinessComponent.errorRepresentNotLengthMax'),
+            textError: t(
+              'RegisterBusinessComponent.errorRepresentNotLengthMax',
+            ),
           },
         });
       } else {
@@ -269,7 +274,7 @@ const BusinessRegistrationScreen = () => {
 
   const handleEmailChange = useCallback(
     (value: string) => {
-      setBusiness({ ...business, email: value });
+      setBusiness({...business, email: value});
       if (isBlank(value)) {
         setValidate({
           ...validate,
@@ -314,53 +319,56 @@ const BusinessRegistrationScreen = () => {
     [validate],
   );
 
-  const handlePasswordChange = useCallback((value: string) => {
-    setBusiness({ ...business, password: value });
-    if (isBlank(value)) {
-      setValidate({
-        ...validate,
-        password: {
-          ...validate.password,
-          isVisible: true,
-          isError: true,
-          textError: t('RegisterBusinessComponent.errorPasswordEmpty'),
-        },
-      });
-    } else if (!isLengthInRange(value, 1, 8)) {
-      setValidate({
-        ...validate,
-        password: {
-          ...validate.password,
-          isVisible: true,
-          isError: true,
-          textError: t('RegisterBusinessComponent.errorPassNotLengthMax'),
-        },
-      });
-    } else if (!isPassword(value)) {
-      setValidate({
-        ...validate,
-        password: {
-          ...validate.password,
-          isVisible: true,
-          isError: true,
-          textError: t('RegisterBusinessComponent.errorPassNotFormat'),
-        },
-      });
-    } else {
-      setValidate({
-        ...validate,
-        password: {
-          ...validate.password,
-          isError: false,
-          isVisible: false,
-        },
-      });
-    }
-  }, [validate]);
+  const handlePasswordChange = useCallback(
+    (value: string) => {
+      setBusiness({...business, password: value});
+      if (isBlank(value)) {
+        setValidate({
+          ...validate,
+          password: {
+            ...validate.password,
+            isVisible: true,
+            isError: true,
+            textError: t('RegisterBusinessComponent.errorPasswordEmpty'),
+          },
+        });
+      } else if (!isLengthInRange(value, 1, 8)) {
+        setValidate({
+          ...validate,
+          password: {
+            ...validate.password,
+            isVisible: true,
+            isError: true,
+            textError: t('RegisterBusinessComponent.errorPassNotLengthMax'),
+          },
+        });
+      } else if (!isPassword(value)) {
+        setValidate({
+          ...validate,
+          password: {
+            ...validate.password,
+            isVisible: true,
+            isError: true,
+            textError: t('RegisterBusinessComponent.errorPassNotFormat'),
+          },
+        });
+      } else {
+        setValidate({
+          ...validate,
+          password: {
+            ...validate.password,
+            isError: false,
+            isVisible: false,
+          },
+        });
+      }
+    },
+    [validate],
+  );
 
   const handleConfirmPasswordChange = useCallback(
     (value: string) => {
-      setBusiness({ ...business, confirmPassword: value });
+      setBusiness({...business, confirmPassword: value});
       if (isBlank(value)) {
         setValidate({
           ...validate,
@@ -397,7 +405,7 @@ const BusinessRegistrationScreen = () => {
 
   const handleTaxCodeChange = useCallback(
     (value: string) => {
-      setBusiness({ ...business, taxCode: value });
+      setBusiness({...business, taxCode: value});
       if (isBlank(value)) {
         setValidate({
           ...validate,
@@ -444,7 +452,7 @@ const BusinessRegistrationScreen = () => {
 
   const handleAddressChange = useCallback(
     (value: string) => {
-      setBusiness({ ...business, address: value });
+      setBusiness({...business, address: value});
       if (isBlank(value)) {
         setValidate({
           ...validate,
@@ -481,7 +489,7 @@ const BusinessRegistrationScreen = () => {
 
   const handlePhoneChange = useCallback(
     (value: string) => {
-      setBusiness({ ...business, phone: value });
+      setBusiness({...business, phone: value});
       if (isBlank(value)) {
         setValidate({
           ...validate,
@@ -516,28 +524,6 @@ const BusinessRegistrationScreen = () => {
     [validate],
   );
 
-  /**
-   * 
-    const [isLoading, setIsLoading] = useState(false)
-    const [isCheck, setCheck] = useState({
-      secureTextEntry: true
-    })
-    const [isCheck1, setCheck1] = useState({
-      secureTextEntry: true
-    })
-  
-    const onCheck = () => {
-      setCheck({
-        secureTextEntry: !isCheck.secureTextEntry
-      })
-    }
-    const onCheck1 = () => {
-      setCheck1({
-        secureTextEntry: !isCheck1.secureTextEntry
-      })
-    }
-  
-   */
   useEffect(() => {
     if (!isTime(timeStart, timeEnd)) {
       setValidate({
@@ -550,7 +536,7 @@ const BusinessRegistrationScreen = () => {
         },
       });
     } else {
-      setBusiness({ ...business, activeTime: timeStart + '-' + timeEnd });
+      setBusiness({...business, activeTime: timeStart + '-' + timeEnd});
       setValidate({
         ...validate,
         activeTime: {
@@ -561,21 +547,6 @@ const BusinessRegistrationScreen = () => {
       });
     }
   }, [timeStart, timeEnd]);
-
-
-  /**
-   *  useEffect(() => {
-    if (businessRegisterResponse.data) {
-      setIsLoading(false)
-      navigation.navigate(ACCEPT_SCREEN, {
-        email: business.email,
-        subject: t('AuthenticateRegistraion.textSubjectAuthenRegistration'),
-        title: t('AuthenticateRegistraion.titleSubjectAuthenRegistration'),
-        url: 'api/users/get/email/authen/register'
-      })
-    }
-  }, [businessRegisterResponse])
-   */
 
   const onSubmit = useCallback(() => {
     if (isAllFieldsValid(validate)) {
@@ -597,7 +568,7 @@ const BusinessRegistrationScreen = () => {
           validate[key].isVisible = true;
         }
       }
-      setValidate({ ...validate });
+      setValidate({...validate});
     }
   }, [validate, imagePicker]);
 
@@ -690,7 +661,7 @@ const BusinessRegistrationScreen = () => {
             isVisible={validate.phone?.isVisible}
           />
           {/*  */}
-          <RowComponent alignItems='center' justifyContent='center'>
+          <RowComponent alignItems="center" justifyContent="center">
             <TextInputWithTitle
               defaultValue={timeStart}
               textInputRef={timeStartRef}
@@ -788,11 +759,18 @@ const BusinessRegistrationScreen = () => {
             isVisible={validate.confirmPassword?.isVisible}
           />
           <SpaceComponent height={15} />
-          <RowComponent justifyContent='space-between'>
-            <TextComponent fontWeight='bold' fontSize={16} color={Colors.BLACK} text={t('RegisterBusinessComponent.avatar')} />
+          <RowComponent justifyContent="space-between">
+            <TextComponent
+              fontWeight="bold"
+              fontSize={16}
+              color={Colors.BLACK}
+              text={t('RegisterBusinessComponent.avatar')}
+            />
             <ButtonComponent
               style={styles.wrapperIconCamera}
-              onPress={() => { imagePickerOption?.show() }}
+              onPress={() => {
+                imagePickerOption?.show();
+              }}
               suffix={<Icon name="camera-retro" size={25} />}
             />
             <ImagePicker
@@ -803,7 +781,7 @@ const BusinessRegistrationScreen = () => {
               }}
             />
           </RowComponent>
-          <RowComponent alignItems='center' justifyContent='center'>
+          <RowComponent alignItems="center" justifyContent="center">
             {imagePicker && imagePicker.length > 0 && (
               <Image
                 style={styles.img}
@@ -819,15 +797,18 @@ const BusinessRegistrationScreen = () => {
           {/* Button */}
           <ButtonComponent
             isDisable={isLoading}
-            style={[styles.btnRegister, { opacity: isLoading ? 0.5 : 1 }]}
+            style={[styles.btnRegister, {opacity: isLoading ? 0.5 : 1}]}
             onPress={onSubmit}
             title={
-              <TextComponent style={styles.txtRegister} text={t('RegisterBusinessComponent.titleRegister')} />
+              <TextComponent
+                style={styles.txtRegister}
+                text={t('RegisterBusinessComponent.titleRegister')}
+              />
             }
             suffix={
               <ActivityIndicator
                 color={Colors.WHITE}
-                style={{ display: isLoading ? 'flex' : 'none' }}
+                style={{display: isLoading ? 'flex' : 'none'}}
               />
             }
           />

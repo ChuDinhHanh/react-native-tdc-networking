@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from 'react';
+import React, {ReactNode, useState} from 'react';
 import {
   KeyboardTypeOptions,
   StyleProp,
@@ -9,10 +9,10 @@ import {
   View,
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
-import { Colors } from '../../constants/Colors';
+import {Colors} from '../../constants/Colors';
 import ButtonComponent from '../buttons/ButtonComponent';
 import SpaceComponent from '../space/SpaceComponent';
-import TextValidateTypeSecond from '../common/TextValidateTypeSecond';
+import TextValidateTypeSecond from '../common/textValidate/TextValidateTypeSecond';
 
 interface TextInputWithTitleProps {
   allowClear?: boolean;
@@ -57,14 +57,14 @@ export default function TextInputWithTitle(props: TextInputWithTitleProps) {
 
   return (
     <View style={styles.group}>
-      <Text style={[styles.txt, { display: title ? 'flex' : 'none' }]}>
+      <Text style={[styles.txt, {display: title ? 'flex' : 'none'}]}>
         {title}
       </Text>
       <View
         style={[
           styles.ip,
           textInputStyle,
-          { flexDirection: 'row', alignItems: 'center' },
+          {flexDirection: 'row', alignItems: 'center'},
         ]}>
         <TextInput
           secureTextEntry={_isShowPass}
@@ -76,7 +76,7 @@ export default function TextInputWithTitle(props: TextInputWithTitleProps) {
           numberOfLines={numberOfLine ?? 1}
           multiline={multiline ?? false}
           placeholder={placeholder}
-          style={{ flex: 1 }}
+          style={{flex: 1}}
           onChangeText={value => onChangeText && onChangeText(value)}
         />
         {allowClear ? (

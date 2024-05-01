@@ -38,7 +38,7 @@ export default function ImagePicker({optionsRef, onResult}: ImagePickerProps) {
       onPress={async (index: number) => {
         if (index === 0) {
           const options: CameraOptions = {
-            // saveToPhotos: true,
+            saveToPhotos: true,
             mediaType: 'photo',
             cameraType: 'back',
             quality: 1,

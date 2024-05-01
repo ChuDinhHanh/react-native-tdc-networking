@@ -7,29 +7,27 @@ import {LOGIN_SCREEN, TOP_TAB_NAVIGATOR} from '../../constants/Screen';
 import {globalStyles} from '../../styles/GlobalStyles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {KeyValue} from '../../constants/KeyValue';
+import {useAppDispatch} from '../../redux/Hook';
+import {setUserLogin} from '../../redux/Slice';
 
 const SplashScreen = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    setTimeout(() => {
+    setTimeout(async () => {
       // Get data of current user
-      const getData = async () => {
-        try {
-          const data = await AsyncStorage.getItem(KeyValue.USER_LOGIN_KEY);
-          if (data) {
-            const userLogin = JSON.parse(data);
-            if (userLogin) {
-              navigation.replace(TOP_TAB_NAVIGATOR);
-            }
-          }
+      await AsyncStorage.getItem(KeyValue.USER_LOGIN_KEY).then(response => {
+        const data = response;
+        if (data) {
+          const userLogin = JSON.parse(data);
+          dispatch(setUserLogin(userLogin));
+          Boolean(userLogin) && navigation.replace(TOP_TAB_NAVIGATOR);
+        } else {
           navigation.replace(LOGIN_SCREEN);
-        } catch (error) {
-          console.log(error);
         }
-      };
-      getData();
+      });
     }, 3000);
   }, []);
 

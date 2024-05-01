@@ -1,15 +1,15 @@
 import {StyleSheet} from 'react-native';
-import { Colors } from '../../../constants/Colors';
+import {Colors} from '../../../constants/Colors';
 
 const styles = StyleSheet.create({
-  container:{
-    backgroundColor:Colors.WHITE
+  container: {
+    backgroundColor: Colors.WHITE,
   },
   headerModal: {
     borderBottomWidth: 0.7,
   },
   btnRegister: {
-    backgroundColor: '#1e90ff',
+    backgroundColor: Colors.COLOR_BTN_BLUE_SECOND,
     alignItems: 'center',
     marginTop: 30,
     marginBottom: 10,
@@ -19,25 +19,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   header: {
-    backgroundColor: '#1e90ff',
+    backgroundColor: Colors.COLOR_BTN_BLUE_SECOND,
     alignItems: 'center',
     flexDirection: 'row',
     justifyContent: 'center',
   },
   txtHeader: {
-    color: '#ffffff',
+    color: Colors.WHITE,
     paddingVertical: 10,
     fontSize: 20,
     fontWeight: 'bold',
   },
   textInput: {
-    borderColor: '#228b22',
+    borderColor: Colors.DROPDOWN_COLOR,
     borderWidth: 2,
   },
   ip: {
     fontSize: 16,
     borderWidth: 2,
-    borderColor: '#97A1B0',
+    borderColor: Colors.GREY1,
     paddingLeft: 10,
     borderRadius: 10,
     marginTop: 10,
@@ -47,13 +47,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   txt: {
-    color: '#000000',
+    color: Colors.BLACK,
     fontWeight: 'bold',
     fontSize: 16,
   },
   dropdown: {
     height: 50,
-    borderColor: '#97A1B0',
+    borderColor: Colors.GREY1,
     borderWidth: 2,
     paddingLeft: 10,
     borderRadius: 10,
@@ -64,12 +64,12 @@ const styles = StyleSheet.create({
   },
   selectedTextStyle: {
     fontSize: 16,
-    color: '#000000',
+    color: Colors.BLACK,
   },
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
-    color: '#000000',
+    color: Colors.BLACK,
   },
   iconStyle: {
     width: 30,
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
   },
   txtRegister: {
-    color: '#ffffff',
+    color: Colors.WHITE,
     paddingVertical: 10,
     fontSize: 20,
     fontWeight: 'bold',
