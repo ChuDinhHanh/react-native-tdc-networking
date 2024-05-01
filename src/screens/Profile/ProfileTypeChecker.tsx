@@ -51,7 +51,19 @@ const ProfileTypeChecker = (props: Props) => {
   const getBody = () => {
     switch (role) {
       case Variable.TYPE_POST_STUDENT:
-        return <StudentBody />;
+        return (
+          <StudentBody
+            t={t}
+            isFollow={props.isFollow}
+            position={t('Profile.profileRole') ?? t('Profile.unUpdate')}
+            phone={props.userData.phone ?? t('Profile.unUpdate')}
+            email={props.userData.email ?? t('Profile.unUpdate')}
+            numberPost={props.data ? props.data.length : 0}
+            name={userData.name ?? t('Profile.unUpdate')}
+            isSameUser={props.userData?.id === userLogin?.id}
+            onClickButtonEvent={onClickButtonEvent}
+          />
+        );
       case Variable.TYPE_POST_BUSINESS:
         return (
           <BusinessBody
@@ -70,7 +82,16 @@ const ProfileTypeChecker = (props: Props) => {
           />
         );
       case Variable.TYPE_POST_FACULTY:
-        return <FacultyBody />;
+        return <FacultyBody
+          t={t}
+          isFollow={false}
+          onClickButtonEvent={onClickButtonEvent}
+          phone={userData.phone ?? t('Profile.unUpdate')}
+          email={userData.email ?? t('Profile.unUpdate')}
+          name={userData.name ?? t('Profile.unUpdate')}
+          numberPost={data ? data.length : 0}
+          isSameUser={userData?.id === userLogin?.id}
+        />;
       default:
         return null;
     }

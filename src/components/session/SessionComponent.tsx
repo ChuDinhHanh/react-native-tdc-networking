@@ -1,5 +1,5 @@
-import React, { ReactNode } from 'react';
-import { StyleProp, View, ViewStyle } from 'react-native';
+import React, {ReactNode} from 'react';
+import {StyleProp, View, ViewStyle} from 'react-native';
 
 interface Props {
   padding?: number;
@@ -7,11 +7,18 @@ interface Props {
   style?: StyleProp<ViewStyle>;
   paddingTop?: number;
   marginHorizontal?: number;
-  backgroundColor?: string
+  backgroundColor?: string;
 }
 
 const SessionComponent = (props: Props) => {
-  const { padding, children, style, paddingTop, marginHorizontal, backgroundColor } = props;
+  const {
+    padding,
+    children,
+    style,
+    paddingTop,
+    marginHorizontal,
+    backgroundColor,
+  } = props;
   const paddingDefault = 16;
 
   return (
@@ -22,7 +29,7 @@ const SessionComponent = (props: Props) => {
           padding: padding ?? paddingDefault,
           paddingTop: paddingTop ?? undefined,
           marginHorizontal,
-          backgroundColor
+          backgroundColor,
         },
       ]}>
       {children}

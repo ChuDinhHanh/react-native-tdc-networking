@@ -60,7 +60,6 @@ const PostTypeChecker = (props: Post) => {
     userId,
   } = props;
 
-
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 

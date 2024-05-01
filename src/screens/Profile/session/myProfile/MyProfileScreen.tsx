@@ -1,28 +1,29 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import ModalImage from '../../../../components/modals/Image/ModalImage';
-import { Variable } from '../../../../constants/Variables';
-import { useAppSelector } from '../../../../redux/Hook';
-import { useGetPostsByIdQuery } from '../../../../redux/Service';
-import { Business } from '../../../../types/Business';
-import { Faculty } from '../../../../types/Faculty';
-import { Student } from '../../../../types/Student';
-import { isFaculty, isStudent } from '../../../../utils/UserHelper';
+import {Variable} from '../../../../constants/Variables';
+import {useAppSelector} from '../../../../redux/Hook';
+import {useGetPostsByIdQuery} from '../../../../redux/Service';
+import {Business} from '../../../../types/Business';
+import {Faculty} from '../../../../types/Faculty';
+import {Student} from '../../../../types/Student';
+import {isFaculty, isStudent} from '../../../../utils/UserHelper';
 import ProfileTypeChecker from '../../ProfileTypeChecker';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { FlatList, ScrollView } from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {FlatList, ScrollView} from 'react-native';
 import SkeletonPost from '../../../../components/skeleton/post/SkeletonPost';
 import PostTypeChecker from '../../../../components/post/postTypeChecker/PostTypeChecker';
-import { GetPostActive } from '../../../../utils/GetPostActive';
-import { LikeAction } from '../../../../types/LikeAction';
-import { Data } from '../../../../data/Data';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../../../App';
-import { OPTION_SCREEN } from '../../../../constants/Screen';
+import {GetPostActive} from '../../../../utils/GetPostActive';
+import {LikeAction} from '../../../../types/LikeAction';
+import {Data} from '../../../../data/Data';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../../../../App';
+import {OPTION_SCREEN} from '../../../../constants/Screen';
 
 const MyProfileScreen = () => {
-  const { userLogin } = useAppSelector(state => state.TDCSocialNetworkReducer);
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const {userLogin} = useAppSelector(state => state.TDCSocialNetworkReducer);
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [group, setGroup] = useState(
     isStudent(userLogin) || isFaculty(userLogin)
       ? userLogin.facultyGroupCode
@@ -38,7 +39,7 @@ const MyProfileScreen = () => {
     image: '',
   });
 
-  const { data, isFetching } = useGetPostsByIdQuery({
+  const {data, isFetching} = useGetPostsByIdQuery({
     userId: userLogin?.id ?? 0,
     groupCode: group ?? '',
     userLogin: userLogin?.id ?? 0,
@@ -56,11 +57,8 @@ const MyProfileScreen = () => {
 
   const handleClickButtonEvent = (flag: number) => {
     if (flag === Variable.MESSENGER_ACTION) {
-
     } else if (flag === Variable.FOLLOW_ACTION) {
-
     } else if (flag === Variable.CALL_ACTION) {
-
     } else {
       navigation.navigate(OPTION_SCREEN);
     }
@@ -89,16 +87,11 @@ const MyProfileScreen = () => {
     });
   }, []);
 
-  const likeAction = (obj: LikeAction) => {
+  const likeAction = (obj: LikeAction) => {};
 
-  }
+  const handleSavePost = async (id: number) => {};
 
-  const handleSavePost = async (id: number) => {
-  }
-
-  const handleDeletePost = async (id: number) => {
-  }
-
+  const handleDeletePost = async (id: number) => {};
 
   const renderItem = useCallback(
     (item: any) => {
@@ -165,7 +158,7 @@ const MyProfileScreen = () => {
             scrollEnabled={false}
             extraData={data?.data.posts}
             data={data?.data.posts}
-            renderItem={({ item }) => renderItem(item)}
+            renderItem={({item}) => renderItem(item)}
           />
         )}
       </ScrollView>
