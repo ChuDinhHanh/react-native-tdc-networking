@@ -1,6 +1,6 @@
 import React from 'react';
-import { useTranslation } from 'react-multi-lang';
-import { View } from 'react-native';
+import {useTranslation} from 'react-multi-lang';
+import {View} from 'react-native';
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import IconEvilIcons from 'react-native-vector-icons/EvilIcons';
 import IconFeather from 'react-native-vector-icons/Feather';
@@ -10,8 +10,8 @@ import IconIonicons from 'react-native-vector-icons/Ionicons';
 import ButtonComponent from '../../../../components/buttons/ButtonComponent';
 import SessionComponent from '../../../../components/session/SessionComponent';
 import TextComponent from '../../../../components/text/TextComponent';
-import { Colors } from '../../../../constants/Colors';
-import { Variable } from '../../../../constants/Variables';
+import {Colors} from '../../../../constants/Colors';
+import {Variable} from '../../../../constants/Variables';
 import styles from './BussinesBody.style';
 
 interface Props {
