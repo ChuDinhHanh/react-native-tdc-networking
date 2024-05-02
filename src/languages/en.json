@@ -174,5 +174,17 @@
         "follow": "Follow",
         "updateProfile": "Update personal information",
         "unUpdate": "Not updated yet"
+    },
+    "RecruitmentPost": {
+        "recruitmentPostType": "Recruitment",
+        "recruitmentPostButtonSeeDetail": "See details",
+        "recruitmentPostCurrency": "vnd/Month"
+    },
+    "SurveyPost": {
+        "surveyPostType": "Survey",
+        "surveyPostButton": "Conduct Survey",
+        "surveyPostButtonSetting": "Edit Answers",
+        "surveyPostButtonJoinSurvey": "Join Survey",
+        "surveyPostButtonDetailQuestion": "Details"
     }
 }

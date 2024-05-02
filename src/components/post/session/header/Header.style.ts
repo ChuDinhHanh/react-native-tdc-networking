@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {Colors} from '../../../../constants/Colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -30,7 +31,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerCenterType: {
-    backgroundColor: 'red',
+    backgroundColor: Colors.COLOR_GREY_FEEBLE,
     paddingHorizontal: 10,
     height: 20,
     borderRadius: 15,

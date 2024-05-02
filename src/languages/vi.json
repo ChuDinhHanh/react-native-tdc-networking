@@ -174,5 +174,17 @@
         "follow": "Theo dõi",
         "updateProfile": "Cập nhật thông tin cá nhân",
         "unUpdate": "chưa được cập nhật "
+    },
+    "RecruitmentPost": {
+        "recruitmentPostType": "Tuyển dụng",
+        "recruitmentPostButtonSeeDetail": "Xem chi tiết",
+        "recruitmentPostCurrency": "vnd/Tháng"
+    },
+    "SurveyPost": {
+        "surveyPostType": "Khảo sát",
+        "surveyPostButton": "Tiến hành khảo sát",
+        "surveyPostButtonSetting": "Chỉnh sửa câu trả lời",
+        "surveyPostButtonJoinSurvey": "Tham gia khảo sát",
+        "surveyPostButtonDetailQuestion": "Chi tiết câu hỏi"
     }
 }

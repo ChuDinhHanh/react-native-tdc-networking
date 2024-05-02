@@ -29,6 +29,7 @@ interface Props {
   alignSelf?: 'auto' | FlexAlignType | undefined;
   style?: StyleProp<ViewStyle>;
   colorDisable?: string;
+  widthAutoFollowContent?: boolean;
 }
 const ButtonComponent = (props: Props) => {
   const {
@@ -49,35 +50,41 @@ const ButtonComponent = (props: Props) => {
     alignSelf,
     style,
     colorDisable,
+    widthAutoFollowContent,
   } = props;
 
   return (
     <TouchableOpacity
       disabled={isDisable}
       onPress={() => onPress()}
-      style={[
-        globalStyles.row,
-        boxShadow && globalStyles.shadow,
-        styles.wrapper_content,
-        {
-          backgroundColor: isDisable ? colorDisable : backgroundColor,
-          width: width ?? 'auto',
-          height: height ?? 'auto',
-          borderRadius,
-          marginVertical,
-          alignSelf,
-        },
-        style,
-      ]}>
-      {affix}
-      <SpaceComponent width={spacePrevious ?? 0} />
-      {title}
-      <SpaceComponent width={spaceBehind ?? 0} />
-      {type && type === 'primary' ? (
-        <View style={{position: 'absolute', right: 14}}>{suffix}</View>
-      ) : (
-        suffix
-      )}
+      style={{
+        flexDirection: widthAutoFollowContent ? 'row' : undefined,
+      }}>
+      <View
+        style={[
+          globalStyles.row,
+          boxShadow && globalStyles.shadow,
+          styles.wrapper_content,
+          {
+            backgroundColor: isDisable ? colorDisable : backgroundColor,
+            width: width ?? 'auto',
+            height: height ?? 'auto',
+            borderRadius,
+            marginVertical,
+            alignSelf,
+          },
+          style,
+        ]}>
+        {affix}
+        <SpaceComponent width={spacePrevious ?? 0} />
+        {title}
+        <SpaceComponent width={spaceBehind ?? 0} />
+        {type && type === 'primary' ? (
+          <View style={{position: 'absolute', right: 14}}>{suffix}</View>
+        ) : (
+          suffix
+        )}
+      </View>
     </TouchableOpacity>
   );
 };
