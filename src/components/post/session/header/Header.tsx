@@ -161,16 +161,17 @@ const Header = (props: Props) => {
           />
           {/* Type author */}
           {(role === Variable.TYPE_POST_BUSINESS ||
-            role === Variable.TYPE_POST_FACULTY) && (
-            <View style={styles.headerCenterType}>
-              <TextComponent
-                fontSize={10}
-                fontWeight="bold"
-                color={Colors.BLACK}
-                text={typeAuthor ?? ''}
-              />
-            </View>
-          )}
+            role === Variable.TYPE_POST_FACULTY) &&
+            type !== Variable.TYPE_NORMAL_POST && (
+              <View style={styles.headerCenterType}>
+                <TextComponent
+                  fontSize={10}
+                  fontWeight="bold"
+                  color={Colors.BLACK}
+                  text={typeAuthor ?? ''}
+                />
+              </View>
+            )}
         </View>
       </View>
       <View style={styles.wrapMenu}>

@@ -2,30 +2,36 @@ import React, {useCallback, useMemo, useState} from 'react';
 import {Variable} from '../../../constants/Variables';
 import {Post} from '../../../types/Post';
 
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {
   setDefaultLanguage,
   setTranslations,
   useTranslation,
 } from 'react-multi-lang';
-import {StyleSheet, View} from 'react-native';
-import {Colors} from '../../../constants/Colors';
+import {View} from 'react-native';
+import {RootStackParamList} from '../../../App';
+import {
+  PROFILE_SCREEN,
+  RECRUITMENT_DETAIL_SCREEN,
+  SURVEY_CONDUCT_SCREEN,
+} from '../../../constants/Screen';
 import en from '../../../languages/en.json';
 import jp from '../../../languages/jp.json';
 import vi from '../../../languages/vi.json';
+import {useAppDispatch, useAppSelector} from '../../../redux/Hook';
+import {setShowBottomSheet} from '../../../redux/Slice';
+import {Like} from '../../../types/Like';
+import {LikeAction} from '../../../types/LikeAction';
+import {ModalComments} from '../../../types/ModalComments ';
 import {numberDayPassed} from '../../../utils/FormatTime';
 import Bottom from '../session/bottom/Bottom';
 import Content from '../session/content/Content';
 import Header from '../session/header/Header';
 import DisplayImage from '../session/image/normalImage/DisplayImage';
-import {Like} from '../../../types/Like';
-import {useAppDispatch, useAppSelector} from '../../../redux/Hook';
-import {useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../../App';
-import {PROFILE_SCREEN} from '../../../constants/Screen';
-import {LikeAction} from '../../../types/LikeAction';
-import {setShowBottomSheet} from '../../../redux/Slice';
-import {ModalComments} from '../../../types/ModalComments ';
+import styles from './PostTypeChecker.style';
+import Recruitment from '../session/recruitment/Recruitment';
+import Survey from '../session/survey/Survey';
 
 setTranslations({vi, jp, en});
 setDefaultLanguage('vi');
@@ -139,6 +145,14 @@ const PostTypeChecker = (props: Post) => {
     return null;
   }, [typeAuthor]);
 
+  const handleClickBtnRecruitmentDetailEvent = useCallback((idPost: number) => {
+    navigation.navigate(RECRUITMENT_DETAIL_SCREEN, {postId: idPost});
+  }, []);
+
+  const handleClickBtnSurveyDetailEvent = (idPost: number) => {
+    navigation.navigate(SURVEY_CONDUCT_SCREEN, {surveyPostId: idPost});
+  };
+
   switch (type) {
     case Variable.TYPE_NORMAL_POST:
       return (
@@ -172,38 +186,88 @@ const PostTypeChecker = (props: Post) => {
         </View>
       );
     case Variable.TYPE_RECRUITMENT_POST:
-      return <></>;
+      return (
+        <View style={styles.container}>
+          <Header
+            t={t}
+            userId={userId}
+            name={name}
+            avatar={avatar}
+            available={available}
+            timeCreatePost={numberDayPassed(timeCreatePost)}
+            typeAuthor={t('RecruitmentPost.recruitmentPostType')}
+            type={type}
+            role={role}
+            onClickMenuOption={handleClickMenuOption}
+            onClickIntoAvatarAndNameAndMenuEvent={
+              handleClickIntoAvatarAndNameAndMenuEvent
+            }
+            isSave={isSave}
+            active={active}
+          />
+          <Recruitment
+            id={id}
+            location={location ?? ''}
+            title={title ?? ''}
+            salary={salary ?? ''}
+            employmentType={employmentType ?? ''}
+            onClickBtnSeeDetailEvent={handleClickBtnRecruitmentDetailEvent}
+            createdAt={timeCreatePost}
+            current={t('RecruitmentPost.recruitmentPostCurrency')}
+            textButton={t('RecruitmentPost.recruitmentPostButtonSeeDetail')}
+          />
+          <Bottom
+            isLike={handleCheckLiked}
+            likes={likes}
+            onClickBottomBtnEvent={handleClickBottomBtnEvent}
+            commentQty={commentQty}
+            textLikeBy={t('Post.normalPostLikeBy')}
+          />
+        </View>
+      );
     case Variable.TYPE_SURVEY_POST:
-      return <></>;
+      return (
+        <View style={styles.container}>
+          <Header
+            t={t}
+            userId={userId}
+            name={name}
+            avatar={avatar}
+            available={available}
+            timeCreatePost={numberDayPassed(timeCreatePost)}
+            typeAuthor={t('SurveyPost.surveyPostType')}
+            type={type}
+            role={role}
+            onClickMenuOption={handleClickMenuOption}
+            onClickIntoAvatarAndNameAndMenuEvent={
+              handleClickIntoAvatarAndNameAndMenuEvent
+            }
+            isSave={isSave}
+            active={active}
+          />
+          <Survey
+            t={t}
+            id={id}
+            title={title ?? ''}
+            active={active}
+            onClickBtnSeeDetailEvent={handleClickBtnSurveyDetailEvent}
+            description={description ?? ''}
+            textButton={t('SurveyPost.surveyPostButton')}
+            textSeeDetailSurvey={t('SurveyPost.surveyPostButtonDetailQuestion')}
+            textJoinSurvey={t('SurveyPost.surveyPostButtonJoinSurvey')}
+          />
+          <Bottom
+            isLike={handleCheckLiked}
+            likes={likes}
+            onClickBottomBtnEvent={handleClickBottomBtnEvent}
+            commentQty={commentQty}
+            textLikeBy={t('Post.normalPostLikeBy')}
+          />
+        </View>
+      );
     default:
       return null;
   }
 };
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 10,
-    backgroundColor: Colors.COLOR_WHITE,
-    marginBottom: 20,
-    marginHorizontal: 5,
-    borderRadius: 5,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4.84,
-    elevation: 5,
-  },
-  wrapHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingTop: 300,
-  },
-  bodyWrap: {
-    marginVertical: 10,
-  },
-});
 
 export default PostTypeChecker;

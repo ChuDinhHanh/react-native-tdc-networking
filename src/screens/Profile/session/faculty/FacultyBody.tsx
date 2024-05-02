@@ -1,6 +1,6 @@
 import React from 'react';
-import { useTranslation } from 'react-multi-lang';
-import { View } from 'react-native';
+import {useTranslation} from 'react-multi-lang';
+import {View} from 'react-native';
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import IconFeather from 'react-native-vector-icons/Feather';
 import IconFontisto from 'react-native-vector-icons/Fontisto';
@@ -8,23 +8,32 @@ import IconIonicons from 'react-native-vector-icons/Ionicons';
 import ButtonComponent from '../../../../components/buttons/ButtonComponent';
 import SessionComponent from '../../../../components/session/SessionComponent';
 import TextComponent from '../../../../components/text/TextComponent';
-import { Colors } from '../../../../constants/Colors';
-import { Variable } from '../../../../constants/Variables';
+import {Colors} from '../../../../constants/Colors';
+import {Variable} from '../../../../constants/Variables';
 import styles from './FacultyBody.style';
 
 interface Props {
-  t: ReturnType<typeof useTranslation>
-  isFollow: boolean,
-  onClickButtonEvent: (flag: number) => void,
-  phone: string,
-  email: string,
-  name: string,
-  numberPost: number,
-  isSameUser: boolean,
+  t: ReturnType<typeof useTranslation>;
+  isFollow: boolean;
+  onClickButtonEvent: (flag: number) => void;
+  phone: string;
+  email: string;
+  name: string;
+  numberPost: number;
+  isSameUser: boolean;
 }
 
 const FacultyBody = (props: Props) => {
-  const { email, isFollow, isSameUser, name, numberPost, onClickButtonEvent, phone, t } = props;
+  const {
+    email,
+    isFollow,
+    isSameUser,
+    name,
+    numberPost,
+    onClickButtonEvent,
+    phone,
+    t,
+  } = props;
   return (
     <SessionComponent padding={10} paddingTop={20}>
       {/* Name */}
@@ -100,10 +109,13 @@ const FacultyBody = (props: Props) => {
           suffix={
             <IconFeather
               style={styles.iconInfo}
-              name='phone-call' size={20} color={Colors.BLACK} />
+              name="phone-call"
+              size={20}
+              color={Colors.BLACK}
+            />
           }
           color={Colors.BLACK}
-          text={`${t("Profile.profilePhone")}: ${phone}`}
+          text={`${t('Profile.profilePhone')}: ${phone}`}
         />
 
         <TextComponent
@@ -111,10 +123,13 @@ const FacultyBody = (props: Props) => {
           suffix={
             <IconFontisto
               style={styles.iconInfo}
-              name='email' size={20} color={Colors.BLACK} />
+              name="email"
+              size={20}
+              color={Colors.BLACK}
+            />
           }
           color={Colors.BLACK}
-          text={`${t("Profile.profileEmail")}: ${email}`}
+          text={`${t('Profile.profileEmail')}: ${email}`}
         />
       </View>
       {/* Number post */}

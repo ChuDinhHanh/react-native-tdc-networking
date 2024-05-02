@@ -174,5 +174,17 @@
         "follow": "フォロー",
         "updateProfile": "プロフィールを更新",
         "unUpdate": "未更新"
+    },
+    "RecruitmentPost": {
+        "recruitmentPostType": "求人",
+        "recruitmentPostButtonSeeDetail": "詳細を見る",
+        "recruitmentPostCurrency": "vnd/月"
+    },
+    "SurveyPost": {
+        "surveyPostType": "アンケート",
+        "surveyPostButton": "アンケート実施",
+        "surveyPostButtonSetting": "回答を設定",
+        "surveyPostButtonJoinSurvey": "アンケートに参加",
+        "surveyPostButtonDetailQuestion": "質問の詳細"
     }
 }

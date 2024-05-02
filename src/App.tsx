@@ -105,8 +105,8 @@ export type RootStackParamList = {
   REVIEW_SURVEY_POST_SCREEN: undefined;
   ADD_QUESTION_SCREEN: undefined;
   CREATE_NORMAL_POST_SCREEN: undefined;
-  SURVEY_CONDUCT_SCREEN: undefined;
-  RECRUITMENT_DETAIL_SCREEN: undefined;
+  SURVEY_CONDUCT_SCREEN: {surveyPostId: number};
+  RECRUITMENT_DETAIL_SCREEN: {postId: number};
   JOB_APPLY_SCREEN: undefined;
   DETAIL_JOB_APPLY: undefined;
   PROFILE_SCREEN: undefined;
