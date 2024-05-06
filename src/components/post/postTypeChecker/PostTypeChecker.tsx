@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {memo, useCallback, useMemo, useState} from 'react';
 import {Variable} from '../../../constants/Variables';
 import {Post} from '../../../types/Post';
 
@@ -12,15 +12,18 @@ import {
 import {View} from 'react-native';
 import {RootStackParamList} from '../../../App';
 import {
+  CREATE_NORMAL_POST_SCREEN,
+  LIST_JOB_APPLY_SCREEN,
   PROFILE_SCREEN,
   RECRUITMENT_DETAIL_SCREEN,
   SURVEY_CONDUCT_SCREEN,
+  SURVEY_RESULT_SCREEN,
 } from '../../../constants/Screen';
 import en from '../../../languages/en.json';
 import jp from '../../../languages/jp.json';
 import vi from '../../../languages/vi.json';
 import {useAppDispatch, useAppSelector} from '../../../redux/Hook';
-import {setShowBottomSheet} from '../../../redux/Slice';
+import {setShowBottomSheet, setShowModalLike} from '../../../redux/Slice';
 import {Like} from '../../../types/Like';
 import {LikeAction} from '../../../types/LikeAction';
 import {ModalComments} from '../../../types/ModalComments ';
@@ -32,11 +35,14 @@ import DisplayImage from '../session/image/normalImage/DisplayImage';
 import styles from './PostTypeChecker.style';
 import Recruitment from '../session/recruitment/Recruitment';
 import Survey from '../session/survey/Survey';
+import {UpdateNormalPost} from '../../../types/UpdateNormalPost';
+import {shallowEqual} from 'react-redux';
 
 setTranslations({vi, jp, en});
 setDefaultLanguage('vi');
 
 const PostTypeChecker = (props: Post) => {
+  console.log('=================PostTypeChecker===================');
   const {
     active,
     available,
@@ -48,8 +54,8 @@ const PostTypeChecker = (props: Post) => {
     employmentType,
     expiration,
     group,
-    handleDelete,
-    handleUnSave,
+    onDelete,
+    onUnSave,
     id,
     images,
     isSave,
@@ -73,7 +79,10 @@ const PostTypeChecker = (props: Post) => {
 
   const t = useTranslation();
 
-  const {userLogin} = useAppSelector(state => state.TDCSocialNetworkReducer);
+  const userLogin = useAppSelector(
+    state => state.TDCSocialNetworkReducer.userLogin,
+    shallowEqual,
+  );
 
   const [likeData, setLikeData] = useState<LikeAction>({
     code: '',
@@ -88,7 +97,51 @@ const PostTypeChecker = (props: Post) => {
     commentFather: [],
   });
 
-  const handleClickMenuOption = useCallback((flag: number) => {}, []);
+  const handleSeeListCvPost = () => {
+    navigation.navigate(LIST_JOB_APPLY_SCREEN, {postId: id});
+  };
+
+  const handleSeeResultSurveyPost = () => {
+    navigation.navigate(SURVEY_RESULT_SCREEN, {surveyPostId: id});
+  };
+
+  const handleUpdateNormalPostEvent = () => {
+    const updateNormalPost: UpdateNormalPost = {
+      postId: props.id,
+      content: props.content,
+      images: props.images,
+    };
+    navigation.navigate(CREATE_NORMAL_POST_SCREEN, {
+      updatePostData: updateNormalPost,
+    });
+  };
+
+  const handleClickMenuOption = useCallback((flag: number) => {
+    switch (flag) {
+      case Variable.CLICK_SAVE_POST_EVENT:
+        onUnSave(id);
+        break;
+      case Variable.CLICK_DELETE_POST_EVENT:
+        onDelete(id);
+        break;
+      case Variable.CLICK_UN_SAVE_POST:
+        onUnSave(id);
+        break;
+      case Variable.CLICK_SEE_LIST_CV_POST_EVENT:
+        handleSeeListCvPost();
+        break;
+      case Variable.CLICK_SEE_RESULT_POST_EVENT:
+        handleSeeResultSurveyPost();
+        break;
+      case Variable.CLICK_UPDATE_POST:
+        if (type.includes(Variable.TYPE_NORMAL_POST)) {
+          handleUpdateNormalPostEvent();
+        }
+        break;
+      default:
+        return null;
+    }
+  }, []);
 
   const handleClickIntoAvatarAndNameAndMenuEvent = useCallback(
     (flag: number | null) => {
@@ -133,7 +186,12 @@ const PostTypeChecker = (props: Post) => {
   };
 
   const handleClickIntoListUserReactions = () => {
-    console.log('open user reaction');
+    dispatch(
+      setShowModalLike({
+        group: group,
+        likes: likes,
+      }),
+    );
   };
 
   const identifyTypeAuthor = useMemo(() => {
@@ -270,4 +328,4 @@ const PostTypeChecker = (props: Post) => {
   }
 };
 
-export default PostTypeChecker;
+export default memo(PostTypeChecker);

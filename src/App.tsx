@@ -81,6 +81,8 @@ import SurveyConductScreen from './screens/Survey/SurveyConductScreen';
 import SurveyResultScreen from './screens/Survey/SurveyResultScreen';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import ProfileScreen from './screens/Profile/session/otherProfile/ProfileScreen';
+import {UpdateNormalPost} from './types/UpdateNormalPost';
+import ModalLike from './components/modals/Like/ModalLike';
 
 export type RootStackParamList = {
   CONVERSATION_SCREEN: undefined;
@@ -104,7 +106,7 @@ export type RootStackParamList = {
   LIST_FOLLOW_SCREEN: undefined;
   REVIEW_SURVEY_POST_SCREEN: undefined;
   ADD_QUESTION_SCREEN: undefined;
-  CREATE_NORMAL_POST_SCREEN: undefined;
+  CREATE_NORMAL_POST_SCREEN: {updatePostData: UpdateNormalPost};
   SURVEY_CONDUCT_SCREEN: {surveyPostId: number};
   RECRUITMENT_DETAIL_SCREEN: {postId: number};
   JOB_APPLY_SCREEN: undefined;
@@ -112,11 +114,11 @@ export type RootStackParamList = {
   PROFILE_SCREEN: undefined;
   LIST_POST_SAVED_SCREEN: undefined;
   OPTION_SCREEN: undefined;
-  SURVEY_RESULT_SCREEN: undefined;
+  SURVEY_RESULT_SCREEN: {surveyPostId: number};
   APPLICATION_OPTION_SCREEN: undefined;
   INTERMEDIATELY_SCREEN: undefined;
   CREATE_SURVEY_SCREEN: undefined;
-  LIST_JOB_APPLY_SCREEN: undefined;
+  LIST_JOB_APPLY_SCREEN: {postId: number};
   FORGOTTEN_PASSWORD_SCREEN: undefined;
   ACCEPT_SCREEN: undefined;
 };
@@ -405,13 +407,15 @@ const App = () => {
     <GestureHandlerRootView>
       <MenuProvider>
         <Provider store={store}>
-          <BottomSheetModalWrapper>
-            <PaperProvider>
-              <NavigationContainer>
-                <DrawerNavigator />
-              </NavigationContainer>
-            </PaperProvider>
-          </BottomSheetModalWrapper>
+          <PaperProvider>
+            <NavigationContainer>
+              <ModalLike>
+                <BottomSheetModalWrapper>
+                  <DrawerNavigator />
+                </BottomSheetModalWrapper>
+              </ModalLike>
+            </NavigationContainer>
+          </PaperProvider>
         </Provider>
       </MenuProvider>
     </GestureHandlerRootView>

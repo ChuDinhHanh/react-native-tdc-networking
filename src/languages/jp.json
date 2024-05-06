@@ -186,5 +186,8 @@
         "surveyPostButtonSetting": "回答を設定",
         "surveyPostButtonJoinSurvey": "アンケートに参加",
         "surveyPostButtonDetailQuestion": "質問の詳細"
+    },
+    "ModalListUserLiked": {
+        "modalListUserLikedTitle": "いいねしたユーザーのリスト"
     }
 }

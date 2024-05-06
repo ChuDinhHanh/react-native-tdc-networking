@@ -21,6 +21,7 @@ import vi from '../../languages/vi.json';
 import {Post} from '../../types/Post';
 import styles from './ProfileTypeChecker.style';
 import Header from './session/common/Header';
+import {shallowEqual} from 'react-redux';
 
 setTranslations({vi, jp, en});
 setDefaultLanguage('jp');
@@ -46,7 +47,10 @@ const ProfileTypeChecker = (props: Props) => {
   const t = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-  const {userLogin} = useAppSelector(state => state.TDCSocialNetworkReducer);
+  const userLogin = useAppSelector(
+    state => state.TDCSocialNetworkReducer.userLogin,
+    shallowEqual,
+  );
 
   const getBody = () => {
     switch (role) {

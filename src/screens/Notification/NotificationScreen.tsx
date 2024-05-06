@@ -1,11 +1,10 @@
+import {View, Text} from 'react-native';
 import React from 'react';
-import {View} from 'react-native';
-import SkeletonNotification from '../../components/skeleton/notification/SkeletonNotification';
 
 const NotificationScreen = () => {
   return (
     <View>
-      <SkeletonNotification />
+      <Text>NotificationScreen</Text>
     </View>
   );
 };

@@ -35,18 +35,18 @@ const RowComponent = (props: Props) => {
     marginVertical,
     height,
   } = props;
+  const style = [
+    {alignItems, justifyContent, marginVertical, height},
+    globalStyles.row,
+  ];
   return (
     <React.Fragment>
       {onPress ? (
-        <TouchableOpacity onPress={onPress}>{children}</TouchableOpacity>
-      ) : (
-        <View
-          style={[
-            {alignItems, justifyContent, marginVertical, height},
-            globalStyles.row,
-          ]}>
+        <TouchableOpacity style={style} onPress={onPress}>
           {children}
-        </View>
+        </TouchableOpacity>
+      ) : (
+        <View style={style}>{children}</View>
       )}
     </React.Fragment>
   );

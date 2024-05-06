@@ -1,29 +1,27 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   DrawerContentComponentProps,
-  DrawerContentScrollView,
   DrawerItem,
-  DrawerItemList,
 } from '@react-navigation/drawer';
-import React, {useTransition} from 'react';
-import {View} from 'react-native';
-import {useAppDispatch, useAppSelector} from '../../redux/Hook';
-import DrawerHeader from './DrawerHeader';
-import SessionComponent from '../session/SessionComponent';
-import Divider from '../common/divider/Divider';
-import {List} from 'react-native-paper';
-import AccordionItem from './AccordionItem';
-import {setDefaultLanguage, setTranslations} from 'react-multi-lang';
-import en from '../../languages/en.json';
-import vi from '../../languages/vi.json';
-import jp from '../../languages/jp.json';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {setUserLogout} from '../../redux/Slice';
-import {Variable} from '../../constants/Variables';
-import {KeyValue} from '../../constants/KeyValue';
 import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import React, {useTransition} from 'react';
+import {setDefaultLanguage, setTranslations} from 'react-multi-lang';
+import {View} from 'react-native';
+import {List} from 'react-native-paper';
+import {shallowEqual} from 'react-redux';
+import {KeyValue} from '../../constants/KeyValue';
 import {LOGIN_SCREEN} from '../../constants/Screen';
+import en from '../../languages/en.json';
+import jp from '../../languages/jp.json';
+import vi from '../../languages/vi.json';
+import {useAppDispatch, useAppSelector} from '../../redux/Hook';
 import {useChangeUserToInactiveStateMutation} from '../../redux/Service';
+import {setUserLogout} from '../../redux/Slice';
+import Divider from '../common/divider/Divider';
+import SessionComponent from '../session/SessionComponent';
+import AccordionItem from './AccordionItem';
+import DrawerHeader from './DrawerHeader';
 
 setTranslations({vi, jp, en});
 setDefaultLanguage('jp');
@@ -33,7 +31,10 @@ const DrawerContent = (props: DrawerContentComponentProps) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const [inactive, inactiveResult] = useChangeUserToInactiveStateMutation();
   const dispatch = useAppDispatch();
-  const {userLogin} = useAppSelector(state => state.TDCSocialNetworkReducer);
+  const userLogin = useAppSelector(
+    state => state.TDCSocialNetworkReducer.userLogin,
+    shallowEqual,
+  );
   console.log('====================================');
   console.log(userLogin?.image);
   console.log('====================================');

@@ -5,6 +5,8 @@ import {Post} from '../types/Post';
 import {StudentRequest} from '../types/request/StudentRequest';
 import {MessageResponseData} from '../types/response/MessageResponseData ';
 import {NotificationModel} from '../types/response/NotificationModel ';
+import Path from '../constants/Path';
+import {SavePostRequest} from '../types/request/SavePostRequest';
 
 export const TDCSocialNetworkAPI = createApi({
   reducerPath: 'TDCSocialNetworkAPI',
@@ -75,6 +77,19 @@ export const TDCSocialNetworkAPI = createApi({
         },
       }),
     }),
+    deletePost: builder.mutation<Data<any>, number>({
+      query: postId => ({
+        url: `api/posts/${postId}`,
+        method: 'DELETE',
+      }),
+    }),
+    saveOrUnSavePost: builder.mutation<Data<any>, SavePostRequest>({
+      query: data => ({
+        url: `api/posts/user/save`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -86,4 +101,6 @@ export const {
   useGetStudentPostQuery,
   useGetNotificationsUserQuery,
   useGetPostsByIdQuery,
+  useDeletePostMutation,
+  useSaveOrUnSavePostMutation,
 } = TDCSocialNetworkAPI;

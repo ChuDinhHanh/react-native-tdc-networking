@@ -1,27 +1,50 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {FlatList, ScrollView} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {shallowEqual} from 'react-redux';
+import {RootStackParamList} from '../../../../App';
 import ModalImage from '../../../../components/modals/Image/ModalImage';
+import PostTypeChecker from '../../../../components/post/postTypeChecker/PostTypeChecker';
+import {OPTION_SCREEN} from '../../../../constants/Screen';
 import {Variable} from '../../../../constants/Variables';
+import {Data} from '../../../../data/Data';
 import {useAppSelector} from '../../../../redux/Hook';
-import {useGetPostsByIdQuery} from '../../../../redux/Service';
+import {
+  useDeletePostMutation,
+  useGetPostsByIdQuery,
+  useSaveOrUnSavePostMutation,
+} from '../../../../redux/Service';
 import {Business} from '../../../../types/Business';
 import {Faculty} from '../../../../types/Faculty';
+import {LikeAction} from '../../../../types/LikeAction';
+import {Post} from '../../../../types/Post';
+import {SavePostRequest} from '../../../../types/request/SavePostRequest';
 import {Student} from '../../../../types/Student';
+import {GetPostActive} from '../../../../utils/GetPostActive';
 import {isFaculty, isStudent} from '../../../../utils/UserHelper';
 import ProfileTypeChecker from '../../ProfileTypeChecker';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {FlatList, ScrollView} from 'react-native';
-import SkeletonPost from '../../../../components/skeleton/post/SkeletonPost';
-import PostTypeChecker from '../../../../components/post/postTypeChecker/PostTypeChecker';
-import {GetPostActive} from '../../../../utils/GetPostActive';
-import {LikeAction} from '../../../../types/LikeAction';
-import {Data} from '../../../../data/Data';
-import {useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../../../App';
-import {OPTION_SCREEN} from '../../../../constants/Screen';
 
 const MyProfileScreen = () => {
-  const {userLogin} = useAppSelector(state => state.TDCSocialNetworkReducer);
+  console.log('==================MyProfileScreen==================');
+  const isFocused = useIsFocused();
+  const userLogin = useAppSelector(
+    state => state.TDCSocialNetworkReducer.userLogin,
+    shallowEqual,
+  );
+  const [
+    deletePost,
+    {isLoading: isDelete, isError: deleteError, error: deleteErrorMessage},
+  ] = useDeletePostMutation();
+  const [
+    saveOrUnSavePost,
+    {
+      isLoading: isSaveOrUnSave,
+      isError: saveOrUnSaveError,
+      error: saveOrUnSaveMessage,
+    },
+  ] = useSaveOrUnSavePostMutation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const [group, setGroup] = useState(
@@ -38,12 +61,19 @@ const MyProfileScreen = () => {
     visible: false,
     image: '',
   });
+  const [posts, setPosts] = useState<Post[]>([]);
+  const latestDataRef = useRef<Post[]>([]);
 
-  const {data, isFetching} = useGetPostsByIdQuery({
-    userId: userLogin?.id ?? 0,
-    groupCode: group ?? '',
-    userLogin: userLogin?.id ?? 0,
-  });
+  const {data, isFetching} = useGetPostsByIdQuery(
+    {
+      userId: userLogin?.id ?? 0,
+      groupCode: group ?? '',
+      userLogin: userLogin?.id ?? 0,
+    },
+    {
+      pollingInterval: isFocused ? 2000 : 86400000,
+    },
+  );
 
   useEffect(() => {
     if (data) {
@@ -51,6 +81,8 @@ const MyProfileScreen = () => {
         setTypeAuthorPost(data.data.user['roleCodes']);
         setUserInfo(data.data.user);
       }
+      latestDataRef.current = data?.data.posts || [];
+      setPosts(latestDataRef.current);
       _setIsFollow(data.data.isFollow);
     }
   }, [data]);
@@ -87,11 +119,28 @@ const MyProfileScreen = () => {
     });
   }, []);
 
+  const handleSavePost = useCallback(async (id: number) => {
+    const dataSaveOrUnSavePost: SavePostRequest = {
+      userId: userLogin?.id ?? 0,
+      postId: id,
+    };
+    try {
+      const response = await saveOrUnSavePost(dataSaveOrUnSavePost);
+    } catch (error) {
+      console.log('Fail to save or un save post', error);
+    }
+  }, []);
+
+  const handleDeletePost = useCallback(async (postId: number) => {
+    try {
+      const response = await deletePost(postId);
+      console.log(response);
+    } catch (error) {
+      console.error('Failed to delete post:', error);
+    }
+  }, []);
+
   const likeAction = (obj: LikeAction) => {};
-
-  const handleSavePost = async (id: number) => {};
-
-  const handleDeletePost = async (id: number) => {};
 
   const renderItem = useCallback(
     (item: any) => {
@@ -107,7 +156,8 @@ const MyProfileScreen = () => {
             timeCreatePost={item.createdAt}
             content={item.content}
             type={item.type}
-            likes={item.likes}
+            likes={Data.Likes}
+            // likes={item.likes}
             comments={item.comment}
             commentQty={item.commentQuantity}
             images={Data.image}
@@ -122,8 +172,8 @@ const MyProfileScreen = () => {
             description={item.description ?? null}
             isSave={item.isSave}
             group={group ?? ''}
-            handleUnSave={handleSavePost}
-            handleDelete={handleDeletePost}
+            onUnSave={handleSavePost}
+            onDelete={handleDeletePost}
             active={item.active}
           />
         );
@@ -150,7 +200,7 @@ const MyProfileScreen = () => {
           onClickButtonEvent={handleClickButtonEvent}
           onClickIntoHeaderComponentEvent={handleClickIntoHeaderComponentEvent}
         />
-        {isFetching ? (
+        {/* {isFetching ? (
           <SkeletonPost />
         ) : (
           <FlatList
@@ -158,9 +208,16 @@ const MyProfileScreen = () => {
             scrollEnabled={false}
             extraData={data?.data.posts}
             data={data?.data.posts}
-            renderItem={({item}) => renderItem(item)}
+            renderItem={({ item }) => renderItem(item)}
           />
-        )}
+        )} */}
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          scrollEnabled={false}
+          extraData={posts}
+          data={posts}
+          renderItem={({item}) => renderItem(item)}
+        />
       </ScrollView>
     </SafeAreaView>
   );

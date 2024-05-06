@@ -1,7 +1,11 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {FlatList, ScrollView, View} from 'react-native';
 import SkeletonPost from '../../../components/skeleton/post/SkeletonPost';
-import {useGetStudentPostQuery} from '../../../redux/Service';
+import {
+  useDeletePostMutation,
+  useGetStudentPostQuery,
+  useSaveOrUnSavePostMutation,
+} from '../../../redux/Service';
 import {useAppSelector} from '../../../redux/Hook';
 import {GetPostActive} from '../../../utils/GetPostActive';
 import PostTypeChecker from '../../../components/post/postTypeChecker/PostTypeChecker';
@@ -9,22 +13,69 @@ import {Variable} from '../../../constants/Variables';
 import {LikeAction} from '../../../types/LikeAction';
 import {Data} from '../../../data/Data';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {SavePostRequest} from '../../../types/request/SavePostRequest';
+import {Post} from '../../../types/Post';
+import {useIsFocused} from '@react-navigation/native';
 
 const StudentDiscussionDashboardScreen = () => {
-  const {userLogin} = useAppSelector(state => state.TDCSocialNetworkReducer);
+  console.log(
+    '====================StudentDiscussionDashboardScreen================',
+  );
+  const isFocused = useIsFocused();
+  const userLogin = useAppSelector(
+    state => state.TDCSocialNetworkReducer.userLogin,
+  );
+  const [
+    deletePost,
+    {isLoading: isDelete, isError: deleteError, error: deleteErrorMessage},
+  ] = useDeletePostMutation();
+  const [
+    saveOrUnSavePost,
+    {
+      isLoading: isSaveOrUnSave,
+      isError: saveOrUnSaveError,
+      error: saveOrUnSaveMessage,
+    },
+  ] = useSaveOrUnSavePostMutation();
   const code = Variable.GROUP_STUDENT;
+  const [posts, setPosts] = useState<Post[]>([]);
+  const latestDataRef = useRef<Post[]>([]);
   const {data, isFetching} = useGetStudentPostQuery(
     {
       id: userLogin?.id ?? 0,
     },
     {
-      // pollingInterval: 1000
+      pollingInterval: isFocused ? 2000 : 86400000,
     },
   );
 
-  const handleSavePost = async (id: number) => {};
+  useEffect(() => {
+    if (data) {
+      latestDataRef.current = data.data || [];
+      setPosts(latestDataRef.current);
+    }
+  }, [data]);
 
-  const handleDeletePost = async (id: number) => {};
+  const handleSavePost = useCallback(async (id: number) => {
+    const dataSaveOrUnSavePost: SavePostRequest = {
+      userId: userLogin?.id ?? 0,
+      postId: id,
+    };
+    try {
+      const response = await saveOrUnSavePost(dataSaveOrUnSavePost);
+    } catch (error) {
+      console.log('Fail to save or un save post', error);
+    }
+  }, []);
+
+  const handleDeletePost = useCallback(async (postId: number) => {
+    try {
+      const response = await deletePost(postId);
+      console.log(response);
+    } catch (error) {
+      console.error('Failed to delete post:', error);
+    }
+  }, []);
 
   const likeAction = (likeData: LikeAction) => {
     likeData.code = Variable.TYPE_POST_BUSINESS;
@@ -47,7 +98,8 @@ const StudentDiscussionDashboardScreen = () => {
             timeCreatePost={item.createdAt}
             content={item.content}
             type={item.type}
-            likes={item.likes}
+            likes={Data.Likes}
+            // likes={item.likes}
             comments={item.comment}
             commentQty={item.commentQuantity}
             images={Data.image}
@@ -62,8 +114,8 @@ const StudentDiscussionDashboardScreen = () => {
             description={item.description ?? null}
             isSave={item.isSave}
             group={code}
-            handleUnSave={handleSavePost}
-            handleDelete={handleDeletePost}
+            onUnSave={handleSavePost}
+            onDelete={handleDeletePost}
             active={item.active}
           />
         );
@@ -77,7 +129,7 @@ const StudentDiscussionDashboardScreen = () => {
   return (
     <SafeAreaView>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {isFetching ? (
+        {/* {isFetching ? (
           <SkeletonPost />
         ) : (
           <FlatList
@@ -85,9 +137,16 @@ const StudentDiscussionDashboardScreen = () => {
             scrollEnabled={false}
             extraData={data?.data}
             data={data?.data}
-            renderItem={({item}) => renderItem(item)}
+            renderItem={({ item }) => renderItem(item)}
           />
-        )}
+        )} */}
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          scrollEnabled={false}
+          extraData={posts}
+          data={posts}
+          renderItem={({item}) => renderItem(item)}
+        />
       </ScrollView>
     </SafeAreaView>
   );

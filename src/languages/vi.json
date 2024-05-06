@@ -186,5 +186,8 @@
         "surveyPostButtonSetting": "Chỉnh sửa câu trả lời",
         "surveyPostButtonJoinSurvey": "Tham gia khảo sát",
         "surveyPostButtonDetailQuestion": "Chi tiết câu hỏi"
+    },
+    "ModalListUserLiked": {
+        "modalListUserLikedTitle": "Danh sách người thích"
     }
 }

@@ -1,30 +1,59 @@
-import React, {useCallback, useState} from 'react';
-import {ScrollView} from 'react-native';
-import SkeletonPost from '../../../components/skeleton/post/SkeletonPost';
-import {useGetFacultyPostQuery} from '../../../redux/Service';
-import {useAppSelector} from '../../../redux/Hook';
-import {GetPostActive} from '../../../utils/GetPostActive';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {FlatList, ScrollView} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import PostTypeChecker from '../../../components/post/postTypeChecker/PostTypeChecker';
-import {LikeAction} from '../../../types/LikeAction';
+import SkeletonPost from '../../../components/skeleton/post/SkeletonPost';
 import {Variable} from '../../../constants/Variables';
 import {Data} from '../../../data/Data';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {FlatList} from 'react-native';
+import {useAppSelector} from '../../../redux/Hook';
+import {
+  useDeletePostMutation,
+  useGetFacultyPostQuery,
+  useSaveOrUnSavePostMutation,
+} from '../../../redux/Service';
+import {LikeAction} from '../../../types/LikeAction';
+import {SavePostRequest} from '../../../types/request/SavePostRequest';
+import {GetPostActive} from '../../../utils/GetPostActive';
+import {Post} from '../../../types/Post';
+import {useIsFocused} from '@react-navigation/native';
 
 const FacultyDashboardScreen = () => {
-  const {userLogin} = useAppSelector(state => state.TDCSocialNetworkReducer);
+  console.log('==================FacultyDashboardScreen==================');
+  const isFocused = useIsFocused();
+  const userLogin = useAppSelector(
+    state => state.TDCSocialNetworkReducer.userLogin,
+  );
+  const [
+    deletePost,
+    {isLoading: isDelete, isError: deleteError, error: deleteErrorMessage},
+  ] = useDeletePostMutation();
+  const [
+    saveOrUnSavePost,
+    {
+      isLoading: isSaveOrUnSave,
+      isError: saveOrUnSaveError,
+      error: saveOrUnSaveMessage,
+    },
+  ] = useSaveOrUnSavePostMutation();
   const [code, setCode] = useState('');
+  const [posts, setPosts] = useState<Post[]>([]);
+  const latestDataRef = useRef<Post[]>([]);
   const {data, isFetching} = useGetFacultyPostQuery(
     {
       faculty: code,
       id: userLogin?.id ?? 0,
     },
-    {},
+    {
+      pollingInterval: isFocused ? 2000 : 86400000,
+    },
   );
 
-  const handleSavePost = async (id: number) => {};
-
-  const handleDeletePost = async (id: number) => {};
+  useEffect(() => {
+    if (data) {
+      latestDataRef.current = data.data || [];
+      setPosts(latestDataRef.current);
+    }
+  }, [data]);
 
   const likeAction = (likeData: LikeAction) => {
     likeData.code = Variable.TYPE_POST_BUSINESS;
@@ -32,6 +61,27 @@ const FacultyDashboardScreen = () => {
     console.log(code, JSON.stringify(likeData));
     console.log('====================================');
   };
+
+  const handleSavePost = useCallback(async (id: number) => {
+    const dataSaveOrUnSavePost: SavePostRequest = {
+      userId: userLogin?.id ?? 0,
+      postId: id,
+    };
+    try {
+      const response = await saveOrUnSavePost(dataSaveOrUnSavePost);
+    } catch (error) {
+      console.log('Fail to save or un save post', error);
+    }
+  }, []);
+
+  const handleDeletePost = useCallback(async (postId: number) => {
+    try {
+      const response = await deletePost(postId);
+      console.log(response);
+    } catch (error) {
+      console.error('Failed to delete post:', error);
+    }
+  }, []);
 
   const renderItem = useCallback(
     (item: any) => {
@@ -47,7 +97,8 @@ const FacultyDashboardScreen = () => {
             timeCreatePost={item.createdAt}
             content={item.content}
             type={item.type}
-            likes={item.likes}
+            likes={Data.Likes}
+            // likes={item.likes}
             comments={item.comment}
             commentQty={item.commentQuantity}
             images={Data.image}
@@ -62,8 +113,8 @@ const FacultyDashboardScreen = () => {
             description={item.description ?? null}
             isSave={item.isSave}
             group={code}
-            handleUnSave={handleSavePost}
-            handleDelete={handleDeletePost}
+            onUnSave={handleSavePost}
+            onDelete={handleDeletePost}
             active={item.active}
           />
         );
@@ -77,7 +128,7 @@ const FacultyDashboardScreen = () => {
   return (
     <SafeAreaView>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {isFetching ? (
+        {/* {isFetching ? (
           <SkeletonPost />
         ) : (
           <FlatList
@@ -85,9 +136,16 @@ const FacultyDashboardScreen = () => {
             scrollEnabled={false}
             extraData={data?.data}
             data={data?.data}
-            renderItem={({item}) => renderItem(item)}
+            renderItem={({ item }) => renderItem(item)}
           />
-        )}
+        )} */}
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          scrollEnabled={false}
+          extraData={posts}
+          data={posts}
+          renderItem={({item}) => renderItem(item)}
+        />
       </ScrollView>
     </SafeAreaView>
   );

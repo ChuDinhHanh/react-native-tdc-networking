@@ -13,19 +13,23 @@ import ButtonComponent from '../buttons/ButtonComponent';
 import SessionComponent from '../session/SessionComponent';
 import TextComponent from '../text/TextComponent';
 import styles from './BottomSheetModalWrapper.style';
+import {shallowEqual} from 'react-redux';
 
 interface Props {
   children: ReactNode;
 }
 const BottomSheetModalWrapper = (props: Props) => {
+  console.log('================BottomSheetModalWrapper====================');
   const {children} = props;
 
-  const {modalCommentData} = useAppSelector(
-    state => state.TDCSocialNetworkReducer,
+  const modalCommentData = useAppSelector(
+    state => state.TDCSocialNetworkReducer.modalCommentData,
+    shallowEqual,
   );
 
-  const {openBottomSheet} = useAppSelector(
-    state => state.TDCSocialNetworkReducer,
+  const openBottomSheet = useAppSelector(
+    state => state.TDCSocialNetworkReducer.modalCommentData,
+    shallowEqual,
   );
 
   const dispatch = useAppDispatch();

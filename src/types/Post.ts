@@ -27,7 +27,7 @@ export interface Post {
   description: string | null;
   isSave: number;
   group: string;
-  handleUnSave: (post_id: number) => void;
-  handleDelete: (post_id: number) => void;
+  onUnSave: (post_id: number) => void;
+  onDelete: (post_id: number) => void;
   active: number;
 }

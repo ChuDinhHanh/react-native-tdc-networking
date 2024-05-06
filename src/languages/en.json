@@ -186,5 +186,8 @@
         "surveyPostButtonSetting": "Edit Answers",
         "surveyPostButtonJoinSurvey": "Join Survey",
         "surveyPostButtonDetailQuestion": "Details"
+    },
+    "ModalListUserLiked": {
+        "modalListUserLikedTitle": "List of liked users"
     }
 }
