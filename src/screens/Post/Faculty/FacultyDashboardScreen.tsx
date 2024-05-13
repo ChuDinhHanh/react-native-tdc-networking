@@ -16,6 +16,8 @@ import {SavePostRequest} from '../../../types/request/SavePostRequest';
 import {GetPostActive} from '../../../utils/GetPostActive';
 import {Post} from '../../../types/Post';
 import {useIsFocused} from '@react-navigation/native';
+import ContainerComponent from '../../container/ContainerComponent';
+import {Colors} from '../../../constants/Colors';
 
 const FacultyDashboardScreen = () => {
   console.log('==================FacultyDashboardScreen==================');
@@ -126,7 +128,7 @@ const FacultyDashboardScreen = () => {
   );
 
   return (
-    <SafeAreaView>
+    <ContainerComponent backgroundColor={Colors.COLOR_GREY_FEEBLE}>
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* {isFetching ? (
           <SkeletonPost />
@@ -147,7 +149,7 @@ const FacultyDashboardScreen = () => {
           renderItem={({item}) => renderItem(item)}
         />
       </ScrollView>
-    </SafeAreaView>
+    </ContainerComponent>
   );
 };
 

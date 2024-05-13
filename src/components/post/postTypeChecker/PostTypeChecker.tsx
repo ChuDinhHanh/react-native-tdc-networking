@@ -37,7 +37,6 @@ import Recruitment from '../session/recruitment/Recruitment';
 import Survey from '../session/survey/Survey';
 import {UpdateNormalPost} from '../../../types/UpdateNormalPost';
 import {shallowEqual} from 'react-redux';
-
 setTranslations({vi, jp, en});
 setDefaultLanguage('vi');
 

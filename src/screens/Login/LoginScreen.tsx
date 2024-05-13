@@ -52,7 +52,7 @@ import {Student} from '../../types/Student';
 import {Token} from '../../types/Token';
 
 setTranslations({vi, jp, en});
-setDefaultLanguage('jp');
+setDefaultLanguage('vi');
 
 interface Validate {
   email: InputTextValidate;

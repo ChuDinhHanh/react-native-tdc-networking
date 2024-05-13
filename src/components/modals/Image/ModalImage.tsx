@@ -14,7 +14,7 @@ interface Props {
 const ModalImage = (props: Props) => {
   const {image, onCloseModal, visible} = props;
   return (
-    <Modal animationType="slide" visible={visible}>
+    <Modal visible={visible}>
       <View style={styles.container}>
         <View style={styles.wrapper}>
           <ButtonComponent

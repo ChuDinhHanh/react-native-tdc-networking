@@ -22,6 +22,7 @@ import {
   CREATE_RECRUITMENT_SCREEN,
   CREATE_SURVEY_SCREEN,
   DETAIL_JOB_APPLY,
+  DETAIL_POST_SCREEN,
   FACULTY_DASHBOARD_SCREEN,
   FORGOTTEN_PASSWORD_SCREEN,
   IMAGE_VIEW_SCREEN,
@@ -83,6 +84,9 @@ import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import ProfileScreen from './screens/Profile/session/otherProfile/ProfileScreen';
 import {UpdateNormalPost} from './types/UpdateNormalPost';
 import ModalLike from './components/modals/Like/ModalLike';
+import ToolbarWithBackPress from './components/toolbars/ToolbarWithBackPress';
+import DetailPost from './screens/Details/Post/Normal/DetailPost';
+import {useTranslation} from 'react-multi-lang';
 
 export type RootStackParamList = {
   CONVERSATION_SCREEN: undefined;
@@ -110,7 +114,7 @@ export type RootStackParamList = {
   SURVEY_CONDUCT_SCREEN: {surveyPostId: number};
   RECRUITMENT_DETAIL_SCREEN: {postId: number};
   JOB_APPLY_SCREEN: undefined;
-  DETAIL_JOB_APPLY: undefined;
+  DETAIL_JOB_APPLY: {cvId: number} | undefined;
   PROFILE_SCREEN: undefined;
   LIST_POST_SAVED_SCREEN: undefined;
   OPTION_SCREEN: undefined;
@@ -121,6 +125,7 @@ export type RootStackParamList = {
   LIST_JOB_APPLY_SCREEN: {postId: number};
   FORGOTTEN_PASSWORD_SCREEN: undefined;
   ACCEPT_SCREEN: undefined;
+  DETAIL_POST_SCREEN: {post: any; notificationType: string} | undefined;
 };
 
 const TopTab = createMaterialTopTabNavigator();
@@ -179,6 +184,7 @@ export function DrawerNavigator(): JSX.Element {
 }
 
 export function StackNavigator(): JSX.Element {
+  const t = useTranslation();
   return (
     <RootStack.Navigator
       initialRouteName={INITIAL_SCREEN}
@@ -350,6 +356,15 @@ export function StackNavigator(): JSX.Element {
         name={ACCEPT_SCREEN}
         options={{header: () => false}}
         component={AcceptScreen}
+      />
+      <RootStack.Screen
+        name={DETAIL_POST_SCREEN}
+        options={{
+          header: () => (
+            <ToolbarWithBackPress title={t('ToolbarTitle.detailPost')} />
+          ),
+        }}
+        component={DetailPost}
       />
     </RootStack.Navigator>
   );

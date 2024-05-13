@@ -25,6 +25,8 @@ import {Student} from '../../../../types/Student';
 import {GetPostActive} from '../../../../utils/GetPostActive';
 import {isFaculty, isStudent} from '../../../../utils/UserHelper';
 import ProfileTypeChecker from '../../ProfileTypeChecker';
+import ContainerComponent from '../../../container/ContainerComponent';
+import {Colors} from '../../../../constants/Colors';
 
 const MyProfileScreen = () => {
   console.log('==================MyProfileScreen==================');
@@ -185,7 +187,7 @@ const MyProfileScreen = () => {
   );
 
   return (
-    <SafeAreaView>
+    <ContainerComponent backgroundColor={Colors.COLOR_GREY_FEEBLE}>
       <ScrollView showsVerticalScrollIndicator={false}>
         <ModalImage
           visible={showUserImage.visible}
@@ -219,7 +221,7 @@ const MyProfileScreen = () => {
           renderItem={({item}) => renderItem(item)}
         />
       </ScrollView>
-    </SafeAreaView>
+    </ContainerComponent>
   );
 };
 

@@ -24,7 +24,7 @@ import AccordionItem from './AccordionItem';
 import DrawerHeader from './DrawerHeader';
 
 setTranslations({vi, jp, en});
-setDefaultLanguage('jp');
+setDefaultLanguage('vi');
 
 const DrawerContent = (props: DrawerContentComponentProps) => {
   const t = useTransition();

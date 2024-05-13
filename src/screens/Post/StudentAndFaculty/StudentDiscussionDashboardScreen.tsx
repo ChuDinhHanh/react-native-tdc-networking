@@ -16,6 +16,8 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {SavePostRequest} from '../../../types/request/SavePostRequest';
 import {Post} from '../../../types/Post';
 import {useIsFocused} from '@react-navigation/native';
+import ContainerComponent from '../../container/ContainerComponent';
+import {Colors} from '../../../constants/Colors';
 
 const StudentDiscussionDashboardScreen = () => {
   console.log(
@@ -127,7 +129,7 @@ const StudentDiscussionDashboardScreen = () => {
   );
 
   return (
-    <SafeAreaView>
+    <ContainerComponent backgroundColor={Colors.COLOR_GREY_FEEBLE}>
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* {isFetching ? (
           <SkeletonPost />
@@ -148,7 +150,7 @@ const StudentDiscussionDashboardScreen = () => {
           renderItem={({item}) => renderItem(item)}
         />
       </ScrollView>
-    </SafeAreaView>
+    </ContainerComponent>
   );
 };
 

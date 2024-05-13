@@ -2,11 +2,10 @@ import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {SERVER_ADDRESS} from '../constants/SystemConstant';
 import {Data} from '../types/Data';
 import {Post} from '../types/Post';
+import {SavePostRequest} from '../types/request/SavePostRequest';
 import {StudentRequest} from '../types/request/StudentRequest';
 import {MessageResponseData} from '../types/response/MessageResponseData ';
 import {NotificationModel} from '../types/response/NotificationModel ';
-import Path from '../constants/Path';
-import {SavePostRequest} from '../types/request/SavePostRequest';
 
 export const TDCSocialNetworkAPI = createApi({
   reducerPath: 'TDCSocialNetworkAPI',
@@ -90,6 +89,43 @@ export const TDCSocialNetworkAPI = createApi({
         body: data,
       }),
     }),
+    markAsReadNotifications: builder.mutation<Data<any>, {userId: number}>({
+      query: data => ({
+        url: `api/notifications/changeStatus/all`,
+        method: 'PUT',
+        body: data,
+      }),
+    }),
+    deleteNotification: builder.mutation<
+      Data<any>,
+      {id: number; userId: number}
+    >({
+      query: data => ({
+        url: `api/notifications/`,
+        method: 'DELETE',
+        body: data,
+      }),
+    }),
+    changeStatusNotification: builder.mutation<
+      Data<any>,
+      {id: number; userId: number}
+    >({
+      query: data => ({
+        url: 'api/notifications/changeStatus',
+        method: 'PUT',
+        body: data,
+      }),
+    }),
+    changeStatusNotificationMakeNotSee: builder.mutation<
+      Data<any>,
+      {id: number; userId: number}
+    >({
+      query: data => ({
+        url: 'api/notifications/changeStatus/makeNotSeen',
+        method: 'PUT',
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -103,4 +139,8 @@ export const {
   useGetPostsByIdQuery,
   useDeletePostMutation,
   useSaveOrUnSavePostMutation,
+  useMarkAsReadNotificationsMutation,
+  useDeleteNotificationMutation,
+  useChangeStatusNotificationMutation,
+  useChangeStatusNotificationMakeNotSeeMutation,
 } = TDCSocialNetworkAPI;

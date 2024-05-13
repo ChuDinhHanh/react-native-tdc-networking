@@ -24,7 +24,7 @@ import Header from './session/common/Header';
 import {shallowEqual} from 'react-redux';
 
 setTranslations({vi, jp, en});
-setDefaultLanguage('jp');
+setDefaultLanguage('vi');
 
 export interface Props {
   isFollow: boolean;

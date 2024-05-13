@@ -19,6 +19,8 @@ import Path from '../../../constants/Path';
 import {SavePostRequest} from '../../../types/request/SavePostRequest';
 import {shallowEqual} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
+import ContainerComponent from '../../container/ContainerComponent';
+import {Colors} from '../../../constants/Colors';
 
 let stompClient: Client;
 const BusinessDashboardScreen = () => {
@@ -126,7 +128,7 @@ const BusinessDashboardScreen = () => {
   }, []);
 
   return (
-    <SafeAreaView>
+    <ContainerComponent backgroundColor={Colors.COLOR_GREY_FEEBLE}>
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* {isFetching ? (
           <SkeletonPost />
@@ -147,7 +149,7 @@ const BusinessDashboardScreen = () => {
           renderItem={({item}) => renderItem(item)}
         />
       </ScrollView>
-    </SafeAreaView>
+    </ContainerComponent>
   );
 };
 
