@@ -218,5 +218,81 @@
         "survey_txt": "すぐに調査 >>",
         "User_update_avatar": "あなたはちょうどアバターの背景を更新しました",
         "Post": "投稿"
+    },
+    "RecuitmentPostDetailComponent": {
+        "titleLoader": "データを読み込んでいます...",
+        "titleJob": "職位",
+        "employeType": "雇用形態",
+        "salary": "給与",
+        "salaryUnitMonth": "VND/月",
+        "expiration": "応募締切",
+        "location": "勤務地",
+        "benefit": "福利厚生",
+        "descriptionJob": "仕事の説明",
+        "requipmentJob": "求められる条件",
+        "btnApplyJob": "仕事に応募",
+        "textNotification": "お知らせ",
+        "textNoApply": "応募対象者ではありません",
+        "textApplied": "応募済みです。ステータスを確認するには、アプリケーションプロフィールを確認してください"
+    },
+    "JobApplyScreen": {
+        "jobApplyScreenButtonAddCvTitle": "履歴書を追加",
+        "jobApplyScreenButtonComplete": "完了",
+        "jobApplyScreenButtonGoBack": "戻る",
+        "jobApplyScreenButtonUpdateCvTitle": "履歴書を更新",
+        "jobApplyScreenEmptyCvTextContent": "履歴書を追加して登録を完了してください",
+        "jobApplyScreenEmptyCvTextTitle": "通知",
+        "jobApplyScreenSaveSuccessTextContent": "応募が成功しました",
+        "jobApplyScreenChangeSuccessTextContent": "変更が成功しました",
+        "jobApplyScreenSaveSuccessTextTitle": "通知",
+        "jobApplyScreenUploadErrorFormat": "PDF形式ではありません",
+        "jobApplyScreenSystemError": "システムエラーが発生しました。後ほど再度お試しください。"
+    },
+    "Comment": {
+        "commentReplyComment": "返信",
+        "commentDeleteComment": "削除",
+        "commentAuthor": "著者",
+        "modalListCommentTitle": "コメント"
+    },
+    "BottomSheet": {
+        "BottomSheetTitle": "データを読み込み中..."
+    },
+    "CreateCommentToolbar": {
+        "commentCreateComment": "コメント投稿",
+        "commentPlaceholderInput": "コメントを入力してください"
+    },
+    "SelectFaculty": {
+        "selectFacultyPlaceholder": "学部を選択...",
+        "selectFacultyTextSearch": "検索..."
+    },
+    "FacultyDashboard": {
+        "facultyDashboardNotifyNotHavePost": "まだ投稿がありません",
+        "facultyDashboardNotYetSelectFaculty": "学部を選択してください"
+    },
+    "CreatePostSelector": {
+        "createPostSelectorPlaceHolder": "投稿内容を入力",
+        "createPostSelectorSurveyText": "調査",
+        "createPostSelectorRecruitmentText": "採用",
+        "createPostSelectorNormalText": "通常"
+    },
+    "InputComment": {
+        "loadingText": "読み込み中...",
+        "respondingText": "応答中",
+        "cancelText": "キャンセル",
+        "requestText": "返信を本当にキャンセルしますか？",
+        "contentRequestText": "続行すると、コメントはそのまま残ります。",
+        "continueText": "続ける",
+        "returnText": "戻る",
+        "warningText": "警告！",
+        "requiredTextWarning": "コメントを空にすることはできません。"
+    },
+    "ModalComment": {
+        "modalCommentTextChar": "文字",
+        "modalCommentCommentNotNull": "コメントは空にできません",
+        "modalCommentTextNumberLimited": "コメント内容はを超えてはいけません",
+        "modalCommentCreateFail": "コメントの作成に失敗しました"
+    },
+    "ModalImage": {
+        "textUpdate": "更新"
     }
 }

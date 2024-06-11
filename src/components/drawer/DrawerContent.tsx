@@ -59,10 +59,7 @@ const DrawerContent = (props: DrawerContentComponentProps) => {
         <Divider marginVertical={15} />
         {/* <DrawerContentScrollView {...props}> */}
         {/* <DrawerItemList {...props} /> */}
-        <List.Accordion
-          id={0}
-          titleNumberOfLines={5}
-          title={<AccordionItem title={'12321'} iconName="users-line" />}>
+        <List.Accordion id={0} titleNumberOfLines={5} title={<AccordionItem />}>
           <DrawerItem
             label={'adwwada'}
             onPress={() => {}}

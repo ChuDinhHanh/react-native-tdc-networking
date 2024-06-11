@@ -218,5 +218,84 @@
         "survey_txt": "Survey now >>",
         "User_update_avatar": "You just updated your avatar background",
         "Post": "Post"
+    },
+    "RecuitmentPostDetailComponent": {
+        "titleLoader": "Loading data...",
+        "titleJob": "Job position",
+        "employeType": "Employment type",
+        "salary": "Salary",
+        "salaryUnitMonth": "VND/month",
+        "expiration": "Application deadline",
+        "location": "Work address",
+        "benefit": "Benefits",
+        "descriptionJob": "Job description",
+        "requipmentJob": "Job requirements",
+        "btnApplyJob": "Apply for the job",
+        "textNotification": "Notification",
+        "textNoApply": "You are not eligible to apply",
+        "textApplied": "You have applied! Please check your application profile for status"
+    },
+    "JobApplyScreen": {
+        "jobApplyScreenButtonAddCvTitle": "Add CV",
+        "jobApplyScreenButtonComplete": "Complete",
+        "jobApplyScreenButtonGoBack": "Go back",
+        "jobApplyScreenButtonUpdateCvTitle": "Update CV",
+        "jobApplyScreenEmptyCvTextContent": "Please add a CV to complete the registration",
+        "jobApplyScreenEmptyCvTextTitle": "Notification",
+        "jobApplyScreenSaveSuccessTextContent": "Application submitted successfully",
+        "jobApplyScreenChangeSuccessTextContent": "Application updated successfully",
+        "jobApplyScreenSaveSuccessTextTitle": "Notification",
+        "jobApplyScreenUploadErrorFormat": "Incorrect PDF format",
+        "jobApplyScreenSystemError": "System error, please try again later!"
+    },
+    "Comment": {
+        "commentReplyComment": "Reply",
+        "commentDeleteComment": "Delete",
+        "commentAuthor": "Author",
+        "modalListCommentTitle": "Comments"
+    },
+    "BottomSheet": {
+        "BottomSheetTitle": "Loading data..."
+    },
+    "CreateCommentToolbar": {
+        "commentCreateComment": "Post comment",
+        "commentPlaceholderInput": "Enter comment..."
+    },
+    "BusinessSelectFacultyToolbar": {
+        "businessSelectFacultyToolbarTitle": "Select the faculty to display posts"
+    },
+    "SelectFaculty": {
+        "selectFacultyPlaceholder": "Select faculty...",
+        "selectFacultyTextSearch": "Search..."
+    },
+    "FacultyDashboard": {
+        "facultyDashboardNotifyNotHavePost": "No posts yet",
+        "facultyDashboardNotYetSelectFaculty": "Please select a faculty"
+    },
+    "CreatePostSelector": {
+        "createPostSelectorPlaceHolder": "Enter post content",
+        "createPostSelectorSurveyText": "Survey",
+        "createPostSelectorRecruitmentText": "Recruitment",
+        "createPostSelectorNormalText": "Normal"
+    },
+    "InputComment": {
+        "loadingText": "Loading...",
+        "respondingText": "Responding",
+        "cancelText": "Cancel",
+        "requestText": "Do you really want to cancel your reply?",
+        "contentRequestText": "If you continue, your comment will remain unchanged.",
+        "continueText": "Continue",
+        "returnText": "Go back",
+        "warningText": "Warning!",
+        "requiredTextWarning": "Comment cannot be empty."
+    },
+    "ModalComment": {
+        "modalCommentTextChar": "characters",
+        "modalCommentCommentNotNull": "Comment cannot be empty",
+        "modalCommentTextNumberLimited": "Comment content cannot exceed",
+        "modalCommentCreateFail": "Failed to create comment"
+    },
+    "ModalImage": {
+        "textUpdate": "Update"
     }
 }

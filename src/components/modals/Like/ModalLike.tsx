@@ -10,44 +10,65 @@ import {
   setTranslations,
   useTranslation,
 } from 'react-multi-lang';
-import {
-  FlatList,
-  Image,
-  Modal,
-  Pressable,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {FlatList, Modal, Pressable, TouchableOpacity, View} from 'react-native';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
+import {RootStackParamList} from '../../../App';
 import {Colors} from '../../../constants/Colors';
-import {PROFILE_SCREEN} from '../../../constants/Screen';
+import {MY_PROFILE_SCREEN, PROFILE_SCREEN} from '../../../constants/Screen';
 import en from '../../../languages/en.json';
 import jp from '../../../languages/jp.json';
 import vi from '../../../languages/vi.json';
 import {useAppDispatch, useAppSelector} from '../../../redux/Hook';
-import {setHiddenModalLike} from '../../../redux/Slice';
+import {
+  setHiddenModalLike,
+  setNavigateToProfileSameUser,
+} from '../../../redux/Slice';
 import ButtonComponent from '../../buttons/ButtonComponent';
 import DefaultAvatar from '../../common/defaultAvatar/DefaultAvatar';
 import Divider from '../../common/divider/Divider';
 import Loading from '../../loading/Loading';
 import RowComponent from '../../row/RowComponent';
 import SessionComponent from '../../session/SessionComponent';
+import SpaceComponent from '../../space/SpaceComponent';
 import TextComponent from '../../text/TextComponent';
 import styles from './ModalLike.style';
+import {shallowEqual} from 'react-redux';
 setTranslations({vi, jp, en});
 setDefaultLanguage('vi');
+
+interface User {
+  id: number;
+  image: string;
+  name: string;
+}
 
 const ModalLike = (props: {children: ReactNode}) => {
   console.log('==================ModalLike==================');
   const isFocused = useIsFocused();
-  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+  const userIdOfProfileScreen = useAppSelector(
+    state => state.TDCSocialNetworkReducer.userIdOfProfileScreen,
+    shallowEqual,
+  );
+
+  const navigationTopTab =
+    useNavigation<NativeStackNavigationProp<ParamListBase>>();
+  const userLogin = useAppSelector(
+    state => state.TDCSocialNetworkReducer.userLogin,
+    shallowEqual,
+  );
   const t = useTranslation();
   const dispatch = useAppDispatch();
   const modalLikeData = useAppSelector(
     state => state.TDCSocialNetworkReducer.modalLikeData,
+    shallowEqual,
   );
   const isOpenModalLike = useAppSelector(
     state => state.TDCSocialNetworkReducer.openModalLike,
+    shallowEqual,
   );
   const {children} = props;
   const [isLoading, setIsLoading] = useState(true);
@@ -61,9 +82,20 @@ const ModalLike = (props: {children: ReactNode}) => {
     }
   }, [modalLikeData]);
 
-  const handleSeeUserProfileScreen = (item: any) => {
+  const handleSeeUserProfileScreen = (item: User) => {
     dispatch(setHiddenModalLike());
-    navigation.navigate(PROFILE_SCREEN);
+    if (userIdOfProfileScreen !== item.id) {
+      if (userLogin?.id !== item.id) {
+        navigation.navigate(PROFILE_SCREEN, {
+          userId: item.id,
+          group: modalLikeData?.group!,
+        });
+      } else {
+        navigationTopTab.navigate(MY_PROFILE_SCREEN);
+      }
+    } else {
+      dispatch(setNavigateToProfileSameUser(item.id));
+    }
   };
 
   const renderItem = (item: any) => (
@@ -72,12 +104,17 @@ const ModalLike = (props: {children: ReactNode}) => {
       alignItems="center"
       marginVertical={5}
       onPress={() => handleSeeUserProfileScreen(item)}>
-      {Boolean(item?.image) ? (
+      {/* {Boolean(item?.image) ? (
         <Image style={styles.avatar} source={{uri: item.image}} />
-      ) : (
+      ) : ( */}
+      <View style={{width: '10%'}}>
         <DefaultAvatar size={40} identifer={item.name[0]} />
-      )}
-      <TextComponent style={styles.txtName} text={item.name} />
+      </View>
+      {/* )} */}
+      <SpaceComponent width={5} />
+      <View style={{width: '90%'}}>
+        <TextComponent style={styles.txtName} text={item.name} />
+      </View>
     </RowComponent>
   );
 

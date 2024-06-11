@@ -7,20 +7,20 @@ import {
   useTranslation,
 } from 'react-multi-lang';
 import {View} from 'react-native';
-import {RootStackParamList} from '../../App';
-import {Variable} from '../../constants/Variables';
-import {useAppSelector} from '../../redux/Hook';
-import BusinessBody from './session/business/BusinessBody';
-import FacultyBody from './session/faculty/FacultyBody';
-import StudentBody from './session/student/StudentBody';
+import {RootStackParamList} from '../../../App';
+import {Variable} from '../../../constants/Variables';
+import {useAppSelector} from '../../../redux/Hook';
+import BusinessBody from '../session/business/BusinessBody';
+import FacultyBody from '../session/faculty/FacultyBody';
+import StudentBody from '../session/student/StudentBody';
 
-import SpaceComponent from '../../components/space/SpaceComponent';
-import en from '../../languages/en.json';
-import jp from '../../languages/jp.json';
-import vi from '../../languages/vi.json';
-import {Post} from '../../types/Post';
+import SpaceComponent from '../../../components/space/SpaceComponent';
+import en from '../../../languages/en.json';
+import jp from '../../../languages/jp.json';
+import vi from '../../../languages/vi.json';
+import {Post} from '../../../types/Post';
 import styles from './ProfileTypeChecker.style';
-import Header from './session/common/Header';
+import Header from '../session/common/Header';
 import {shallowEqual} from 'react-redux';
 
 setTranslations({vi, jp, en});

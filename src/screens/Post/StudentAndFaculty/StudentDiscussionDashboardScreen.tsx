@@ -18,7 +18,12 @@ import {Post} from '../../../types/Post';
 import {useIsFocused} from '@react-navigation/native';
 import ContainerComponent from '../../container/ContainerComponent';
 import {Colors} from '../../../constants/Colors';
+import {Client, Frame} from 'stompjs';
+import {getStompClient} from '../../../sockets/getStompClient';
+import {DeletePostRequest} from '../../../types/request/DeletePostRequest';
+import CreatePostToolbar from '../../../components/toolbars/post/CreatePostToolbar';
 
+let stompClient: Client;
 const StudentDiscussionDashboardScreen = () => {
   console.log(
     '====================StudentDiscussionDashboardScreen================',
@@ -71,19 +76,40 @@ const StudentDiscussionDashboardScreen = () => {
   }, []);
 
   const handleDeletePost = useCallback(async (postId: number) => {
+    const DeletePostData: DeletePostRequest = {
+      postId: postId,
+    };
     try {
-      const response = await deletePost(postId);
+      const response = await deletePost(DeletePostData);
       console.log(response);
     } catch (error) {
       console.error('Failed to delete post:', error);
     }
   }, []);
 
+  useEffect(() => {
+    stompClient = getStompClient();
+    const onConnected = () => {
+      stompClient.subscribe(`/topic/posts/group/${code}`, onMessageReceived);
+      stompClient.send(`/app/posts/group/${code}/listen/${userLogin?.id}`);
+    };
+    const onMessageReceived = (payload: any) => {
+      setPosts(JSON.parse(payload.body));
+    };
+
+    const onError = (err: string | Frame) => {
+      console.log(err);
+    };
+    stompClient.connect({}, onConnected, onError);
+  }, []);
+
   const likeAction = (likeData: LikeAction) => {
-    likeData.code = Variable.TYPE_POST_BUSINESS;
-    console.log('====================================');
-    console.log(code, JSON.stringify(likeData));
-    console.log('====================================');
+    likeData.code = Variable.TYPE_POST_STUDENT;
+    stompClient.send(
+      `/app/posts/group/${code}/like`,
+      {},
+      JSON.stringify(likeData),
+    );
   };
 
   const renderItem = useCallback(
@@ -100,8 +126,7 @@ const StudentDiscussionDashboardScreen = () => {
             timeCreatePost={item.createdAt}
             content={item.content}
             type={item.type}
-            likes={Data.Likes}
-            // likes={item.likes}
+            likes={item.likes}
             comments={item.comment}
             commentQty={item.commentQuantity}
             images={Data.image}
@@ -131,17 +156,13 @@ const StudentDiscussionDashboardScreen = () => {
   return (
     <ContainerComponent backgroundColor={Colors.COLOR_GREY_FEEBLE}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* {isFetching ? (
-          <SkeletonPost />
-        ) : (
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            scrollEnabled={false}
-            extraData={data?.data}
-            data={data?.data}
-            renderItem={({ item }) => renderItem(item)}
+        {userLogin?.roleCodes === Variable.TYPE_POST_STUDENT && (
+          <CreatePostToolbar
+            role={userLogin.roleCodes}
+            image={''}
+            name={userLogin.name}
           />
-        )} */}
+        )}
         <FlatList
           showsVerticalScrollIndicator={false}
           scrollEnabled={false}

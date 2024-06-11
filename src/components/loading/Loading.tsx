@@ -1,7 +1,18 @@
-import {View, Text, ActivityIndicator} from 'react-native';
 import React from 'react';
+import {
+  setDefaultLanguage,
+  setTranslations,
+  useTranslation,
+} from 'react-multi-lang';
+import {ActivityIndicator, View} from 'react-native';
+import en from '../../languages/en.json';
+import jp from '../../languages/jp.json';
+import vi from '../../languages/vi.json';
 import TextComponent from '../text/TextComponent';
 import styles from './Loading.style';
+
+setTranslations({vi, jp, en});
+setDefaultLanguage('jp');
 
 interface Props {
   colorActivityIndicator: string;
@@ -16,6 +27,8 @@ const Loading = (props: Props) => {
     fontSizeText,
     sizeActivityIndicator,
   } = props;
+
+  const t = useTranslation();
   return (
     <View style={styles.wrapper}>
       <ActivityIndicator
@@ -25,7 +38,7 @@ const Loading = (props: Props) => {
       <TextComponent
         color={colorText ?? undefined}
         fontSize={fontSizeText ?? undefined}
-        text="Loading..."
+        text={t('BottomSheet.BottomSheetTitle')}
       />
     </View>
   );

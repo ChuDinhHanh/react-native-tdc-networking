@@ -2,18 +2,20 @@ import React, {memo, useCallback, useMemo, useState} from 'react';
 import {Variable} from '../../../constants/Variables';
 import {Post} from '../../../types/Post';
 
-import {useNavigation} from '@react-navigation/native';
+import {ParamListBase, useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {
   setDefaultLanguage,
   setTranslations,
   useTranslation,
 } from 'react-multi-lang';
-import {View} from 'react-native';
+import {Text, View} from 'react-native';
+import {shallowEqual} from 'react-redux';
 import {RootStackParamList} from '../../../App';
 import {
   CREATE_NORMAL_POST_SCREEN,
   LIST_JOB_APPLY_SCREEN,
+  MY_PROFILE_SCREEN,
   PROFILE_SCREEN,
   RECRUITMENT_DETAIL_SCREEN,
   SURVEY_CONDUCT_SCREEN,
@@ -23,20 +25,23 @@ import en from '../../../languages/en.json';
 import jp from '../../../languages/jp.json';
 import vi from '../../../languages/vi.json';
 import {useAppDispatch, useAppSelector} from '../../../redux/Hook';
-import {setShowBottomSheet, setShowModalLike} from '../../../redux/Slice';
+import {
+  setNavigateToProfileSameUser,
+  setShowBottomSheet,
+  setShowModalLike,
+} from '../../../redux/Slice';
 import {Like} from '../../../types/Like';
 import {LikeAction} from '../../../types/LikeAction';
 import {ModalComments} from '../../../types/ModalComments ';
+import {UpdateNormalPost} from '../../../types/UpdateNormalPost';
 import {numberDayPassed} from '../../../utils/FormatTime';
 import Bottom from '../session/bottom/Bottom';
 import Content from '../session/content/Content';
 import Header from '../session/header/Header';
 import DisplayImage from '../session/image/normalImage/DisplayImage';
-import styles from './PostTypeChecker.style';
 import Recruitment from '../session/recruitment/Recruitment';
 import Survey from '../session/survey/Survey';
-import {UpdateNormalPost} from '../../../types/UpdateNormalPost';
-import {shallowEqual} from 'react-redux';
+import styles from './PostTypeChecker.style';
 setTranslations({vi, jp, en});
 setDefaultLanguage('vi');
 
@@ -74,6 +79,9 @@ const PostTypeChecker = (props: Post) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
+  const navigationTopTab =
+    useNavigation<NativeStackNavigationProp<ParamListBase>>();
+
   const dispatch = useAppDispatch();
 
   const t = useTranslation();
@@ -83,17 +91,15 @@ const PostTypeChecker = (props: Post) => {
     shallowEqual,
   );
 
+  const userIdOfProfileScreen = useAppSelector(
+    state => state.TDCSocialNetworkReducer.userIdOfProfileScreen,
+    shallowEqual,
+  );
+
   const [likeData, setLikeData] = useState<LikeAction>({
     code: '',
     postId: id,
     userId: userLogin?.id ?? 0,
-  });
-
-  const [commentData, setCommentData] = useState<ModalComments>({
-    id: id,
-    userCreatedPostId: userId,
-    group: group,
-    commentFather: [],
   });
 
   const handleSeeListCvPost = () => {
@@ -145,7 +151,15 @@ const PostTypeChecker = (props: Post) => {
   const handleClickIntoAvatarAndNameAndMenuEvent = useCallback(
     (flag: number | null) => {
       if (flag === Variable.GO_TO_PROFILE_ACTIONS) {
-        navigation.navigate(PROFILE_SCREEN);
+        if (userIdOfProfileScreen !== userId) {
+          if (userId !== userLogin?.id) {
+            navigation.navigate(PROFILE_SCREEN, {userId: userId, group: group});
+          } else {
+            navigationTopTab.navigate(MY_PROFILE_SCREEN);
+          }
+        } else {
+          dispatch(setNavigateToProfileSameUser(userId));
+        }
       }
     },
     [],
@@ -166,22 +180,31 @@ const PostTypeChecker = (props: Post) => {
     return result;
   }, [likes, userLogin?.id]);
 
-  const handleClickBottomBtnEvent = useCallback((flag: number | null) => {
-    if (flag === Variable.LIKE_ACTION) {
-      handleClickIntoBtnIconLikeEvent();
-    } else if (flag === Variable.COMMENT_ACTION) {
-      handleClickIntoBtnIconComments();
-    } else {
-      handleClickIntoListUserReactions();
-    }
-  }, []);
+  const handleClickBottomBtnEvent = useCallback(
+    (flag: number | null) => {
+      if (flag === Variable.LIKE_ACTION) {
+        handleClickIntoBtnIconLikeEvent();
+      } else if (flag === Variable.COMMENT_ACTION) {
+        handleClickIntoBtnIconComments();
+      } else {
+        handleClickIntoListUserReactions();
+      }
+    },
+    [commentQty, comments],
+  );
 
   const handleClickIntoBtnIconLikeEvent = () => {
     likeAction(likeData);
   };
 
   const handleClickIntoBtnIconComments = () => {
-    dispatch(setShowBottomSheet(commentData));
+    const newComment: ModalComments = {
+      id: id,
+      userCreatedPostId: userId,
+      group: group,
+      comments: comments,
+    };
+    dispatch(setShowBottomSheet(newComment));
   };
 
   const handleClickIntoListUserReactions = () => {

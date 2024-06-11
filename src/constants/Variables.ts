@@ -43,4 +43,7 @@ export const Variable = {
   USER_CREATE_WATCH_JOB: 'user_create_watch_job',
   USER_UPDATE_AVATAR: 'user_update_avatar',
   USER_COMMENT_POST: 'user_comment_post',
+  INPUT_OF_COMMENT: 1,
+  NUMBER_MAX_CHARACTER: 1024,
+  NUMBER_MIN_CHARACTER: 0,
 };

@@ -66,10 +66,12 @@ const LoginScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
   const [userLoginRequest, setUserLoginRequest] = useState<UserLoginRequest>({
     email: '',
     password: '',
   });
+
   const [loginValidate, setLoginValidate] = useState<Validate>({
     email: {
       textError: ERROR_MESSAGES.emailRequired,

@@ -1,13 +1,5 @@
 import React, {ReactNode} from 'react';
-import {
-  FlexAlignType,
-  View,
-  TouchableOpacity,
-  Falsy,
-  ViewStyle,
-  RegisteredStyle,
-  RecursiveArray,
-} from 'react-native';
+import {FlexAlignType, TouchableOpacity, View} from 'react-native';
 import {globalStyles} from '../../styles/GlobalStyles';
 
 interface Props {
@@ -24,6 +16,7 @@ interface Props {
     | 'space-around'
     | 'space-evenly'
     | undefined;
+  marginLeft?: number;
 }
 
 const RowComponent = (props: Props) => {
@@ -34,9 +27,10 @@ const RowComponent = (props: Props) => {
     onPress,
     marginVertical,
     height,
+    marginLeft,
   } = props;
   const style = [
-    {alignItems, justifyContent, marginVertical, height},
+    {alignItems, justifyContent, marginVertical, height, marginLeft},
     globalStyles.row,
   ];
   return (

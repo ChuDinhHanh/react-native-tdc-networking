@@ -2,8 +2,8 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React from 'react';
-import {Text} from 'react-native';
+import React, {useEffect} from 'react';
+import {StatusBar, Text} from 'react-native';
 import {PaperProvider} from 'react-native-paper';
 import {MenuProvider} from 'react-native-popup-menu';
 import Icon from 'react-native-vector-icons/FontAwesome6';
@@ -58,7 +58,7 @@ import ForgottenPasswordScreen from './screens/ForgotPass/ForgottenPasswordScree
 import ImageViewScreen from './screens/Image/ImageViewScreen';
 import IntermediationScreen from './screens/Intermediate/IntermediationScreen';
 import SplashScreen from './screens/Intro/SplashScreen';
-import JobApplyScreen from './screens/JobApply/JobApplyScreen';
+import JobApplyScreen from './screens/JobApply/jobApplyScreen/JobApplyScreen';
 import ListJobApplyScreen from './screens/JobApply/ListJobApplyScreen';
 import LoginScreen from './screens/Login/LoginScreen';
 import MessengerScreen from './screens/Messager/MessengerScreen';
@@ -87,6 +87,10 @@ import ModalLike from './components/modals/Like/ModalLike';
 import ToolbarWithBackPress from './components/toolbars/ToolbarWithBackPress';
 import DetailPost from './screens/Details/Post/Normal/DetailPost';
 import {useTranslation} from 'react-multi-lang';
+import {Colors} from './constants/Colors';
+import {useNetInfo, NetInfoState} from '@react-native-community/netinfo';
+import {Alert} from 'react-native';
+import {ToastContainer, toast} from 'react-toastify';
 
 export type RootStackParamList = {
   CONVERSATION_SCREEN: undefined;
@@ -110,12 +114,14 @@ export type RootStackParamList = {
   LIST_FOLLOW_SCREEN: undefined;
   REVIEW_SURVEY_POST_SCREEN: undefined;
   ADD_QUESTION_SCREEN: undefined;
-  CREATE_NORMAL_POST_SCREEN: {updatePostData: UpdateNormalPost};
+  CREATE_NORMAL_POST_SCREEN: {updatePostData: UpdateNormalPost} | undefined;
   SURVEY_CONDUCT_SCREEN: {surveyPostId: number};
   RECRUITMENT_DETAIL_SCREEN: {postId: number};
-  JOB_APPLY_SCREEN: undefined;
+  JOB_APPLY_SCREEN:
+    | {recruitmentPostId?: number; profileId?: number; cvUrl?: string}
+    | undefined;
   DETAIL_JOB_APPLY: {cvId: number} | undefined;
-  PROFILE_SCREEN: undefined;
+  PROFILE_SCREEN: {userId: number; group: string} | undefined;
   LIST_POST_SAVED_SCREEN: undefined;
   OPTION_SCREEN: undefined;
   SURVEY_RESULT_SCREEN: {surveyPostId: number};
@@ -201,7 +207,11 @@ export function StackNavigator(): JSX.Element {
       }}>
       <RootStack.Screen
         name={RECRUITMENT_DETAIL_SCREEN}
-        options={{header: () => false}}
+        options={{
+          header: () => (
+            <ToolbarWithBackPress title={t('ToolbarTitle.detailPost')} />
+          ),
+        }}
         component={RecruitmentDetailScreen}
       />
 
@@ -313,7 +323,11 @@ export function StackNavigator(): JSX.Element {
 
       <RootStack.Screen
         name={PROFILE_SCREEN}
-        options={{header: () => false}}
+        options={{
+          header: () => (
+            <ToolbarWithBackPress title={t('ToolbarTitle.detailPost')} />
+          ),
+        }}
         component={ProfileScreen}
       />
 
@@ -418,8 +432,23 @@ function TopTabNavigator(): JSX.Element {
 }
 
 const App = () => {
+  const internetState: NetInfoState = useNetInfo();
+  useEffect(() => {
+    if (internetState.isConnected === false) {
+      Alert.alert(
+        'No Internet! ❌',
+        'Sorry, we need an Internet connection for MY_APP to run correctly.',
+        [{text: 'Okay'}],
+      );
+    }
+  }, [internetState.isConnected]);
   return (
     <GestureHandlerRootView>
+      <StatusBar
+        animated={true}
+        backgroundColor={Colors.WHITE}
+        barStyle="dark-content"
+      />
       <MenuProvider>
         <Provider store={store}>
           <PaperProvider>

@@ -61,12 +61,6 @@ export const Data = {
         'https://kynguyenlamdep.com/wp-content/uploads/2022/06/anh-gai-xinh-cuc-dep.jpg',
     },
     {
-      id: 7,
-      name: 'Nguyen Thi Hong',
-      image:
-        'https://kynguyenlamdep.com/wp-content/uploads/2022/06/anh-gai-xinh-cuc-dep.jpg',
-    },
-    {
       id: 8,
       name: 'Nguyen Thi Hong',
       image:
@@ -117,12 +111,6 @@ export const Data = {
     {
       id: 8,
       name: 'Nguyen Thi Hong',
-      image:
-        'https://kynguyenlamdep.com/wp-content/uploads/2022/06/anh-gai-xinh-cuc-dep.jpg',
-    },
-    {
-      id: 8,
-      name: 'Nguyen Thi Hong3',
       image:
         'https://kynguyenlamdep.com/wp-content/uploads/2022/06/anh-gai-xinh-cuc-dep.jpg',
     },

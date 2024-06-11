@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {FlatList, SafeAreaView, ScrollView} from 'react-native';
-import {Client} from 'stompjs';
+import {Client, Frame} from 'stompjs';
 import PostTypeChecker from '../../../components/post/postTypeChecker/PostTypeChecker';
 import SkeletonPost from '../../../components/skeleton/post/SkeletonPost';
 import {Variable} from '../../../constants/Variables';
@@ -21,6 +21,12 @@ import {shallowEqual} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
 import ContainerComponent from '../../container/ContainerComponent';
 import {Colors} from '../../../constants/Colors';
+import {Text} from 'react-native';
+import SessionComponent from '../../../components/session/SessionComponent';
+import {getStompClient} from '../../../sockets/getStompClient';
+import {SERVER_ADDRESS} from '../../../constants/SystemConstant';
+import {DeletePostRequest} from '../../../types/request/DeletePostRequest';
+import CreatePostToolbar from '../../../components/toolbars/post/CreatePostToolbar';
 
 let stompClient: Client;
 const BusinessDashboardScreen = () => {
@@ -61,11 +67,29 @@ const BusinessDashboardScreen = () => {
     }
   }, [data]);
 
+  useEffect(() => {
+    stompClient = getStompClient();
+    const onConnected = () => {
+      stompClient.subscribe(`/topic/posts/group/${code}`, onMessageReceived);
+      stompClient.send(`/app/posts/group/${code}/listen/${userLogin?.id}`);
+    };
+    const onMessageReceived = (payload: any) => {
+      setPosts(JSON.parse(payload.body));
+    };
+
+    const onError = (err: string | Frame) => {
+      console.log(err);
+    };
+    stompClient.connect({}, onConnected, onError);
+  }, []);
+
   const likeAction = (likeData: LikeAction) => {
     likeData.code = Variable.TYPE_POST_BUSINESS;
-    console.log('====================================');
-    console.log(code, JSON.stringify(likeData));
-    console.log('====================================');
+    stompClient.send(
+      `/app/posts/group/${code}/like`,
+      {},
+      JSON.stringify(likeData),
+    );
   };
 
   const handleSavePost = useCallback(async (id: number) => {
@@ -81,17 +105,20 @@ const BusinessDashboardScreen = () => {
   }, []);
 
   const handleDeletePost = useCallback(async (postId: number) => {
+    const DeletePostData: DeletePostRequest = {
+      postId: postId,
+    };
     try {
-      const response = await deletePost(postId);
+      const response = await deletePost(DeletePostData);
       console.log(response);
     } catch (error) {
       console.error('Failed to delete post:', error);
     }
   }, []);
 
-  const renderItem = useCallback((item: any) => {
-    if (GetPostActive(item.active)) {
-      return (
+  const renderItem = useCallback(
+    (item: any) => {
+      return GetPostActive(item.active) ? (
         <PostTypeChecker
           id={item.id}
           userId={item.user['id']}
@@ -102,7 +129,7 @@ const BusinessDashboardScreen = () => {
           timeCreatePost={item.createdAt}
           content={item.content}
           type={item.type}
-          likes={Data.Likes}
+          likes={item.likes}
           comments={item.comment}
           commentQty={item.commentQuantity}
           images={Data.image}
@@ -121,11 +148,10 @@ const BusinessDashboardScreen = () => {
           onDelete={handleDeletePost}
           active={item.active}
         />
-      );
-    } else {
-      return null;
-    }
-  }, []);
+      ) : null;
+    },
+    [posts],
+  );
 
   return (
     <ContainerComponent backgroundColor={Colors.COLOR_GREY_FEEBLE}>
@@ -141,6 +167,13 @@ const BusinessDashboardScreen = () => {
             renderItem={({ item }) => renderItem(item)}
           />
         )} */}
+        {userLogin?.roleCodes === Variable.TYPE_POST_BUSINESS && (
+          <CreatePostToolbar
+            role={userLogin.roleCodes}
+            image={''}
+            name={userLogin.name}
+          />
+        )}
         <FlatList
           showsVerticalScrollIndicator={false}
           scrollEnabled={false}

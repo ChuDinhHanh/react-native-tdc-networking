@@ -1,5 +1,5 @@
-import { View, Pressable, Image, Text } from 'react-native';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import {View, Pressable, Image, Text} from 'react-native';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import styles from './NotificationItem.style';
 import {
   Menu,
@@ -15,16 +15,16 @@ import {
 } from 'react-multi-lang';
 import RowComponent from '../../row/RowComponent';
 import DefaultAvatar from '../../common/defaultAvatar/DefaultAvatar';
-import { useIsFocused } from '@react-navigation/native';
-import { Variable } from '../../../constants/Variables';
+import {useIsFocused} from '@react-navigation/native';
+import {Variable} from '../../../constants/Variables';
 import moment from 'moment';
 import vi from '../../../languages/vi.json';
 import en from '../../../languages/en.json';
 import jp from '../../../languages/jp.json';
-import { Colors } from '../../../constants/Colors';
+import {Colors} from '../../../constants/Colors';
 import TextComponent from '../../text/TextComponent';
 
-setTranslations({ vi, jp, en });
+setTranslations({vi, jp, en});
 setDefaultLanguage('vi');
 
 export interface Props {
@@ -119,7 +119,7 @@ const NotificationItem = (props: Props) => {
           header: props.userInteracted.name,
           body: t('Notifications.create_survey'),
           image: props.userInteracted.image,
-          group: props?.dataValue?.group.name ?? '',
+          group: props?.dataValue?.group?.name ?? '',
           time: props.createdAt,
           canClick: true,
         });
@@ -132,7 +132,7 @@ const NotificationItem = (props: Props) => {
           header: '',
           body: t('Notifications.save_post'),
           image: '',
-          group: props?.dataValue?.group.name ?? '',
+          group: props?.dataValue?.group?.name ?? '',
           time: props.createdAt,
           canClick: true,
         });
@@ -148,7 +148,7 @@ const NotificationItem = (props: Props) => {
           header: props.userInteracted.name,
           body: t('Notifications.user_like_post'),
           image: props.userInteracted.image,
-          group: props?.dataValue?.group.name ?? '',
+          group: props?.dataValue?.group?.name ?? '',
           time: props.createdAt,
           canClick: true,
         });

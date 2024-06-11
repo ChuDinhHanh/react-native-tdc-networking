@@ -12,6 +12,9 @@ export interface TDCSocialNetworkState {
   modalCommentData: ModalComments | null;
   modalLikeData: ModalLike | null;
   openModalLike: boolean;
+  userIdOfProfileScreen: number;
+  isNavigateToSame: {flag: boolean; result: boolean};
+  timeoutId: any;
 }
 
 const initialState: TDCSocialNetworkState = {
@@ -20,6 +23,12 @@ const initialState: TDCSocialNetworkState = {
   modalCommentData: null,
   modalLikeData: null,
   openModalLike: false,
+  userIdOfProfileScreen: 0,
+  timeoutId: null,
+  isNavigateToSame: {
+    flag: false,
+    result: false,
+  },
 };
 
 export const TDCSocialNetworkSlice = createSlice({
@@ -51,6 +60,16 @@ export const TDCSocialNetworkSlice = createSlice({
       state.modalLikeData = null;
       state.openModalLike = false;
     },
+    setUserIdOfProfileScreen: (state, action: PayloadAction<number>) => {
+      state.userIdOfProfileScreen = action.payload;
+    },
+    setNavigateToProfileSameUser: (state, action: PayloadAction<number>) => {
+      if (state.userIdOfProfileScreen === action.payload) {
+        //Switch state of flag
+        state.isNavigateToSame.flag = !state.isNavigateToSame.flag;
+        state.isNavigateToSame.result = true;
+      }
+    },
   },
   extraReducers: builder => {},
 });
@@ -61,5 +80,7 @@ export const {
   setShowBottomSheet,
   setHiddenModalLike,
   setShowModalLike,
+  setUserIdOfProfileScreen,
+  setNavigateToProfileSameUser,
 } = TDCSocialNetworkSlice.actions;
 export default TDCSocialNetworkSlice.reducer;

@@ -218,5 +218,84 @@
         "survey_txt": "Khảo sát ngay >>",
         "user_update_avatar": "Bạn vừa cập nhật ảnh nền",
         "post": "Bài viết"
+    },
+    "RecuitmentPostDetailComponent": {
+        "titleLoader": "Đang tải dữ liệu...",
+        "titleJob": "Vị trí tuyển dụng",
+        "employeType": "Hình thức làm việc",
+        "salary": "Lương",
+        "salaryUnitMonth": "vnd/tháng",
+        "expiration": "Thời hạn ứng tuyển",
+        "location": "Địa chỉ làm việc",
+        "benefit": "Phúc lợi",
+        "descriptionJob": "Mô tả công việc",
+        "requipmentJob": "Yêu cầu công việc",
+        "btnApplyJob": "Nộp đơn ứng tuyển",
+        "textNotification": "Thông báo",
+        "textNoApply": "Bạn không thuộc đối tượng ứng tuyển",
+        "textApplied": "Bạn đã ứng tuyển! Vui lòng vào hồ sơ ứng tuyển để theo dõi tình trạng hồ sơ"
+    },
+    "JobApplyScreen": {
+        "jobApplyScreenButtonAddCvTitle": "Thêm CV",
+        "jobApplyScreenButtonComplete": "Hoàn tất",
+        "jobApplyScreenButtonGoBack": "Quay lại",
+        "jobApplyScreenButtonUpdateCvTitle": "Cập nhật CV",
+        "jobApplyScreenEmptyCvTextContent": "Vui lòng thêm CV để hoàn tất đăng ký",
+        "jobApplyScreenEmptyCvTextTitle": "Thông báo",
+        "jobApplyScreenSaveSuccessTextContent": "Nộp đơn thành công",
+        "jobApplyScreenChangeSuccessTextContent": "Sửa đơn thành công",
+        "jobApplyScreenSaveSuccessTextTitle": "Thông báo",
+        "jobApplyScreenUploadErrorFormat": "Không đúng định dạng pdf",
+        "jobApplyScreenSystemError": "Lỗi hệ thống vui lòng thử lại sau!"
+    },
+    "Comment": {
+        "commentReplyComment": "Trả lời",
+        "commentDeleteComment": "Xóa",
+        "commentAuthor": "Tác giả",
+        "modalListCommentTitle": "Bình luận"
+    },
+    "BottomSheet": {
+        "BottomSheetTitle": "Đang tải dữ liệu..."
+    },
+    "CreateCommentToolbar": {
+        "commentCreateComment": "Đăng bình luận",
+        "commentPlaceholderInput": "Hãy nhập nội dung bình luận"
+    },
+    "BusinessSelectFacultyToolbar": {
+        "businessSelectFacultyToolbarTitle": "Hãy lựa chọn khoa mà bạn muốn hiển thị bài viết"
+    },
+    "SelectFaculty": {
+        "selectFacultyPlaceholder": "Chọn khoa...",
+        "selectFacultyTextSearch": "Tìm kiếm.."
+    },
+    "FacultyDashboard": {
+        "facultyDashboardNotifyNotHavePost": "Chưa có bài viết nào",
+        "facultyDashboardNotYetSelectFaculty": "Vui lòng chọn khoa"
+    },
+    "CreatePostSelector": {
+        "createPostSelectorPlaceHolder": "Nhập nội dung bài viết",
+        "createPostSelectorSurveyText": "Khảo sát",
+        "createPostSelectorRecruitmentText": "Tuyển dụng",
+        "createPostSelectorNormalText": "Thông thường"
+    },
+    "InputComment": {
+        "loadingText": "Đang tải...",
+        "respondingText": "Đang phản hồi",
+        "cancelText": "Hủy",
+        "requestText": " Bạn có thực sự muốn hủy trả lời?",
+        "contentRequestText": " Nếu tiếp tục bình luận của bạn sẽ giữ nguyên.",
+        "continueText": "Tiếp tục",
+        "returnText": "Quay lại",
+        "warningText": "Cảnh báo!",
+        "requiredTextWarning": "Bình luận không được để trống."
+    },
+    "ModalComment": {
+        "modalCommentTextChar": "ký tự",
+        "modalCommentCommentNotNull": "nội dung bình luận không thể để trống",
+        "modalCommentTextNumberLimited": "nội dung bình luận không thể quá",
+        "modalCommentCreateFail": "Tạo bình luận thất bại"
+    },
+    "ModalImage": {
+        "textUpdate": "Cập nhật"
     }
 }
