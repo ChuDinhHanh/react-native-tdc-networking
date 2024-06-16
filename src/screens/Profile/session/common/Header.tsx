@@ -1,9 +1,9 @@
 import React from 'react';
-import { Image, Pressable, Text, TouchableOpacity, View } from 'react-native';
+import {Image, Pressable, Text, TouchableOpacity, View} from 'react-native';
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import DefaultAvatar from '../../../../components/common/defaultAvatar/DefaultAvatar';
-import { Colors } from '../../../../constants/Colors';
-import { Variable } from '../../../../constants/Variables';
+import {Colors} from '../../../../constants/Colors';
+import {Variable} from '../../../../constants/Variables';
 import styles from './Header.style';
 
 interface Props {
@@ -33,7 +33,7 @@ const Header = (props: Props) => {
         <Image
           style={styles.imageBackground}
           // source={{ uri: SERVER_ADDRESS + `api/images/${background}` }}
-          source={{ uri: `${background}` }}
+          source={{uri: `${background}`}}
         />
         <View style={styles.wrapperCameraBackground}>
           {isSameUser && (
@@ -52,16 +52,12 @@ const Header = (props: Props) => {
       {/* Avatar */}
       {Boolean(avatar) ? (
         <Pressable
-          onPress={() =>
-            onClickIntoHeaderComponentEvent(
-              Variable.SEE_AVATAR,
-            )
-          }
+          onPress={() => onClickIntoHeaderComponentEvent(Variable.SEE_AVATAR)}
           style={[styles.imageAvatarWrapper, styles.border]}>
           <Image
             style={styles.avatar}
             // source={{ uri: SERVER_ADDRESS + `api/images/${avatar}` }}
-            source={{ uri: `${avatar}` }}
+            source={{uri: `${avatar}`}}
           />
           <Pressable
             onPress={() =>
@@ -74,13 +70,9 @@ const Header = (props: Props) => {
           </Pressable>
         </Pressable>
       ) : (
-        <Pressable style={styles.imageAvatarWrapper}
-          onPress={() =>
-            onClickIntoHeaderComponentEvent(
-              Variable.SEE_AVATAR,
-            )
-          }
-        >
+        <Pressable
+          style={styles.imageAvatarWrapper}
+          onPress={() => onClickIntoHeaderComponentEvent(Variable.SEE_AVATAR)}>
           <DefaultAvatar identifer={name[0]} size={120} />
           <Pressable
             onPress={() =>

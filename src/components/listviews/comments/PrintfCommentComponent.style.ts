@@ -7,9 +7,9 @@ const styles = StyleSheet.create({
   wrapperRight: {
     width: '87%',
   },
-  wrapperChildrenComment:{
-    paddingBottom:'50%'
-  }
+  wrapperChildrenComment: {
+    paddingBottom: '50%',
+  },
 });
 
 export default styles;

@@ -1,7 +1,7 @@
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
-  BottomSheetView
+  BottomSheetView,
 } from '@gorhom/bottom-sheet';
 import React, {
   ReactNode,
@@ -11,18 +11,18 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { TextInput, View } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
-import { Divider } from 'react-native-paper';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {TextInput, View} from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
+import {Divider} from 'react-native-paper';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
-import { shallowEqual } from 'react-redux';
-import { Client, Frame } from 'stompjs';
-import { Colors } from '../../constants/Colors';
-import { useAppDispatch, useAppSelector } from '../../redux/Hook';
-import { setHiddenBottomSheet } from '../../redux/Slice';
-import { getStompClient } from '../../sockets/getStompClient';
-import { Comment } from '../../types/Comment';
+import {shallowEqual} from 'react-redux';
+import {Client, Frame} from 'stompjs';
+import {Colors} from '../../constants/Colors';
+import {useAppDispatch, useAppSelector} from '../../redux/Hook';
+import {setHiddenBottomSheet} from '../../redux/Slice';
+import {getStompClient} from '../../sockets/getStompClient';
+import {Comment} from '../../types/Comment';
 import ButtonComponent from '../buttons/ButtonComponent';
 import InputCommentModal from '../input/InputCommentModal/InputCommentModal';
 import PrintfCommentComponent from '../listviews/comments/PrintfCommentComponent';
@@ -51,9 +51,9 @@ interface DeleteCommentForm {
 
 const BottomSheetModalWrapper = (props: Props) => {
   console.log('================BottomSheetModalWrapper====================');
-  const { children } = props;
+  const {children} = props;
   const inputRef = useRef<TextInput>(null);
-  const [replyComment, setReplyComment] = useState({ postId: 0, name: '' });
+  const [replyComment, setReplyComment] = useState({postId: 0, name: ''});
   const [comments, setComments] = useState<Comment[] | []>([]);
   const userLogin = useAppSelector(
     state => state.TDCSocialNetworkReducer.userLogin,
@@ -95,9 +95,9 @@ const BottomSheetModalWrapper = (props: Props) => {
   const handleClearReplyData = () => {
     setReplyComment({
       postId: 0,
-      name: ''
+      name: '',
     });
-  }
+  };
 
   // Add new comment
   const handleCreateNewComment = useCallback(
@@ -119,13 +119,12 @@ const BottomSheetModalWrapper = (props: Props) => {
     [replyComment, modalCommentData],
   );
 
-
   // Reply comment
   const handleClickToCommentReplyEvent = useCallback(
     (postId: number, name: string) => {
       setReplyComment({
         postId: postId,
-        name: name
+        name: name,
       });
       inputRef?.current && inputRef.current?.focus();
     },
@@ -133,18 +132,21 @@ const BottomSheetModalWrapper = (props: Props) => {
   );
 
   // Delete comment
-  const handleClickDeleteCommentEvent = useCallback(async (id: number) => {
-    const deleteComment: DeleteCommentForm = {
-      commentId: id,
-      postId: modalCommentData?.id ?? 0,
-      userId: userLogin?.id ?? 0,
-    };
-    stompClient.send(
-      `/app/posts/${modalCommentData?.id}/comments/delete`,
-      {},
-      JSON.stringify(deleteComment),
-    );
-  }, [modalCommentData]);
+  const handleClickDeleteCommentEvent = useCallback(
+    async (id: number) => {
+      const deleteComment: DeleteCommentForm = {
+        commentId: id,
+        postId: modalCommentData?.id ?? 0,
+        userId: userLogin?.id ?? 0,
+      };
+      stompClient.send(
+        `/app/posts/${modalCommentData?.id}/comments/delete`,
+        {},
+        JSON.stringify(deleteComment),
+      );
+    },
+    [modalCommentData],
+  );
 
   // Socket
   useEffect(() => {
@@ -162,7 +164,7 @@ const BottomSheetModalWrapper = (props: Props) => {
       console.log(JSON.parse(payload.body));
       console.log('===============vv=====================');
     };
-    const onError = (err: string | Frame) => { };
+    const onError = (err: string | Frame) => {};
     stompClient.connect({}, onConnected, onError);
   }, [openBottomSheet]);
 
@@ -215,7 +217,7 @@ const BottomSheetModalWrapper = (props: Props) => {
               </SessionComponent>
             </ScrollView>
             {/* Input */}
-            <SafeAreaView style={[styles.textInput, { bottom: '0%' }]}>
+            <SafeAreaView style={[styles.textInput, {bottom: '0%'}]}>
               <InputCommentModal
                 onCancelReply={handleClearReplyData}
                 userReply={replyComment.name}

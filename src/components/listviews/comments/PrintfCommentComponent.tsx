@@ -1,7 +1,7 @@
-import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
-import { FlatList, View } from 'react-native';
-import { Colors } from '../../../constants/Colors';
-import { appInfo } from '../../../constants/Infos';
+import React, {memo, useCallback, useEffect, useMemo, useState} from 'react';
+import {FlatList, View} from 'react-native';
+import {Colors} from '../../../constants/Colors';
+import {appInfo} from '../../../constants/Infos';
 import Divider from '../../common/divider/Divider';
 import CommentsItemComponent from '../../items/commentItem/CommentsItemComponent';
 import Loading from '../../loading/Loading';
@@ -9,13 +9,16 @@ import RowComponent from '../../row/RowComponent';
 import SpaceComponent from '../../space/SpaceComponent';
 import TextComponent from '../../text/TextComponent';
 import styles from './PrintfCommentComponent.style';
-import { setDefaultLanguage, setTranslations, useTranslation } from 'react-multi-lang';
-import en from '../../../languages/en.json'
-import jp from '../../../languages/jp.json'
-import vi from '../../../languages/vi.json'
-setTranslations({ vi, jp, en });
+import {
+  setDefaultLanguage,
+  setTranslations,
+  useTranslation,
+} from 'react-multi-lang';
+import en from '../../../languages/en.json';
+import jp from '../../../languages/jp.json';
+import vi from '../../../languages/vi.json';
+setTranslations({vi, jp, en});
 setDefaultLanguage('jp');
-
 
 interface Props {
   comments: any;
@@ -31,7 +34,7 @@ interface Comment {
 }
 
 const PrintfCommentComponent = React.memo((props: Props) => {
-  const { comments, onDeleteEvent, onReplyEvent } = props;
+  const {comments, onDeleteEvent, onReplyEvent} = props;
   const [showData, setShowData] = useState(false);
   const memoizedComments = useMemo(() => comments, [comments]);
 
@@ -50,7 +53,7 @@ const PrintfCommentComponent = React.memo((props: Props) => {
           onReplyEvent={onReplyEvent}
         />
       ) : (
-        <View style={{ marginTop: appInfo.sizes.HEIGHT * 0.3 }}>
+        <View style={{marginTop: appInfo.sizes.HEIGHT * 0.3}}>
           <Loading
             colorActivityIndicator={Colors.COLOR_BLUE_BANNER}
             sizeActivityIndicator={30}
@@ -62,11 +65,11 @@ const PrintfCommentComponent = React.memo((props: Props) => {
 });
 
 const PrintfFatherCommentComponent = React.memo((props: Props) => {
-  const { comments, onDeleteEvent, onReplyEvent } = props;
+  const {comments, onDeleteEvent, onReplyEvent} = props;
   const memoizedComments = useMemo(() => comments, [comments]);
 
   const renderCommentItem = useCallback(
-    ({ item }: { item: Comment }) => {
+    ({item}: {item: Comment}) => {
       if (!item.parent) {
         return (
           <React.Fragment key={item.id}>
@@ -105,14 +108,13 @@ const PrintfFatherCommentComponent = React.memo((props: Props) => {
 
 const PrintfChildrenCommentComponent = React.memo((props: Props) => {
   const t = useTranslation();
-  const { comments, onDeleteEvent, onReplyEvent, isFather } = props;
+  const {comments, onDeleteEvent, onReplyEvent, isFather} = props;
   const [seeMore, setSeeMore] = useState(false);
   const [loading, setLoading] = useState(false);
   const memoizedComments = useMemo(() => comments, [comments]);
   const totalOfScreen = useMemo(() => {
     return memoizedComments.length;
   }, [memoizedComments]);
-
 
   return (
     <>
@@ -129,30 +131,37 @@ const PrintfChildrenCommentComponent = React.memo((props: Props) => {
             marginLeft={props.isFather ? 0 : 32}
             alignItems="center"
             justifyContent="flex-start">
-
-            {
-              loading ? <TextComponent fontSize={10} color={Colors.COLOR_BTN_BLUE_PRIMARY} text={t('InputComment.loadingText')} /> :
-                <>
-                  <Divider width={30} backgroundColor={Colors.BLACK} />
-                  <SpaceComponent width={5} />
-                  <TextComponent
-                    fontSize={10}
-                    color={Colors.BLACK}
-                    text={!seeMore ? `Xem ${totalOfScreen} câu trả lời` : 'Ẩn bớt'}
-                  />
-                </>
-            }
-
+            {loading ? (
+              <TextComponent
+                fontSize={10}
+                color={Colors.COLOR_BTN_BLUE_PRIMARY}
+                text={t('InputComment.loadingText')}
+              />
+            ) : (
+              <>
+                <Divider width={30} backgroundColor={Colors.BLACK} />
+                <SpaceComponent width={5} />
+                <TextComponent
+                  fontSize={10}
+                  color={Colors.BLACK}
+                  text={
+                    !seeMore ? `Xem ${totalOfScreen} câu trả lời` : 'Ẩn bớt'
+                  }
+                />
+              </>
+            )}
           </RowComponent>
         </View>
       </RowComponent>
       {seeMore && (
         <FlatList
-          onViewableItemsChanged={() => { setLoading(false) }}
+          onViewableItemsChanged={() => {
+            setLoading(false);
+          }}
           extraData={props.comments}
           scrollEnabled={false}
           data={memoizedComments}
-          renderItem={({ item }) => (
+          renderItem={({item}) => (
             <React.Fragment key={item.id}>
               <CommentsItemComponent
                 item={item}

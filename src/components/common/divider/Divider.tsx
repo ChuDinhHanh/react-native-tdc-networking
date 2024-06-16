@@ -1,6 +1,6 @@
 import React from 'react';
-import { View } from 'react-native';
-import { Colors } from '../../../constants/Colors';
+import {View} from 'react-native';
+import {Colors} from '../../../constants/Colors';
 
 interface Props {
   thickness?: number;
@@ -10,7 +10,8 @@ interface Props {
   width?: number;
 }
 const Divider = (props: Props) => {
-  const { thickness, backgroundColor, marginVertical, marginBottom, width } = props;
+  const {thickness, backgroundColor, marginVertical, marginBottom, width} =
+    props;
   return (
     <View
       style={{

@@ -21,6 +21,7 @@ import {GetStudentPostRequest} from '../types/request/GetStudentPostRequest';
 import {GetFacultyPostRequest} from '../types/request/GetFacultyPostRequest';
 import {GetBusinessPostRequest} from '../types/request/GetBusinessPostRequest';
 import {ChangeUserToInactiveStateRequest} from '../types/request/ChangeUserToInactiveStateRequest';
+import {FollowUserModel} from '../types/response/FollowUserModel';
 
 export const TDCSocialNetworkAPI = createApi({
   reducerPath: 'TDCSocialNetworkAPI',
@@ -197,6 +198,32 @@ export const TDCSocialNetworkAPI = createApi({
         },
       }),
     }),
+    getFollowingUser: builder.query<
+      Data<FollowUserModel[]>,
+      {id: number | undefined}
+    >({
+      query: data => ({
+        url: 'api/users/follow/me',
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    getFollowerUser: builder.query<
+      Data<FollowUserModel[]>,
+      {id: number | undefined}
+    >({
+      query: data => ({
+        url: 'api/users/follow/other',
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    getSavedPost: builder.query<Data<Post[]>, {uid: number}>({
+      query: data => ({
+        url: `api/posts/user/save/${data.uid}`,
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
@@ -221,4 +248,7 @@ export const {
   useFollowMutation,
   useGetFacultyQuery,
   useUploadImageBackgroundMutation,
+  useGetFollowingUserQuery,
+  useGetFollowerUserQuery,
+  useGetSavedPostQuery,
 } = TDCSocialNetworkAPI;

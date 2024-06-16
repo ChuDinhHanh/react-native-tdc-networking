@@ -297,5 +297,54 @@
     },
     "ModalImage": {
         "textUpdate": "Cập nhật"
+    },
+    "OptionScreen": {
+        "optionScreenFollowText": "Theo dõi",
+        "optionScreenSaveText": "Lưu",
+        "optionScreenUpdateProfileText": "Cập nhật trang cá nhân"
+    },
+    "ToolbarTitle": {
+        "changePasswordScreen": "Thay đổi mật khẩu",
+        "recruitmentDetailScreen": "Chi tiết tuyển dụng",
+        "topTabNavigator": "TDC Social Network",
+        "drawerTabNavigator": "TDC Social Network",
+        "forgottenPasswordScreen": "Quên mật khẩu",
+        "acceptForgottenPasswordScreen": "Xác nhận email",
+        "searchScreen": "Tìm kiếm",
+        "conversationScreen": "Hội thoại",
+        "messengerScreen": "Messenger",
+        "addQuestionScreen": "Thêm câu hỏi",
+        "reviewSurveyPostScreen": "Xem lại bài viết",
+        "surveyConductScreen": "Thực hiện khảo sát",
+        "jobApplyScreen": "Ứng tuyển",
+        "listPostSavedScreen": "Lưu bài viết",
+        "createNormalPostScreen": "",
+        "listJobApplyScreen": "Danh sách ứng tuyển",
+        "listFollowScreen": "Danh sách theo dõi",
+        "profileScreen": "Trang cá nhân người dùng",
+        "detailJobApply": "Chi tiết hồ sơ ứng tuyển",
+        "optionScreen": "Tùy chọn",
+        "splashScreen": "",
+        "surveyResultScreen": "Kết quả khảo sát",
+        "applicationOptionScreen": "Tùy chọn ứng dụng",
+        "approvalPostScreen": "Duyệt bài viết",
+        "createSurveyScreen": "Thêm khảo sát",
+        "createRecruitmentScreen": "Thêm tin tuyển dụng",
+        "createUpdateProfile": "Cập nhật thông tin cá nhân",
+        "manageJobApply": "Quản lý hồ sơ ứng tuyển",
+        "pendingPostScreen": "Bài viết đang chờ",
+        "detailSurveyScreen": "Chi tiết câu hỏi",
+        "studentAndFacultyScreen": "Nhóm thảo luận của sinh viên ",
+        "detailPost": "Chi tiết thông báo"
+    },
+    "FollowComponent": {
+        "following": "Đang theo dõi",
+        "follower": "Đang theo dõi bạn",
+        "search": "Tìm kiếm người dùng ..."
+    },
+    "UserItem": {
+        "follow": "Theo dõi",
+        "unFollow": "Hủy theo dõi",
+        "profile": "Trang cá nhân"
     }
 }

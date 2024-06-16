@@ -8,6 +8,11 @@ interface Props {
   height?: number;
   onPress?: () => void;
   marginVertical?: number;
+  borderRadius?: number;
+  backgroundColor?: string;
+  marginHorizontal?: number;
+  paddingHorizontal?: number;
+  padding?: number;
   justifyContent?:
     | 'flex-start'
     | 'flex-end'
@@ -28,9 +33,25 @@ const RowComponent = (props: Props) => {
     marginVertical,
     height,
     marginLeft,
+    backgroundColor,
+    borderRadius,
+    marginHorizontal,
+    paddingHorizontal,
+    padding,
   } = props;
   const style = [
-    {alignItems, justifyContent, marginVertical, height, marginLeft},
+    {
+      alignItems,
+      justifyContent,
+      marginVertical,
+      height,
+      marginLeft,
+      backgroundColor,
+      borderRadius,
+      marginHorizontal,
+      paddingHorizontal,
+      padding,
+    },
     globalStyles.row,
   ];
   return (

@@ -1,44 +1,48 @@
-import { useIsFocused, useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { setDefaultLanguage, setTranslations, useTranslation } from 'react-multi-lang';
-import { FlatList, ScrollView } from 'react-native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useCallback, useEffect, useRef, useState} from 'react';
+import {
+  setDefaultLanguage,
+  setTranslations,
+  useTranslation,
+} from 'react-multi-lang';
+import {FlatList, ScrollView} from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import { Asset } from 'react-native-image-picker';
-import { shallowEqual } from 'react-redux';
-import { RootStackParamList } from '../../../../App';
+import {Asset} from 'react-native-image-picker';
+import {shallowEqual} from 'react-redux';
+import {RootStackParamList} from '../../../../App';
 import ModalImage from '../../../../components/modals/Image/ModalImage';
 import PostTypeChecker from '../../../../components/post/postTypeChecker/PostTypeChecker';
 import ImagePicker from '../../../../components/upload/ImagePicker';
-import { Colors } from '../../../../constants/Colors';
-import { MESSENGER_SCREEN, OPTION_SCREEN } from '../../../../constants/Screen';
-import { Variable } from '../../../../constants/Variables';
-import { Data } from '../../../../data/Data';
+import {Colors} from '../../../../constants/Colors';
+import {MESSENGER_SCREEN, OPTION_SCREEN} from '../../../../constants/Screen';
+import {Variable} from '../../../../constants/Variables';
+import {Data} from '../../../../data/Data';
 import en from '../../../../languages/en.json';
 import jp from '../../../../languages/jp.json';
 import vi from '../../../../languages/vi.json';
-import { useAppDispatch, useAppSelector } from '../../../../redux/Hook';
+import {useAppDispatch, useAppSelector} from '../../../../redux/Hook';
 import {
   useDeletePostMutation,
   useFollowMutation,
   useGetPostsByIdQuery,
   useLikeMutation,
-  useSaveOrUnSavePostMutation
+  useSaveOrUnSavePostMutation,
 } from '../../../../redux/Service';
-import { setUserIdOfProfileScreen } from '../../../../redux/Slice';
-import { Business } from '../../../../types/Business';
-import { Faculty } from '../../../../types/Faculty';
-import { LikeAction } from '../../../../types/LikeAction';
-import { Post } from '../../../../types/Post';
-import { DeletePostRequest } from '../../../../types/request/DeletePostRequest';
-import { FollowRequest } from '../../../../types/request/FollowRequest';
-import { SavePostRequest } from '../../../../types/request/SavePostRequest';
-import { Student } from '../../../../types/Student';
-import { GetPostActive } from '../../../../utils/GetPostActive';
+import {setUserIdOfProfileScreen} from '../../../../redux/Slice';
+import {Business} from '../../../../types/Business';
+import {Faculty} from '../../../../types/Faculty';
+import {LikeAction} from '../../../../types/LikeAction';
+import {Post} from '../../../../types/Post';
+import {DeletePostRequest} from '../../../../types/request/DeletePostRequest';
+import {FollowRequest} from '../../../../types/request/FollowRequest';
+import {SavePostRequest} from '../../../../types/request/SavePostRequest';
+import {Student} from '../../../../types/Student';
+import {GetPostActive} from '../../../../utils/GetPostActive';
 import ContainerComponent from '../../../container/ContainerComponent';
 import ProfileTypeChecker from '../../profileTypeChecker/ProfileTypeChecker';
 
-setTranslations({ vi, jp, en });
+setTranslations({vi, jp, en});
 setDefaultLanguage('vi');
 
 interface Props {
@@ -48,7 +52,7 @@ interface Props {
 
 const PrintfProfileScreen = (props: Props) => {
   console.log('==================PrintfProfileScreen==================');
-  const { userIdOfProfile, group } = props;
+  const {userIdOfProfile, group} = props;
   const t = useTranslation();
   const userLogin = useAppSelector(
     state => state.TDCSocialNetworkReducer.userLogin,
@@ -58,11 +62,12 @@ const PrintfProfileScreen = (props: Props) => {
   const [isFollow, setIsFollow] = useState<boolean>(false);
   const isFocused = useIsFocused();
   const scrollViewRef = useRef<ScrollView>(null);
-  const [imagePickerOption, setImagePickerOption] = useState<ActionSheet | null>();
+  const [imagePickerOption, setImagePickerOption] =
+    useState<ActionSheet | null>();
   const [userInformation, setUserInformation] = useState<object>({
     userId: userLogin?.id,
-    avatar: undefined
-  })
+    avatar: undefined,
+  });
   const [imagePicker, setImagePicker] = useState<Asset[] | null>(null);
   const [flagImageUpdate, setFlagImageUpdate] = useState(-1);
   const isNavigateToSame = useAppSelector(
@@ -72,7 +77,7 @@ const PrintfProfileScreen = (props: Props) => {
 
   const [
     deletePost,
-    { isLoading: isDelete, isError: deleteError, error: deleteErrorMessage },
+    {isLoading: isDelete, isError: deleteError, error: deleteErrorMessage},
   ] = useDeletePostMutation();
 
   const [
@@ -86,19 +91,19 @@ const PrintfProfileScreen = (props: Props) => {
 
   const [
     like,
-    { isLoading: isLike, isError: likeError, error: likeErrorMessage },
+    {isLoading: isLike, isError: likeError, error: likeErrorMessage},
   ] = useLikeMutation();
 
   const [
     follow,
-    { isLoading: _isFollow, isError: followError, error: followErrorMessage },
+    {isLoading: _isFollow, isError: followError, error: followErrorMessage},
   ] = useFollowMutation();
 
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const [userInfo, setUserInfo] = useState<
-    Student | Faculty | Business | null
+    Student | Faculty | Business | undefined
   >();
   const [typeAuthorPost, setTypeAuthorPost] = useState<string>('');
   const [showUserImage, setShowUserImage] = useState({
@@ -126,7 +131,7 @@ const PrintfProfileScreen = (props: Props) => {
     }
   }, [isNavigateToSame]);
 
-  const { data, isFetching } = useGetPostsByIdQuery(
+  const {data, isFetching} = useGetPostsByIdQuery(
     {
       userId: userIdOfProfile ?? 0,
       groupCode: group ?? '',
@@ -157,7 +162,7 @@ const PrintfProfileScreen = (props: Props) => {
     } else if (flag === Variable.CALL_ACTION) {
       //
     } else {
-      navigation.navigate(OPTION_SCREEN);
+      navigation.navigate(OPTION_SCREEN, {userData: userInfo!});
     }
   };
 
@@ -195,7 +200,6 @@ const PrintfProfileScreen = (props: Props) => {
         break;
     }
   }, []);
-
 
   const handleClickCloseImageEvent = useCallback(() => {
     setShowUserImage({
@@ -277,8 +281,8 @@ const PrintfProfileScreen = (props: Props) => {
   );
 
   const handleClearImagePickerData = () => {
-    setImagePicker(null)
-  }
+    setImagePicker(null);
+  };
 
   const handleUpdateImageEvent = () => {
     console.log('===================handleUpdateImageEvent=================');
@@ -292,7 +296,7 @@ const PrintfProfileScreen = (props: Props) => {
     //   sendData();
     // })
     handleClearImagePickerData();
-  }
+  };
 
   return (
     <ContainerComponent backgroundColor={Colors.COLOR_GREY_FEEBLE}>
@@ -303,15 +307,15 @@ const PrintfProfileScreen = (props: Props) => {
           image={showUserImage.image}
           onCloseModal={handleClickCloseImageEvent}
         />
-        {
-          Boolean(imagePicker) && <ModalImage
+        {Boolean(imagePicker) && (
+          <ModalImage
             onUpdate={handleUpdateImageEvent}
             isUpload={true}
             visible={true}
             image={imagePicker}
             onCloseModal={handleClearImagePickerData}
           />
-        }
+        )}
         <ProfileTypeChecker
           isFollow={isFollow}
           data={data?.data.posts}
@@ -325,13 +329,13 @@ const PrintfProfileScreen = (props: Props) => {
           scrollEnabled={false}
           extraData={posts}
           data={posts}
-          renderItem={({ item }) => renderItem(item)}
+          renderItem={({item}) => renderItem(item)}
         />
       </ScrollView>
       <ImagePicker
-        optionsRef={(ref) => setImagePickerOption(ref)}
-        onResult={(result) => {
-          setImagePicker(result)
+        optionsRef={ref => setImagePickerOption(ref)}
+        onResult={result => {
+          setImagePicker(result);
         }}
       />
     </ContainerComponent>

@@ -294,5 +294,54 @@
     },
     "ModalImage": {
         "textUpdate": "更新"
+    },
+    "OptionScreen": {
+        "optionScreenFollowText": "フォロー",
+        "optionScreenSaveText": "保存",
+        "optionScreenUpdateProfileText": "プロフィールを更新"
+    },
+    "ToolbarTitle": {
+        "changePasswordScreen": "パスワードを変更",
+        "recruitmentDetailScreen": "求人詳細",
+        "topTabNavigator": "TDC ソーシャルネットワーク",
+        "drawerTabNavigator": "TDC ソーシャルネットワーク",
+        "forgottenPasswordScreen": "パスワードをお忘れの方",
+        "acceptForgottenPasswordScreen": "Eメール確認",
+        "searchScreen": "検索",
+        "conversationScreen": "会話",
+        "messengerScreen": "メッセンジャー",
+        "addQuestionScreen": "質問を追加",
+        "reviewSurveyPostScreen": "投稿を確認",
+        "surveyConductScreen": "アンケートを実施",
+        "jobApplyScreen": "求人応募",
+        "listPostSavedScreen": "保存した投稿",
+        "createNormalPostScreen": "",
+        "listJobApplyScreen": "応募リスト",
+        "listFollowScreen": "フォローリスト",
+        "profileScreen": "ユーザープロフィール",
+        "detailJobApply": "応募詳細",
+        "optionScreen": "オプション",
+        "splashScreen": "",
+        "surveyResultScreen": "アンケート結果",
+        "applicationOptionScreen": "アプリケーションオプション",
+        "approvalPostScreen": "投稿承認",
+        "createSurveyScreen": "アンケート作成",
+        "createRecruitmentScreen": "求人作成",
+        "createUpdateProfile": "プロフィールを更新",
+        "manageJobApply": "応募管理",
+        "pendingPostScreen": "保留中の投稿",
+        "detailSurveyScreen": "質問詳細",
+        "studentAndFacultyScreen": "学生のディスカッショングループ",
+        "detailPost": "お知らせの詳細"
+    },
+    "FollowComponent": {
+        "following": "フォロー中",
+        "follower": "あなたをフォローしています",
+        "search": "ユーザーを検索..."
+    },
+    "UserItem": {
+        "follow": "フォロー",
+        "unFollow": "フォロー解除",
+        "profile": "プロフィール"
     }
 }

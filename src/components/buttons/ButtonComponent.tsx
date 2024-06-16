@@ -30,6 +30,15 @@ interface Props {
   style?: StyleProp<ViewStyle>;
   colorDisable?: string;
   widthAutoFollowContent?: boolean;
+  justifyContent?:
+    | 'flex-start'
+    | 'flex-end'
+    | 'center'
+    | 'space-between'
+    | 'space-around'
+    | 'space-evenly'
+    | undefined;
+  padding?: number;
 }
 const ButtonComponent = (props: Props) => {
   const {
@@ -51,19 +60,22 @@ const ButtonComponent = (props: Props) => {
     style,
     colorDisable,
     widthAutoFollowContent,
+    justifyContent,
+    padding,
   } = props;
 
   return (
     <TouchableOpacity
       disabled={isDisable}
       onPress={() => onPress()}
-      style={{
-        flexDirection: widthAutoFollowContent ? 'row' : undefined,
-      }}>
+      style={[
+        {
+          flexDirection: widthAutoFollowContent ? 'row' : undefined,
+        },
+      ]}>
       <View
         style={[
           globalStyles.row,
-          boxShadow && globalStyles.shadow,
           styles.wrapper_content,
           {
             backgroundColor: isDisable ? colorDisable : backgroundColor,
@@ -72,6 +84,8 @@ const ButtonComponent = (props: Props) => {
             borderRadius,
             marginVertical,
             alignSelf,
+            justifyContent: justifyContent ?? 'center',
+            padding,
           },
           style,
         ]}>
@@ -91,7 +105,6 @@ const ButtonComponent = (props: Props) => {
 
 const styles = StyleSheet.create({
   wrapper_content: {
-    justifyContent: 'center',
     alignItems: 'center',
   },
 });

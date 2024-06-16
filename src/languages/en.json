@@ -297,5 +297,54 @@
     },
     "ModalImage": {
         "textUpdate": "Update"
+    },
+    "OptionScreen": {
+        "optionScreenFollowText": "Follow",
+        "optionScreenSaveText": "Save",
+        "optionScreenUpdateProfileText": "Update profile"
+    },
+    "ToolbarTitle": {
+        "changePasswordScreen": "Change Password",
+        "recruitmentDetailScreen": "Recruitment details",
+        "topTabNavigator": "TDC Social Network",
+        "drawerTabNavigator": "TDC Social Network",
+        "forgottenPasswordScreen": "Forgot password",
+        "acceptForgottenPasswordScreen": "Confirm email",
+        "searchScreen": "Search",
+        "conversationScreen": "Conversation",
+        "messengerScreen": "Messenger",
+        "addQuestionScreen": "Add question",
+        "reviewSurveyPostScreen": "Review post",
+        "surveyConductScreen": "Conduct survey",
+        "jobApplyScreen": "Apply for job",
+        "listPostSavedScreen": "Saved posts",
+        "createNormalPostScreen": "",
+        "listJobApplyScreen": "Job application list",
+        "listFollowScreen": "Follow list",
+        "profileScreen": "User profile",
+        "detailJobApply": "Job application details",
+        "optionScreen": "Options",
+        "splashScreen": "",
+        "surveyResultScreen": "Survey result",
+        "applicationOptionScreen": "Application options",
+        "approvalPostScreen": "Approve post",
+        "createSurveyScreen": "Add survey",
+        "createRecruitmentScreen": "Add recruitment post",
+        "createUpdateProfile": "Update personal information",
+        "manageJobApply": "Manage job applications",
+        "pendingPostScreen": "Pending posts",
+        "detailSurveyScreen": "Question details",
+        "studentAndFacultyScreen": "Student discussion group",
+        "detailPost": "Notification details"
+    },
+    "FollowComponent": {
+        "following": "Following",
+        "follower": "Follows you",
+        "search": "Search user..."
+    },
+    "UserItem": {
+        "follow": "Follow",
+        "unFollow": "Unfollow",
+        "profile": "Profile"
     }
 }

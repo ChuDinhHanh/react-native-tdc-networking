@@ -1,21 +1,21 @@
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {
   setDefaultLanguage,
   setTranslations,
   useTranslation,
 } from 'react-multi-lang';
-import { Text, TouchableOpacity, View } from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import MaterialCommunityIconsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { RootStackParamList } from '../../../App';
-import { Colors } from '../../../constants/Colors';
-import { PROFILE_SCREEN } from '../../../constants/Screen';
+import {RootStackParamList} from '../../../App';
+import {Colors} from '../../../constants/Colors';
+import {PROFILE_SCREEN} from '../../../constants/Screen';
 import en from '../../../languages/en.json';
 import jp from '../../../languages/jp.json';
 import vi from '../../../languages/vi.json';
-import { useAppDispatch, useAppSelector } from '../../../redux/Hook';
-import { setHiddenBottomSheet } from '../../../redux/Slice';
-import { numberDayPassed } from '../../../utils/FormatTime';
+import {useAppDispatch, useAppSelector} from '../../../redux/Hook';
+import {setHiddenBottomSheet} from '../../../redux/Slice';
+import {numberDayPassed} from '../../../utils/FormatTime';
 import ButtonComponent from '../../buttons/ButtonComponent';
 import DefaultAvatar from '../../common/defaultAvatar/DefaultAvatar';
 import Content from '../../post/session/content/Content';
@@ -24,7 +24,7 @@ import SpaceComponent from '../../space/SpaceComponent';
 import TextComponent from '../../text/TextComponent';
 import styles from './CommentsItemComponent.style';
 
-setTranslations({ vi, jp, en });
+setTranslations({vi, jp, en});
 setDefaultLanguage('vi');
 
 interface Props {
@@ -75,13 +75,13 @@ const CommentsItemComponent = (props: Props) => {
       </View>
       <View style={styles.wrapperRight}>
         <ButtonComponent
-          style={{ alignSelf: 'flex-start' }}
+          style={{alignSelf: 'flex-start'}}
           onPress={handlePressAvatarAndName}
           title={
-            <Text style={{ color: Colors.BLACK }}>
+            <Text style={{color: Colors.BLACK}}>
               {item.user.name}
               {item.user.id === userLogin?.id && (
-                <Text style={{ color: Colors.COLOR_BLUE_BANNER }}>
+                <Text style={{color: Colors.COLOR_BLUE_BANNER}}>
                   {'\xa0'}
                   <MaterialCommunityIconsIcon
                     name="microphone-variant"
@@ -135,7 +135,7 @@ const CommentsItemComponent = (props: Props) => {
               alignItems="center"
               justifyContent="flex-start">
               <View
-                style={{ width: 30, height: 1, backgroundColor: Colors.BLACK }}
+                style={{width: 30, height: 1, backgroundColor: Colors.BLACK}}
               />
               <SpaceComponent width={5} />
               <TextComponent

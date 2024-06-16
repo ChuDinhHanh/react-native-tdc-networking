@@ -30,7 +30,6 @@ import {
   JOB_APPLY_SCREEN,
   LIST_FOLLOW_SCREEN,
   LIST_JOB_APPLY_SCREEN,
-  LIST_POST_SAVED_SCREEN,
   LOGIN_SCREEN,
   MESSENGER_SCREEN,
   MY_PROFILE_SCREEN,
@@ -39,6 +38,7 @@ import {
   PROFILE_SCREEN,
   RECRUITMENT_DETAIL_SCREEN,
   REVIEW_SURVEY_POST_SCREEN,
+  SAVED_POST_SCREEN,
   SEARCH_SCREEN,
   SPLASH_SCREEN,
   STUDENT_DISCUSSION_DASHBOARD_SCREEN,
@@ -46,6 +46,7 @@ import {
   SURVEY_CONDUCT_SCREEN,
   SURVEY_RESULT_SCREEN,
   TOP_TAB_NAVIGATOR,
+  UPDATE_PROFILE,
 } from './constants/Screen';
 import {INITIAL_SCREEN} from './constants/SystemConstant';
 import {store} from './redux/Store';
@@ -53,7 +54,7 @@ import AcceptScreen from './screens/Censorship/AcceptScreen';
 import ConversationScreen from './screens/Converstation/ConversationScreen';
 import DetailJobApplyScreen from './screens/Details/Post/Job/DetailJobApplyScreen';
 import RecruitmentDetailScreen from './screens/Details/Post/Recruitment/RecruitmentDetailScreen';
-import ListFollowScreen from './screens/Follow/ListFollowScreen';
+import ListFollowScreen from './screens/Follow/common/ListFollowScreen';
 import ForgottenPasswordScreen from './screens/ForgotPass/ForgottenPasswordScreen';
 import ImageViewScreen from './screens/Image/ImageViewScreen';
 import IntermediationScreen from './screens/Intermediate/IntermediationScreen';
@@ -65,13 +66,12 @@ import MessengerScreen from './screens/Messager/MessengerScreen';
 import NotificationScreen from './screens/Notification/NotificationScreen';
 import ApplicationOptionScreen from './screens/Options/ApplicationOptionScreen';
 import OptionScreen from './screens/Options/OptionScreen';
-import BusinessDashboardScreen from './screens/Post/Bussiness/BusinessDashboardScreen';
+import BusinessDashboardScreen from './screens/Post/bussiness/BusinessDashboardScreen';
 import CreateNormalPostScreen from './screens/Post/CreatePost/Normal/CreateNormalPostScreen';
 import CreateRecruitmentScreen from './screens/Post/CreatePost/Recruitment/CreateRecruitmentScreen';
 import CreateSurveyPostScreen from './screens/Post/CreatePost/Survey/CreateSurveyPostScreen';
-import FacultyDashboardScreen from './screens/Post/Faculty/FacultyDashboardScreen';
-import ListPostSavedScreen from './screens/Post/SavePost/ListPostSavedScreen';
-import StudentDiscussionDashboardScreen from './screens/Post/StudentAndFaculty/StudentDiscussionDashboardScreen';
+import FacultyDashboardScreen from './screens/Post/faculty/FacultyDashboardScreen';
+import StudentDiscussionDashboardScreen from './screens/Post/studentAndFaculty/StudentDiscussionDashboardScreen';
 import MyProfileScreen from './screens/Profile/session/myProfile/MyProfileScreen';
 import SearchScreen from './screens/Search/SearchScreen';
 import BusinessRegistrationScreen from './screens/SignUp/Business/BusinessRegistrationScreen';
@@ -91,6 +91,12 @@ import {Colors} from './constants/Colors';
 import {useNetInfo, NetInfoState} from '@react-native-community/netinfo';
 import {Alert} from 'react-native';
 import {ToastContainer, toast} from 'react-toastify';
+import {Student} from './types/Student';
+import {Faculty} from './types/Faculty';
+import {Business} from './types/Business';
+import {UpdateProfile} from './types/screens/UpdateProfile';
+import UpdateProfileScreen from './screens/Profile/update/UpdateProfileScreen';
+import SavedPostScreen from './screens/Post/savePost/SavedPostScreen';
 
 export type RootStackParamList = {
   CONVERSATION_SCREEN: undefined;
@@ -123,7 +129,7 @@ export type RootStackParamList = {
   DETAIL_JOB_APPLY: {cvId: number} | undefined;
   PROFILE_SCREEN: {userId: number; group: string} | undefined;
   LIST_POST_SAVED_SCREEN: undefined;
-  OPTION_SCREEN: undefined;
+  OPTION_SCREEN: UpdateProfile;
   SURVEY_RESULT_SCREEN: {surveyPostId: number};
   APPLICATION_OPTION_SCREEN: undefined;
   INTERMEDIATELY_SCREEN: undefined;
@@ -132,6 +138,8 @@ export type RootStackParamList = {
   FORGOTTEN_PASSWORD_SCREEN: undefined;
   ACCEPT_SCREEN: undefined;
   DETAIL_POST_SCREEN: {post: any; notificationType: string} | undefined;
+  UPDATE_PROFILE: UpdateProfile;
+  SAVED_POST_SCREEN: undefined;
 };
 
 const TopTab = createMaterialTopTabNavigator();
@@ -298,9 +306,13 @@ export function StackNavigator(): JSX.Element {
       />
 
       <RootStack.Screen
-        name={LIST_POST_SAVED_SCREEN}
-        options={{header: () => false}}
-        component={ListPostSavedScreen}
+        name={SAVED_POST_SCREEN}
+        options={{
+          header: () => (
+            <ToolbarWithBackPress title={t('ToolbarTitle.detailPost')} />
+          ),
+        }}
+        component={SavedPostScreen}
       />
 
       <RootStack.Screen
@@ -311,13 +323,23 @@ export function StackNavigator(): JSX.Element {
 
       <RootStack.Screen
         name={LIST_JOB_APPLY_SCREEN}
-        options={{header: () => false}}
+        options={{
+          header: () => (
+            <ToolbarWithBackPress
+              title={t('ToolbarTitle.listJobApplyScreen')}
+            />
+          ),
+        }}
         component={ListJobApplyScreen}
       />
 
       <RootStack.Screen
         name={LIST_FOLLOW_SCREEN}
-        options={{header: () => false}}
+        options={{
+          header: () => (
+            <ToolbarWithBackPress title={t('ToolbarTitle.listFollowScreen')} />
+          ),
+        }}
         component={ListFollowScreen}
       />
 
@@ -325,7 +347,7 @@ export function StackNavigator(): JSX.Element {
         name={PROFILE_SCREEN}
         options={{
           header: () => (
-            <ToolbarWithBackPress title={t('ToolbarTitle.detailPost')} />
+            <ToolbarWithBackPress title={t('ToolbarTitle.profileScreen')} />
           ),
         }}
         component={ProfileScreen}
@@ -333,13 +355,23 @@ export function StackNavigator(): JSX.Element {
 
       <RootStack.Screen
         name={DETAIL_JOB_APPLY}
-        options={{header: () => false}}
+        options={{
+          header: () => (
+            <ToolbarWithBackPress title={t('ToolbarTitle.detailJobApply')} />
+          ),
+        }}
         component={DetailJobApplyScreen}
       />
 
       <RootStack.Screen
         name={OPTION_SCREEN}
-        options={{header: () => false}}
+        options={{
+          header: () => (
+            <ToolbarWithBackPress
+              title={t('ToolbarTitle.applicationOptionScreen')}
+            />
+          ),
+        }}
         component={OptionScreen}
       />
 
@@ -351,24 +383,42 @@ export function StackNavigator(): JSX.Element {
 
       <RootStack.Screen
         name={SURVEY_RESULT_SCREEN}
-        options={{header: () => false}}
+        options={{
+          header: () => (
+            <ToolbarWithBackPress
+              title={t('ToolbarTitle.surveyResultScreen')}
+            />
+          ),
+        }}
         component={SurveyResultScreen}
       />
 
       <RootStack.Screen
         name={APPLICATION_OPTION_SCREEN}
-        options={{header: () => false}}
+        options={{
+          header: () => (
+            <ToolbarWithBackPress
+              title={t('ToolbarTitle.applicationOptionScreen')}
+            />
+          ),
+        }}
         component={ApplicationOptionScreen}
       />
 
       <RootStack.Screen
         name={FORGOTTEN_PASSWORD_SCREEN}
-        options={{header: () => false}}
+        options={{
+          title: t('ToolbarTitle.forgottenPasswordScreen'),
+          header: () => null,
+        }}
         component={ForgottenPasswordScreen}
       />
       <RootStack.Screen
         name={ACCEPT_SCREEN}
-        options={{header: () => false}}
+        options={{
+          title: t('ToolbarTitle.acceptForgottenPasswordScreen'),
+          header: () => null,
+        }}
         component={AcceptScreen}
       />
       <RootStack.Screen
@@ -379,6 +429,17 @@ export function StackNavigator(): JSX.Element {
           ),
         }}
         component={DetailPost}
+      />
+      <RootStack.Screen
+        name={UPDATE_PROFILE}
+        options={{
+          header: () => (
+            <ToolbarWithBackPress
+              title={t('ToolbarTitle.createUpdateProfile')}
+            />
+          ),
+        }}
+        component={UpdateProfileScreen}
       />
     </RootStack.Navigator>
   );

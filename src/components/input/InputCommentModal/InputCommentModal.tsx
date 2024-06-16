@@ -1,28 +1,26 @@
-import { MutableRefObject, useState } from 'react';
-import { setDefaultLanguage, setTranslations, useTranslation } from 'react-multi-lang';
+import {MutableRefObject, useState} from 'react';
 import {
-  Alert,
-  Keyboard,
-  Text,
-  TextInput,
-  View
-} from 'react-native';
-import { Divider } from 'react-native-paper';
+  setDefaultLanguage,
+  setTranslations,
+  useTranslation,
+} from 'react-multi-lang';
+import {Alert, Keyboard, Text, TextInput, View} from 'react-native';
+import {Divider} from 'react-native-paper';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
-import { Colors } from '../../../constants/Colors';
-import { Variable } from '../../../constants/Variables';
+import {Colors} from '../../../constants/Colors';
+import {Variable} from '../../../constants/Variables';
 import en from '../../../languages/en.json';
 import jp from '../../../languages/jp.json';
 import vi from '../../../languages/vi.json';
-import { useAppSelector } from '../../../redux/Hook';
-import { isLengthInRange, isNotBlank } from '../../../utils/ValidateUtils';
+import {useAppSelector} from '../../../redux/Hook';
+import {isLengthInRange, isNotBlank} from '../../../utils/ValidateUtils';
 import ButtonComponent from '../../buttons/ButtonComponent';
 import DefaultAvatar from '../../common/defaultAvatar/DefaultAvatar';
 import RowComponent from '../../row/RowComponent';
 import SessionComponent from '../../session/SessionComponent';
 import TextComponent from '../../text/TextComponent';
 import styles from './InputCommentModal.style';
-setTranslations({ vi, jp, en });
+setTranslations({vi, jp, en});
 setDefaultLanguage('jp');
 
 interface Props {
@@ -35,7 +33,7 @@ interface Props {
 const InputCommentModal = (props: Props) => {
   const t = useTranslation();
   console.log('===============InputCommentModalComponent=====================');
-  const { onCreateNewComment, inputRef, userReply, onCancelReply } = props;
+  const {onCreateNewComment, inputRef, userReply, onCancelReply} = props;
   const userLogin = useAppSelector(
     state => state.TDCSocialNetworkReducer.userLogin,
   );
@@ -53,39 +51,56 @@ const InputCommentModal = (props: Props) => {
       onCreateNewComment(comment);
       setComment('');
     } else {
-      Alert.alert(`⚠️ ${t("InputComment.warningText")}`, `${t("InputComment.requiredTextWarning")}`, [
-        { text: `${t("InputComment.continueText")}` },
-      ]);
+      Alert.alert(
+        `⚠️ ${t('InputComment.warningText')}`,
+        `${t('InputComment.requiredTextWarning')}`,
+        [{text: `${t('InputComment.continueText')}`}],
+      );
     }
   };
 
   const handleCancelReplyClickEvent = () => {
-    Alert.alert(`⚠️ ${t("InputComment.requestText")}`, `${t("InputComment.contentRequestText")}`, [
-      {
-        text: `${t("InputComment.continueText")}`,
-        onPress: onCancelReply,
-      },
-      {
-        text: `${t("InputComment.returnText")}`,
-        style: 'destructive'
-      }
-    ]);
-  }
+    Alert.alert(
+      `⚠️ ${t('InputComment.requestText')}`,
+      `${t('InputComment.contentRequestText')}`,
+      [
+        {
+          text: `${t('InputComment.continueText')}`,
+          onPress: onCancelReply,
+        },
+        {
+          text: `${t('InputComment.returnText')}`,
+          style: 'destructive',
+        },
+      ],
+    );
+  };
 
   return (
-    <View style={[styles.wrapper, { bottom: 0 }]}>
+    <View style={[styles.wrapper, {bottom: 0}]}>
       <Divider />
       <SessionComponent>
-        {
-          Boolean(userReply) && <RowComponent marginVertical={8}>
+        {Boolean(userReply) && (
+          <RowComponent marginVertical={8}>
             <View style={styles.wrapperUserTag}>
               <Text style={styles.textUserTagTitle}>
-                {t("InputComment.respondingText")} <Text style={styles.textUserNameTag}>{userReply}</Text>
+                {t('InputComment.respondingText')}{' '}
+                <Text style={styles.textUserNameTag}>{userReply}</Text>
               </Text>
             </View>
-            <ButtonComponent onPress={handleCancelReplyClickEvent} title={<TextComponent fontWeight='bold' color={Colors.BLACK} fontSize={10} text={t("InputComment.cancelText")} />} />
+            <ButtonComponent
+              onPress={handleCancelReplyClickEvent}
+              title={
+                <TextComponent
+                  fontWeight="bold"
+                  color={Colors.BLACK}
+                  fontSize={10}
+                  text={t('InputComment.cancelText')}
+                />
+              }
+            />
           </RowComponent>
-        }
+        )}
         <RowComponent justifyContent="center" alignItems="center">
           <View style={styles.wrapperAvatar}>
             <DefaultAvatar size={38} identifer={userLogin?.name[0]} />
@@ -95,7 +110,11 @@ const InputCommentModal = (props: Props) => {
               ref={inputRef}
               value={comment}
               onChangeText={val => setComment(val)}
-              placeholder={Boolean(userReply) ? '' : t("CreateCommentToolbar.commentPlaceholderInput")}
+              placeholder={
+                Boolean(userReply)
+                  ? ''
+                  : t('CreateCommentToolbar.commentPlaceholderInput')
+              }
               placeholderTextColor="grey"
               style={styles.textInput}
             />
@@ -115,7 +134,7 @@ const InputCommentModal = (props: Props) => {
           </View>
         </RowComponent>
       </SessionComponent>
-    </View >
+    </View>
   );
 };
 
