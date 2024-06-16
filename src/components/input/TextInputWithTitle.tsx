@@ -1,4 +1,4 @@
-import React, {ReactNode, useState} from 'react';
+import React, {useState} from 'react';
 import {
   KeyboardTypeOptions,
   StyleProp,
@@ -11,8 +11,8 @@ import {
 import Entypo from 'react-native-vector-icons/Entypo';
 import {Colors} from '../../constants/Colors';
 import ButtonComponent from '../buttons/ButtonComponent';
-import SpaceComponent from '../space/SpaceComponent';
 import TextValidateTypeSecond from '../common/textValidate/TextValidateTypeSecond';
+import SpaceComponent from '../space/SpaceComponent';
 
 interface TextInputWithTitleProps {
   allowClear?: boolean;
@@ -79,7 +79,7 @@ export default function TextInputWithTitle(props: TextInputWithTitleProps) {
           style={{flex: 1}}
           onChangeText={value => onChangeText && onChangeText(value)}
         />
-        {allowClear ? (
+        {isHidePass ? (
           <View style={styles.affixAndSuffix}>
             <ButtonComponent
               onPress={() => _setIsShowPass(!_isShowPass)}

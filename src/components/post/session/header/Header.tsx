@@ -16,6 +16,7 @@ import DefaultAvatar from '../../../common/defaultAvatar/DefaultAvatar';
 import SpaceComponent from '../../../space/SpaceComponent';
 import TextComponent from '../../../text/TextComponent';
 import styles from './Header.style';
+import {shallowEqual} from 'react-redux';
 
 export interface Props {
   t: ReturnType<typeof useTranslation>;
@@ -40,7 +41,10 @@ interface MenuOptionItem {
 }
 
 const Header = (props: Props) => {
-  const {userLogin} = useAppSelector(state => state.TDCSocialNetworkReducer);
+  const userLogin = useAppSelector(
+    state => state.TDCSocialNetworkReducer.userLogin,
+    shallowEqual,
+  );
   const {
     active,
     available,
@@ -72,7 +76,7 @@ const Header = (props: Props) => {
       {
         type: Variable.CLICK_UN_SAVE_POST,
         name: t('MenuOption.menuOptionUnSaveArticle'),
-        visible: isSave === 0 && userLogin?.id !== userId,
+        visible: isSave === 1,
       },
     ];
 
@@ -80,7 +84,7 @@ const Header = (props: Props) => {
       options.push({
         type: Variable.CLICK_UPDATE_POST,
         name: t('MenuOption.menuOptionViewSurveyUpdateNormalPost'),
-        visible: isSave === 0 && userLogin?.id !== userId,
+        visible: active === 0,
       });
     }
 

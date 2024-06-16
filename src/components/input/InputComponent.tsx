@@ -6,6 +6,7 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
 import {Colors} from '../../constants/Colors';
 import ButtonComponent from '../buttons/ButtonComponent';
@@ -14,6 +15,7 @@ import TextComponent from '../text/TextComponent';
 import TextValidate from '../validation/TextValidate';
 
 interface Props {
+  allowClear?: boolean;
   value?: string;
   affix?: ReactNode;
   suffix?: ReactNode;
@@ -38,6 +40,7 @@ interface Props {
 }
 const InputComponent = (props: Props) => {
   const {
+    allowClear,
     typePassword,
     isHidePass,
     placeholder,
@@ -64,6 +67,8 @@ const InputComponent = (props: Props) => {
 
   const inputRef = useRef<TextInput>(null);
 
+  const [inputValue, setInputValue] = useState(value);
+
   useEffect(() => {
     isFocus && inputRef.current?.focus();
   }, [isFocus]);
@@ -76,6 +81,16 @@ const InputComponent = (props: Props) => {
     }
   }, [isError]);
 
+  const handleClearData = () => {
+    onChange('');
+    setInputValue('');
+  };
+
+  const handleOnChangeData = (val: string) => {
+    setInputValue(val);
+    onChange(val);
+  };
+
   return (
     <View>
       {/* Title */}
@@ -83,7 +98,6 @@ const InputComponent = (props: Props) => {
         <TextComponent
           marginBottom={5}
           fontSize={18}
-          //   fontFamily={fontFamilies.regular}
           color={Colors.BLACK}
           text={title}
         />
@@ -101,38 +115,39 @@ const InputComponent = (props: Props) => {
             borderColor: getColor,
           },
         ]}>
-        {affix && <View style={styles.affixAndSuffix}>{affix ?? affix}</View>}
+        {affix}
         <TextInput
           ref={inputRef}
-          value={value}
+          value={inputValue}
           placeholder={placeholder}
-          onChangeText={val => onChange(val)}
+          onChangeText={val => handleOnChangeData(val)}
           secureTextEntry={_isShowPass}
           placeholderTextColor={'#747688'}
           keyboardType={type ?? 'default'}
           autoCapitalize="none"
           onEndEditing={onEnd}
           onBlur={onBlur}
-          style={{flex: 1, marginHorizontal: 10}}
+          style={{flex: 1}}
         />
-        {typePassword ? (
-          <View style={styles.affixAndSuffix}>
-            <ButtonComponent
-              onPress={() => _setIsShowPass(!_isShowPass)}
-              affix={
-                <Entypo
-                  name={_isShowPass ? 'eye-with-line' : 'eye'}
-                  color={Colors.BLACK}
-                  size={20}
-                />
-              }
-            />
-          </View>
-        ) : (
-          <SpaceComponent width={15} />
+        {typePassword && (
+          <ButtonComponent
+            onPress={() => _setIsShowPass(!_isShowPass)}
+            affix={
+              <Entypo
+                name={_isShowPass ? 'eye-with-line' : 'eye'}
+                color={Colors.BLACK}
+                size={20}
+              />
+            }
+          />
+        )}
+        {allowClear && Boolean(inputValue) && (
+          <ButtonComponent
+            onPress={handleClearData}
+            affix={<AntDesign name={'close'} color={Colors.BLACK} size={20} />}
+          />
         )}
       </View>
-      <SpaceComponent height={marginBottom ?? 15} />
     </View>
   );
 };
@@ -145,6 +160,5 @@ const styles = StyleSheet.create({
     minHeight: 56,
     flex: 1,
   },
-  affixAndSuffix: {},
 });
 export default InputComponent;

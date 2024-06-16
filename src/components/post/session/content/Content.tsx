@@ -9,13 +9,19 @@ import {useTranslation} from 'react-multi-lang';
 interface Props {
   t: ReturnType<typeof useTranslation>;
   content: string;
+  backgroundColor?: string;
+  paddingVertical?: number;
 }
 const Content = (props: Props) => {
-  const {t, content} = props;
+  const {t, content, backgroundColor, paddingVertical} = props;
   const [expand, setExpand] = useState(false);
   return (
     <SafeAreaView style={styles.safe}>
-      <View style={styles.root}>
+      <View
+        style={[
+          styles.root,
+          {backgroundColor, paddingVertical: paddingVertical ?? 10},
+        ]}>
         <ReadMore
           seeLessText={t('CommentContainer.commentContainerComponentHidden')}
           seeMoreText={t('CommentContainer.commentContainerComponentSeeMore')}

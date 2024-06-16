@@ -1,13 +1,12 @@
-import {View, Text} from 'react-native';
 import React from 'react';
-import styles from './Survey.style';
-import Content from '../content/Content';
 import {useTranslation} from 'react-multi-lang';
-import {TouchableOpacity} from 'react-native';
+import {View} from 'react-native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import TextComponent from '../../../text/TextComponent';
-import ButtonComponent from '../../../buttons/ButtonComponent';
 import {Colors} from '../../../../constants/Colors';
+import ButtonComponent from '../../../buttons/ButtonComponent';
+import TextComponent from '../../../text/TextComponent';
+import Content from '../content/Content';
+import styles from './Survey.style';
 
 interface Props {
   t: ReturnType<typeof useTranslation>;
@@ -23,11 +22,11 @@ interface Props {
 
 const Survey = (props: Props) => {
   const {
+    t,
     active,
     description,
     id,
     onClickBtnSeeDetailEvent,
-    t,
     textButton,
     textJoinSurvey,
     textSeeDetailSurvey,

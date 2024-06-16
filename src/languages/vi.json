@@ -186,5 +186,165 @@
         "surveyPostButtonSetting": "Chỉnh sửa câu trả lời",
         "surveyPostButtonJoinSurvey": "Tham gia khảo sát",
         "surveyPostButtonDetailQuestion": "Chi tiết câu hỏi"
+    },
+    "ModalListUserLiked": {
+        "modalListUserLikedTitle": "Danh sách người thích"
+    },
+    "NotificationsComponent": {
+        "notification": "Thông báo",
+        "readAll": "Đọc tất cả",
+        "deleteNotification": "Xóa thông báo",
+        "unReadNotification": "Đánh dấu chưa đọc",
+        "search": "Tìm kiếm thông báo ..."
+    },
+    "Notifications": {
+        "register_success": "Chào mừng bạn đến với TDC Social Network!",
+        "change_password_success": "Bạn đã thay đổi mật khẩu thành công!",
+        "update_post": "Bạn đã cập nhật bài viết!",
+        "create_survey": " vừa đăng khảo sát",
+        "save_post": "Bạn vừa lưu bài viết!",
+        "user_like_post": " đã thích bài viết của bạn",
+        "user_comment_post": " đã bình luận bài viết của bạn",
+        "user_reply_comment": " đã trả lời bình luận của bạn",
+        "user_conduct_survey": " đã thực hiện khảo sát của bạn",
+        "post_log": "Bài viết của bạn đã bị từ chối vì ",
+        "accept_post": "Bài viết của bạn đã được duyệt!",
+        "user_update": "Bạn vừa cập nhật thông tin tài khoản thành công!",
+        "user_follow": " vừa theo dõi bạn",
+        "user_change_language": "Bạn vừa thay đổi ngôn ngữ thành công!",
+        "user_apply_job": "Bạn vừa ứng tuyển cho bài đăng:",
+        "user_create_watch_job": " vừa ứng tuyển bài đăng:",
+        "in_group": " trong",
+        "survey_txt": "Khảo sát ngay >>",
+        "user_update_avatar": "Bạn vừa cập nhật ảnh nền",
+        "post": "Bài viết"
+    },
+    "RecuitmentPostDetailComponent": {
+        "titleLoader": "Đang tải dữ liệu...",
+        "titleJob": "Vị trí tuyển dụng",
+        "employeType": "Hình thức làm việc",
+        "salary": "Lương",
+        "salaryUnitMonth": "vnd/tháng",
+        "expiration": "Thời hạn ứng tuyển",
+        "location": "Địa chỉ làm việc",
+        "benefit": "Phúc lợi",
+        "descriptionJob": "Mô tả công việc",
+        "requipmentJob": "Yêu cầu công việc",
+        "btnApplyJob": "Nộp đơn ứng tuyển",
+        "textNotification": "Thông báo",
+        "textNoApply": "Bạn không thuộc đối tượng ứng tuyển",
+        "textApplied": "Bạn đã ứng tuyển! Vui lòng vào hồ sơ ứng tuyển để theo dõi tình trạng hồ sơ"
+    },
+    "JobApplyScreen": {
+        "jobApplyScreenButtonAddCvTitle": "Thêm CV",
+        "jobApplyScreenButtonComplete": "Hoàn tất",
+        "jobApplyScreenButtonGoBack": "Quay lại",
+        "jobApplyScreenButtonUpdateCvTitle": "Cập nhật CV",
+        "jobApplyScreenEmptyCvTextContent": "Vui lòng thêm CV để hoàn tất đăng ký",
+        "jobApplyScreenEmptyCvTextTitle": "Thông báo",
+        "jobApplyScreenSaveSuccessTextContent": "Nộp đơn thành công",
+        "jobApplyScreenChangeSuccessTextContent": "Sửa đơn thành công",
+        "jobApplyScreenSaveSuccessTextTitle": "Thông báo",
+        "jobApplyScreenUploadErrorFormat": "Không đúng định dạng pdf",
+        "jobApplyScreenSystemError": "Lỗi hệ thống vui lòng thử lại sau!"
+    },
+    "Comment": {
+        "commentReplyComment": "Trả lời",
+        "commentDeleteComment": "Xóa",
+        "commentAuthor": "Tác giả",
+        "modalListCommentTitle": "Bình luận"
+    },
+    "BottomSheet": {
+        "BottomSheetTitle": "Đang tải dữ liệu..."
+    },
+    "CreateCommentToolbar": {
+        "commentCreateComment": "Đăng bình luận",
+        "commentPlaceholderInput": "Hãy nhập nội dung bình luận"
+    },
+    "BusinessSelectFacultyToolbar": {
+        "businessSelectFacultyToolbarTitle": "Hãy lựa chọn khoa mà bạn muốn hiển thị bài viết"
+    },
+    "SelectFaculty": {
+        "selectFacultyPlaceholder": "Chọn khoa...",
+        "selectFacultyTextSearch": "Tìm kiếm.."
+    },
+    "FacultyDashboard": {
+        "facultyDashboardNotifyNotHavePost": "Chưa có bài viết nào",
+        "facultyDashboardNotYetSelectFaculty": "Vui lòng chọn khoa"
+    },
+    "CreatePostSelector": {
+        "createPostSelectorPlaceHolder": "Nhập nội dung bài viết",
+        "createPostSelectorSurveyText": "Khảo sát",
+        "createPostSelectorRecruitmentText": "Tuyển dụng",
+        "createPostSelectorNormalText": "Thông thường"
+    },
+    "InputComment": {
+        "loadingText": "Đang tải...",
+        "respondingText": "Đang phản hồi",
+        "cancelText": "Hủy",
+        "requestText": " Bạn có thực sự muốn hủy trả lời?",
+        "contentRequestText": " Nếu tiếp tục bình luận của bạn sẽ giữ nguyên.",
+        "continueText": "Tiếp tục",
+        "returnText": "Quay lại",
+        "warningText": "Cảnh báo!",
+        "requiredTextWarning": "Bình luận không được để trống."
+    },
+    "ModalComment": {
+        "modalCommentTextChar": "ký tự",
+        "modalCommentCommentNotNull": "nội dung bình luận không thể để trống",
+        "modalCommentTextNumberLimited": "nội dung bình luận không thể quá",
+        "modalCommentCreateFail": "Tạo bình luận thất bại"
+    },
+    "ModalImage": {
+        "textUpdate": "Cập nhật"
+    },
+    "OptionScreen": {
+        "optionScreenFollowText": "Theo dõi",
+        "optionScreenSaveText": "Lưu",
+        "optionScreenUpdateProfileText": "Cập nhật trang cá nhân"
+    },
+    "ToolbarTitle": {
+        "changePasswordScreen": "Thay đổi mật khẩu",
+        "recruitmentDetailScreen": "Chi tiết tuyển dụng",
+        "topTabNavigator": "TDC Social Network",
+        "drawerTabNavigator": "TDC Social Network",
+        "forgottenPasswordScreen": "Quên mật khẩu",
+        "acceptForgottenPasswordScreen": "Xác nhận email",
+        "searchScreen": "Tìm kiếm",
+        "conversationScreen": "Hội thoại",
+        "messengerScreen": "Messenger",
+        "addQuestionScreen": "Thêm câu hỏi",
+        "reviewSurveyPostScreen": "Xem lại bài viết",
+        "surveyConductScreen": "Thực hiện khảo sát",
+        "jobApplyScreen": "Ứng tuyển",
+        "listPostSavedScreen": "Lưu bài viết",
+        "createNormalPostScreen": "",
+        "listJobApplyScreen": "Danh sách ứng tuyển",
+        "listFollowScreen": "Danh sách theo dõi",
+        "profileScreen": "Trang cá nhân người dùng",
+        "detailJobApply": "Chi tiết hồ sơ ứng tuyển",
+        "optionScreen": "Tùy chọn",
+        "splashScreen": "",
+        "surveyResultScreen": "Kết quả khảo sát",
+        "applicationOptionScreen": "Tùy chọn ứng dụng",
+        "approvalPostScreen": "Duyệt bài viết",
+        "createSurveyScreen": "Thêm khảo sát",
+        "createRecruitmentScreen": "Thêm tin tuyển dụng",
+        "createUpdateProfile": "Cập nhật thông tin cá nhân",
+        "manageJobApply": "Quản lý hồ sơ ứng tuyển",
+        "pendingPostScreen": "Bài viết đang chờ",
+        "detailSurveyScreen": "Chi tiết câu hỏi",
+        "studentAndFacultyScreen": "Nhóm thảo luận của sinh viên ",
+        "detailPost": "Chi tiết thông báo"
+    },
+    "FollowComponent": {
+        "following": "Đang theo dõi",
+        "follower": "Đang theo dõi bạn",
+        "search": "Tìm kiếm người dùng ..."
+    },
+    "UserItem": {
+        "follow": "Theo dõi",
+        "unFollow": "Hủy theo dõi",
+        "profile": "Trang cá nhân"
     }
 }

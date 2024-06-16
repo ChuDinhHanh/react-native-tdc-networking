@@ -186,5 +186,165 @@
         "surveyPostButtonSetting": "Edit Answers",
         "surveyPostButtonJoinSurvey": "Join Survey",
         "surveyPostButtonDetailQuestion": "Details"
+    },
+    "ModalListUserLiked": {
+        "modalListUserLikedTitle": "List of liked users"
+    },
+    "NotificationsComponent": {
+        "notification": "Notification",
+        "readAll": "Read all",
+        "deleteNotification": "Delete notification",
+        "unReadNotification": "Mark as unread",
+        "search": "Search notification..."
+    },
+    "Notifications": {
+        "register_success": "Welcome to TDC Social Network!",
+        "change_password_success": "You have successfully changed your password!",
+        "update_post": "You have updated a post",
+        "create_survey": " has created a survey",
+        "save_post": "You have saved a post",
+        "user_like_post": " has liked your post",
+        "user_comment_post": " has commented on your post",
+        "user_reply_comment": " has replied to your comment",
+        "user_conduct_survey": " has conducted your survey",
+        "post_log": "Your post has been rejected because ",
+        "accept_post": "Your post has been approved",
+        "user_update": "You have successfully updated your account information",
+        "user_follow": " has started following you",
+        "user_change_language": "You have successfully changed the language",
+        "user_apply_job": "You have applied for the job posting:",
+        "user_create_watch_job": " has applied for the job posting:",
+        "in_group": " in",
+        "survey_txt": "Survey now >>",
+        "User_update_avatar": "You just updated your avatar background",
+        "Post": "Post"
+    },
+    "RecuitmentPostDetailComponent": {
+        "titleLoader": "Loading data...",
+        "titleJob": "Job position",
+        "employeType": "Employment type",
+        "salary": "Salary",
+        "salaryUnitMonth": "VND/month",
+        "expiration": "Application deadline",
+        "location": "Work address",
+        "benefit": "Benefits",
+        "descriptionJob": "Job description",
+        "requipmentJob": "Job requirements",
+        "btnApplyJob": "Apply for the job",
+        "textNotification": "Notification",
+        "textNoApply": "You are not eligible to apply",
+        "textApplied": "You have applied! Please check your application profile for status"
+    },
+    "JobApplyScreen": {
+        "jobApplyScreenButtonAddCvTitle": "Add CV",
+        "jobApplyScreenButtonComplete": "Complete",
+        "jobApplyScreenButtonGoBack": "Go back",
+        "jobApplyScreenButtonUpdateCvTitle": "Update CV",
+        "jobApplyScreenEmptyCvTextContent": "Please add a CV to complete the registration",
+        "jobApplyScreenEmptyCvTextTitle": "Notification",
+        "jobApplyScreenSaveSuccessTextContent": "Application submitted successfully",
+        "jobApplyScreenChangeSuccessTextContent": "Application updated successfully",
+        "jobApplyScreenSaveSuccessTextTitle": "Notification",
+        "jobApplyScreenUploadErrorFormat": "Incorrect PDF format",
+        "jobApplyScreenSystemError": "System error, please try again later!"
+    },
+    "Comment": {
+        "commentReplyComment": "Reply",
+        "commentDeleteComment": "Delete",
+        "commentAuthor": "Author",
+        "modalListCommentTitle": "Comments"
+    },
+    "BottomSheet": {
+        "BottomSheetTitle": "Loading data..."
+    },
+    "CreateCommentToolbar": {
+        "commentCreateComment": "Post comment",
+        "commentPlaceholderInput": "Enter comment..."
+    },
+    "BusinessSelectFacultyToolbar": {
+        "businessSelectFacultyToolbarTitle": "Select the faculty to display posts"
+    },
+    "SelectFaculty": {
+        "selectFacultyPlaceholder": "Select faculty...",
+        "selectFacultyTextSearch": "Search..."
+    },
+    "FacultyDashboard": {
+        "facultyDashboardNotifyNotHavePost": "No posts yet",
+        "facultyDashboardNotYetSelectFaculty": "Please select a faculty"
+    },
+    "CreatePostSelector": {
+        "createPostSelectorPlaceHolder": "Enter post content",
+        "createPostSelectorSurveyText": "Survey",
+        "createPostSelectorRecruitmentText": "Recruitment",
+        "createPostSelectorNormalText": "Normal"
+    },
+    "InputComment": {
+        "loadingText": "Loading...",
+        "respondingText": "Responding",
+        "cancelText": "Cancel",
+        "requestText": "Do you really want to cancel your reply?",
+        "contentRequestText": "If you continue, your comment will remain unchanged.",
+        "continueText": "Continue",
+        "returnText": "Go back",
+        "warningText": "Warning!",
+        "requiredTextWarning": "Comment cannot be empty."
+    },
+    "ModalComment": {
+        "modalCommentTextChar": "characters",
+        "modalCommentCommentNotNull": "Comment cannot be empty",
+        "modalCommentTextNumberLimited": "Comment content cannot exceed",
+        "modalCommentCreateFail": "Failed to create comment"
+    },
+    "ModalImage": {
+        "textUpdate": "Update"
+    },
+    "OptionScreen": {
+        "optionScreenFollowText": "Follow",
+        "optionScreenSaveText": "Save",
+        "optionScreenUpdateProfileText": "Update profile"
+    },
+    "ToolbarTitle": {
+        "changePasswordScreen": "Change Password",
+        "recruitmentDetailScreen": "Recruitment details",
+        "topTabNavigator": "TDC Social Network",
+        "drawerTabNavigator": "TDC Social Network",
+        "forgottenPasswordScreen": "Forgot password",
+        "acceptForgottenPasswordScreen": "Confirm email",
+        "searchScreen": "Search",
+        "conversationScreen": "Conversation",
+        "messengerScreen": "Messenger",
+        "addQuestionScreen": "Add question",
+        "reviewSurveyPostScreen": "Review post",
+        "surveyConductScreen": "Conduct survey",
+        "jobApplyScreen": "Apply for job",
+        "listPostSavedScreen": "Saved posts",
+        "createNormalPostScreen": "",
+        "listJobApplyScreen": "Job application list",
+        "listFollowScreen": "Follow list",
+        "profileScreen": "User profile",
+        "detailJobApply": "Job application details",
+        "optionScreen": "Options",
+        "splashScreen": "",
+        "surveyResultScreen": "Survey result",
+        "applicationOptionScreen": "Application options",
+        "approvalPostScreen": "Approve post",
+        "createSurveyScreen": "Add survey",
+        "createRecruitmentScreen": "Add recruitment post",
+        "createUpdateProfile": "Update personal information",
+        "manageJobApply": "Manage job applications",
+        "pendingPostScreen": "Pending posts",
+        "detailSurveyScreen": "Question details",
+        "studentAndFacultyScreen": "Student discussion group",
+        "detailPost": "Notification details"
+    },
+    "FollowComponent": {
+        "following": "Following",
+        "follower": "Follows you",
+        "search": "Search user..."
+    },
+    "UserItem": {
+        "follow": "Follow",
+        "unFollow": "Unfollow",
+        "profile": "Profile"
     }
 }

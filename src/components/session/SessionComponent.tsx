@@ -8,6 +8,7 @@ interface Props {
   paddingTop?: number;
   marginHorizontal?: number;
   backgroundColor?: string;
+  margin?: number;
 }
 
 const SessionComponent = (props: Props) => {
@@ -18,6 +19,7 @@ const SessionComponent = (props: Props) => {
     paddingTop,
     marginHorizontal,
     backgroundColor,
+    margin,
   } = props;
   const paddingDefault = 16;
 
@@ -30,6 +32,7 @@ const SessionComponent = (props: Props) => {
           paddingTop: paddingTop ?? undefined,
           marginHorizontal,
           backgroundColor,
+          margin,
         },
       ]}>
       {children}

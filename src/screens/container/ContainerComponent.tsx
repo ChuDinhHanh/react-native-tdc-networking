@@ -16,6 +16,7 @@ interface Props {
   backgroundColor?: string;
   isFullHeight?: boolean;
   isFullWidth?: boolean;
+  isFull?: boolean;
   children: ReactNode;
   paddingVertical?: number;
   showsScrollIndicator?: boolean;
@@ -32,12 +33,14 @@ const ContainerComponent = (props: Props) => {
     isScrollEnable,
     showsScrollIndicator,
     imageBackground,
+    isFull,
   } = props;
 
   const content = (
     <SafeAreaView
       style={{
         paddingVertical,
+        flex: isFull ? 1 : undefined,
         backgroundColor: backgroundColor ?? Colors.WHITE,
         justifyContent: isCenter ? 'center' : undefined,
         alignItems: isCenter ? 'center' : undefined,

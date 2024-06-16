@@ -28,7 +28,7 @@ import {
 } from '../../constants/Screen';
 
 setTranslations({en, vi, jp});
-setDefaultLanguage('jp');
+setDefaultLanguage('vi');
 
 const IntermediationScreen = () => {
   const t = useTranslation();

@@ -1,13 +1,5 @@
 import React, {ReactNode} from 'react';
-import {
-  FlexAlignType,
-  View,
-  TouchableOpacity,
-  Falsy,
-  ViewStyle,
-  RegisteredStyle,
-  RecursiveArray,
-} from 'react-native';
+import {FlexAlignType, TouchableOpacity, View} from 'react-native';
 import {globalStyles} from '../../styles/GlobalStyles';
 
 interface Props {
@@ -16,6 +8,11 @@ interface Props {
   height?: number;
   onPress?: () => void;
   marginVertical?: number;
+  borderRadius?: number;
+  backgroundColor?: string;
+  marginHorizontal?: number;
+  paddingHorizontal?: number;
+  padding?: number;
   justifyContent?:
     | 'flex-start'
     | 'flex-end'
@@ -24,6 +21,7 @@ interface Props {
     | 'space-around'
     | 'space-evenly'
     | undefined;
+  marginLeft?: number;
 }
 
 const RowComponent = (props: Props) => {
@@ -34,19 +32,36 @@ const RowComponent = (props: Props) => {
     onPress,
     marginVertical,
     height,
+    marginLeft,
+    backgroundColor,
+    borderRadius,
+    marginHorizontal,
+    paddingHorizontal,
+    padding,
   } = props;
+  const style = [
+    {
+      alignItems,
+      justifyContent,
+      marginVertical,
+      height,
+      marginLeft,
+      backgroundColor,
+      borderRadius,
+      marginHorizontal,
+      paddingHorizontal,
+      padding,
+    },
+    globalStyles.row,
+  ];
   return (
     <React.Fragment>
       {onPress ? (
-        <TouchableOpacity onPress={onPress}>{children}</TouchableOpacity>
-      ) : (
-        <View
-          style={[
-            {alignItems, justifyContent, marginVertical, height},
-            globalStyles.row,
-          ]}>
+        <TouchableOpacity style={style} onPress={onPress}>
           {children}
-        </View>
+        </TouchableOpacity>
+      ) : (
+        <View style={style}>{children}</View>
       )}
     </React.Fragment>
   );

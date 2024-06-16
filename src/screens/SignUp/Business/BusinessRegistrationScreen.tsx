@@ -50,7 +50,7 @@ import {
 } from 'react-multi-lang';
 
 setTranslations({vi, jp, en});
-setDefaultLanguage('jp');
+setDefaultLanguage('vi');
 
 interface RegisterBusiness {
   name: InputTextValidate;

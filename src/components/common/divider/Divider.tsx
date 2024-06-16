@@ -7,13 +7,15 @@ interface Props {
   backgroundColor?: string;
   marginVertical?: number;
   marginBottom?: number;
+  width?: number;
 }
 const Divider = (props: Props) => {
-  const {thickness, backgroundColor, marginVertical, marginBottom} = props;
+  const {thickness, backgroundColor, marginVertical, marginBottom, width} =
+    props;
   return (
     <View
       style={{
-        width: '100%',
+        width: width ?? '100%',
         borderBottomWidth: thickness ?? 1,
         borderBottomColor: backgroundColor ?? Colors.GREY_DIVIDER,
         marginVertical,

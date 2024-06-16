@@ -22,6 +22,10 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover',
   },
+  buttonUpload: {
+    paddingVertical: 2,
+    paddingHorizontal: 5,
+  },
 });
 
 export default styles;
