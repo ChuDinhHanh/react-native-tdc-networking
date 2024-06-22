@@ -17,7 +17,6 @@ import {
   INTERMEDIATELY_SCREEN,
   TOP_TAB_NAVIGATOR,
 } from '../../constants/Screen';
-import {ERROR_MESSAGES} from '../../languages/vietnamese.json';
 import {
   InputTextValidate,
   isBlank,
@@ -50,6 +49,7 @@ import {Faculty} from '../../types/Faculty';
 import {UserLoginRequest} from '../../types/request/UserLoginRequest';
 import {Student} from '../../types/Student';
 import {Token} from '../../types/Token';
+import ButtonFullWith from '../../components/buttons/ButtonFullWith';
 
 setTranslations({vi, jp, en});
 setDefaultLanguage('vi');
@@ -74,12 +74,12 @@ const LoginScreen = () => {
 
   const [loginValidate, setLoginValidate] = useState<Validate>({
     email: {
-      textError: ERROR_MESSAGES.emailRequired,
+      textError: t('LoginComponent.emailRequired'),
       isVisible: false,
       isError: undefined,
     },
     password: {
-      textError: ERROR_MESSAGES.emailRequired,
+      textError: t('LoginComponent.passwordRequired'),
       isVisible: false,
       isError: undefined,
     },
@@ -236,6 +236,8 @@ const LoginScreen = () => {
           />
           <ContainerComponent isCenter={true}>
             <ButtonComponent
+              widthAutoFollowContent={true}
+              justifyContent="center"
               isDisable={isBtnDisabled}
               suffix={
                 <ActivityIndicator

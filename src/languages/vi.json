@@ -11,7 +11,9 @@
         "alertLoginFail": "Sai thông tin email hoặc mật khẩu",
         "forgotPass": "Quên mật khẩu?",
         "titleRegister": "Đăng ký",
-        "requestRegister": "Chưa có tài khoản?"
+        "requestRegister": "Chưa có tài khoản?",
+        "emailRequired": "Email không được để trống!",
+        "passwordRequired": "Mật khẩu không được để trống!"
     },
     "RegisterComponent": {
         "typeStudent": "Sinh viên",
@@ -346,5 +348,63 @@
         "follow": "Theo dõi",
         "unFollow": "Hủy theo dõi",
         "profile": "Trang cá nhân"
+    },
+    "StudentUpdate": {
+        "studentUpdateName": "Họ và tên",
+        "facultyUpdateNamePlaceholder": "Hãy nhập tên của bạn"
+    },
+    "Update": {
+        "updatePhoneNumber": "Số điện thoại",
+        "updatePhoneNumberPlaceholder": "Nhập số điện thoại",
+        "updateAvatarTitle": "Ảnh đại diện",
+        "updateBackgroundTitle": "Ảnh bìa",
+        "updateProfileButtonTitle": "Cập nhật thông tin",
+        "updatingProfileButtonTitle": "Đang cập nhật"
+    },
+    "Validate": {
+        "validatePhoneNull": "Số điện thoại không được để trống",
+        "validatePhoneUnCorrectFormat": "Số điện thoại sai định dạng",
+        "validateEmailNull": "Email không được để trống",
+        "validateEmailUnCorrectFormat": "Email sai định dạng",
+        "validateEmailHadUsed": "Email đã đươck đăng ký, vui lòng nhập email khác",
+        "validateEmailHasMaxLength": "Email không vượt quá 255 ký tự",
+        "validateNameHasMaxLength": "Tên không được vượt quá 255 ký tự ",
+        "validateNameHasSpecialCharacter": "Tên không được chứa các ký tự đặc biệt ",
+        "validateAddressNull": "Địa chỉ không được để trống",
+        "validatePresentorNull": "Tên người đại diện không được để trống",
+        "validateRepresentorSpecialCharacter": "Tên không được chứa các ký tự đặc biệt",
+        "validateRepresentorMaxLength": "Tên không được vượt quá 255 ký tự ",
+        "validateTaxCodeNull": "Mã số thuế không được để trống",
+        "validateNameNull": "Tên không được để trống",
+        "validateNameSpecialCharacter": "Tên không được chứa các ký tự đặc biệt",
+        "validateNameMaxLength": "Tên không được vượt quá 255 ký tự ",
+        "validateNameTimeActiveUnCorrect": "Thời gian hoạt động sai quy định",
+        "validateTaxCodeFormat": "Mã thuế sai quy định",
+        "validateTaxCodeMaxLength": "Mã số thuế không vượt quá 255 ký tự",
+        "validateAddressMaxLength": "Địa chỉ không vượt quá 255 ký tự"
+    },
+    "UpdateProfile": {
+        "updateProfileAlertSuccess": "Cập nhật thành công",
+        "updateProfileAlertFail": "Cập nhật thất bại vui lòng thử lại",
+        "updateProfileAlertFiledNotCorrectValid": "Vui lòng nhập đúng các trường"
+    },
+    "BusinessUpdate": {
+        "businessUpdateCompanyName": "Tên doanh nghiệp",
+        "businessUpdateEmail": "Email",
+        "businessUpdateRepresentorFullName": "Họ tên người đại diện",
+        "businessUpdateCompanyTaxId": "Mã số thuế",
+        "businessUpdateCompanyAddress": "Địa chỉ",
+        "businessUpdateCompanyPhoneNumber": "Số điện thoại",
+        "businessUpdateCompanyTimeActiveStart": "Thời gian bắt đầu hoạt động",
+        "businessUpdateCompanyTimeActiveEnd": "Thời gian kết thúc hoạt động",
+        "businessUpdateCompanyAvatar": "Ảnh đại diện",
+        "businessUpdateCompanyButton": "Cập nhật thông tin cá nhân",
+        "businessUpdateCompanyNamePlaceholder": "Nhập tên doanh nghiệp",
+        "businessUpdateEmailPlaceholder": "Nhập email",
+        "businessUpdateRepresentorFullNamePlaceholder": "Nhập họ tên người đại diện",
+        "businessUpdateCompanyTaxIdPlaceholder": "Nhập mã số thuế",
+        "businessUpdateCompanyAddressPlaceholder": "Nhập địa chỉ",
+        "businessUpdateCompanyPhoneNumberPlaceholder": "Nhập số điện thoại",
+        "businessUpdateTimeActive": "Đến"
     }
 }

@@ -11,7 +11,9 @@
         "alertLoginFail": "不正確なメールアドレスまたはパスワード",
         "forgotPass": "パスワードを忘れましたか？",
         "titleRegister": "登録",
-        "requestRegister": "アカウントをお持ちでないですか？"
+        "requestRegister": "アカウントをお持ちでないですか？",
+        "emailRequired": "メールアドレスは空にできません！",
+        "passwordRequired": "パスワードは空にできません！"
     },
     "RegisterComponent": {
         "typeStudent": "学生",
@@ -343,5 +345,63 @@
         "follow": "フォロー",
         "unFollow": "フォロー解除",
         "profile": "プロフィール"
+    },
+    "StudentUpdate": {
+        "studentUpdateName": "フルネーム",
+        "facultyUpdateNamePlaceholder": "あなたの名前を入力してください"
+    },
+    "Update": {
+        "updatePhoneNumber": "電話番号",
+        "updatePhoneNumberPlaceholder": "電話番号を入力してください",
+        "updateAvatarTitle": "アバター",
+        "updateBackgroundTitle": "カバー画像",
+        "updateProfileButtonTitle": "プロフィールを更新",
+        "updatingProfileButtonTitle": "更新中"
+    },
+    "Validate": {
+        "validatePhoneNull": "電話番号は空にできません",
+        "validatePhoneUnCorrectFormat": "正しくない電話番号形式",
+        "validateEmailNull": "メールアドレスは空にできません",
+        "validateEmailUnCorrectFormat": "正しくないメールアドレス形式",
+        "validateEmailHadUsed": "このメールアドレスはすでに登録されています。別のメールアドレスを入力してください",
+        "validateEmailHasMaxLength": "メールアドレスは255文字を超えることはできません",
+        "validateNameHasMaxLength": "名前は255文字を超えることはできません",
+        "validateNameHasSpecialCharacter": "名前に特殊文字を含めることはできません",
+        "validateAddressNull": "住所は空にできません",
+        "validatePresentorNull": "代表者の名前は空にできません",
+        "validateRepresentorSpecialCharacter": "名前に特殊文字を含めることはできません",
+        "validateRepresentorMaxLength": "名前は255文字を超えることはできません",
+        "validateTaxCodeNull": "税金コードは空にできません",
+        "validateNameNull": "名前は空にできません",
+        "validateNameSpecialCharacter": "名前に特殊文字を含めることはできません",
+        "validateNameMaxLength": "名前は255文字を超えることはできません",
+        "validateNameTimeActiveUnCorrect": "正しくない稼働時間",
+        "validateTaxCodeFormat": "正しくない税金コード形式",
+        "validateTaxCodeMaxLength": "税金コードは255文字を超えることはできません",
+        "validateAddressMaxLength": "住所は255文字を超えることはできません"
+    },
+    "UpdateProfile": {
+        "updateProfileAlertSuccess": "成功裏に更新されました",
+        "updateProfileAlertFail": "更新に失敗しました。もう一度試してください",
+        "updateProfileAlertFiledNotCorrectValid": "フィールドを正しく入力してください"
+    },
+    "BusinessUpdate": {
+        "businessUpdateCompanyName": "会社名",
+        "businessUpdateEmail": "Eメール",
+        "businessUpdateRepresentorFullName": "代表者の名前",
+        "businessUpdateCompanyTaxId": "税金コード",
+        "businessUpdateCompanyAddress": "住所",
+        "businessUpdateCompanyPhoneNumber": "電話番号",
+        "businessUpdateCompanyTimeActiveStart": "開始時間",
+        "businessUpdateCompanyTimeActiveEnd": "終了時間",
+        "businessUpdateCompanyAvatar": "アバター",
+        "businessUpdateCompanyButton": "プロフィールを更新",
+        "businessUpdateCompanyNamePlaceholder": "会社名を入力してください",
+        "businessUpdateEmailPlaceholder": "Eメールを入力してください",
+        "businessUpdateRepresentorFullNamePlaceholder": "代表者の名前を入力してください",
+        "businessUpdateCompanyTaxIdPlaceholder": "税金コードを入力してください",
+        "businessUpdateCompanyAddressPlaceholder": "住所を入力してください",
+        "businessUpdateCompanyPhoneNumberPlaceholder": "電話番号を入力してください",
+        "businessUpdateTimeActive": "まで"
     }
 }

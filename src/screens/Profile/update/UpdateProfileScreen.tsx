@@ -5,9 +5,9 @@ import {Route} from 'react-native-tab-view';
 import {RootStackParamList} from '../../../App';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {Variable} from '../../../constants/Variables';
-import Student from '../../../components/update/profiles/student/student';
-import Business from '../../../components/update/profiles/business/Business';
-import Faculty from '../../../components/update/profiles/faculty/faculty';
+import UpdateStudentScreen from '../../update/profile/student/UpdateStudentScreen';
+import UpdateBusinessScreen from '../../update/profile/business/UpdateBusinessScreen';
+import UpdateFacultyScreen from '../../update/profile/faculty/UpdateFacultyScreen';
 
 const UpdateProfileScreen = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'UPDATE_PROFILE'>>();
@@ -17,21 +17,23 @@ const UpdateProfileScreen = () => {
   const handleIdentifyTypeUpdate = () => {
     switch (userData?.roleCodes) {
       case Variable.TYPE_POST_STUDENT:
-        return <Student userData={userData} _navigation={navigation} />;
+        return (
+          <UpdateStudentScreen userData={userData} _navigation={navigation} />
+        );
       case Variable.TYPE_POST_BUSINESS:
-        return <Business userData={userData} _navigation={navigation} />;
+        return (
+          <UpdateBusinessScreen userData={userData} _navigation={navigation} />
+        );
       case Variable.TYPE_POST_FACULTY:
-        return <Faculty userData={userData} _navigation={navigation} />;
+        return (
+          <UpdateFacultyScreen userData={userData} _navigation={navigation} />
+        );
       default:
         break;
     }
   };
 
-  return (
-    <View>
-      <Text>{JSON.stringify(userData)}</Text>
-    </View>
-  );
+  return <React.Fragment>{handleIdentifyTypeUpdate()}</React.Fragment>;
 };
 
 export default UpdateProfileScreen;

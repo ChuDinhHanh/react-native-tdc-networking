@@ -11,7 +11,9 @@
         "alertLoginFail": "Incorrect email or password",
         "forgotPass": "Forgot password?",
         "titleRegister": "Register",
-        "requestRegister": "Don't have an account?"
+        "requestRegister": "Don't have an account?",
+        "emailRequired": "Email cannot be empty!",
+        "passwordRequired": "Password cannot be empty!"
     },
     "RegisterComponent": {
         "typeStudent": "Student",
@@ -346,5 +348,63 @@
         "follow": "Follow",
         "unFollow": "Unfollow",
         "profile": "Profile"
+    },
+    "StudentUpdate": {
+        "studentUpdateName": "Full name",
+        "facultyUpdateNamePlaceholder": "Enter your name"
+    },
+    "Update": {
+        "updatePhoneNumber": "Phone number",
+        "updatePhoneNumberPlaceholder": "Enter phone number",
+        "updateAvatarTitle": "Avatar",
+        "updateProfileButtonTitle": "Update profile",
+        "updateBackgroundTitle": "Cover Image",
+        "updatingProfileButtonTitle": "Updating"
+    },
+    "Validate": {
+        "validatePhoneNull": "Phone number cannot be empty",
+        "validatePhoneUnCorrectFormat": "Incorrect phone number format",
+        "validateEmailNull": "Email cannot be empty",
+        "validateEmailUnCorrectFormat": "Incorrect email format",
+        "validateEmailHadUsed": "Email has already been registered, please enter another email",
+        "validateEmailHasMaxLength": "Email cannot exceed 255 characters",
+        "validateNameHasMaxLength": "Name cannot exceed 255 characters",
+        "validateNameHasSpecialCharacter": "Name cannot contain special characters",
+        "validateAddressNull": "Address cannot be empty",
+        "validatePresentorNull": "Representative name cannot be empty",
+        "validateRepresentorSpecialCharacter": "Name cannot contain special characters",
+        "validateRepresentorMaxLength": "Name cannot exceed 255 characters",
+        "validateTaxCodeNull": "Tax code cannot be empty",
+        "validateNameNull": "Name cannot be empty",
+        "validateNameSpecialCharacter": "Name cannot contain special characters",
+        "validateNameMaxLength": "Name cannot exceed 255 characters",
+        "validateNameTimeActiveUnCorrect": "Incorrect operating time",
+        "validateTaxCodeFormat": "Incorrect tax code format",
+        "validateTaxCodeMaxLength": "Tax code cannot exceed 255 characters",
+        "validateAddressMaxLength": "Address cannot exceed 255 characters"
+    },
+    "UpdateProfile": {
+        "updateProfileAlertSuccess": "Successfully updated",
+        "updateProfileAlertFail": "Update failed, please try again",
+        "updateProfileAlertFiledNotCorrectValid": "Please enter the fields correctly"
+    },
+    "BusinessUpdate": {
+        "businessUpdateCompanyName": "Company name",
+        "businessUpdateEmail": "Email",
+        "businessUpdateRepresentorFullName": "Representative name",
+        "businessUpdateCompanyTaxId": "Tax code",
+        "businessUpdateCompanyAddress": "Address",
+        "businessUpdateCompanyPhoneNumber": "Phone number",
+        "businessUpdateCompanyTimeActiveStart": "Start time",
+        "businessUpdateCompanyTimeActiveEnd": "End time",
+        "businessUpdateCompanyAvatar": "Avatar",
+        "businessUpdateCompanyButton": "Update profile",
+        "businessUpdateCompanyNamePlaceholder": "Enter company name",
+        "businessUpdateEmailPlaceholder": "Enter email",
+        "businessUpdateRepresentorFullNamePlaceholder": "Enter representative name",
+        "businessUpdateCompanyTaxIdPlaceholder": "Enter tax code",
+        "businessUpdateCompanyAddressPlaceholder": "Enter address",
+        "businessUpdateCompanyPhoneNumberPlaceholder": "Enter phone number",
+        "businessUpdateTimeActive": "To"
     }
 }

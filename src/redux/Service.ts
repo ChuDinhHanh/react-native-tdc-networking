@@ -22,6 +22,13 @@ import {GetFacultyPostRequest} from '../types/request/GetFacultyPostRequest';
 import {GetBusinessPostRequest} from '../types/request/GetBusinessPostRequest';
 import {ChangeUserToInactiveStateRequest} from '../types/request/ChangeUserToInactiveStateRequest';
 import {FollowUserModel} from '../types/response/FollowUserModel';
+import {StudentUpdateRequest} from '../types/request/StudentUpdateRequest';
+import {Token} from '../types/Token';
+import {Student} from '../types/Student';
+import {Faculty} from '../types/Faculty';
+import {Business} from '../types/Business';
+import {BusinessUpdateRequest} from '../types/request/BusinessUpdateRequest';
+import {FacultyUpdateRequest} from '../types/request/FacultyUpdateRequest';
 
 export const TDCSocialNetworkAPI = createApi({
   reducerPath: 'TDCSocialNetworkAPI',
@@ -224,6 +231,39 @@ export const TDCSocialNetworkAPI = createApi({
         method: 'GET',
       }),
     }),
+    createOrUpdateStudent: builder.mutation<Data<Token>, StudentUpdateRequest>({
+      query: data => ({
+        url: 'api/student',
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    createOrUpdateBusiness: builder.mutation<
+      Data<Token>,
+      BusinessUpdateRequest
+    >({
+      query: data => ({
+        url: 'api/business',
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    createOrUpdateFaculty: builder.mutation<Data<Token>, FacultyUpdateRequest>({
+      query: data => ({
+        url: 'api/faculty',
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    getUserByToken: builder.query<Data<any>, {TOKEN: string}>({
+      query: data => ({
+        url: `api/users/token/${data.TOKEN}`,
+        method: 'GET',
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      }),
+    }),
   }),
 });
 
@@ -251,4 +291,9 @@ export const {
   useGetFollowingUserQuery,
   useGetFollowerUserQuery,
   useGetSavedPostQuery,
+  useCreateOrUpdateStudentMutation,
+  useLazyGetUserByTokenQuery,
+  useGetUserByTokenQuery,
+  useCreateOrUpdateBusinessMutation,
+  useCreateOrUpdateFacultyMutation,
 } = TDCSocialNetworkAPI;

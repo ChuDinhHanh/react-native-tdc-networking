@@ -78,6 +78,7 @@ const IntermediationScreen = () => {
             />
             <RowComponent justifyContent="center" alignItems="center">
               <ButtonComponent
+                widthAutoFollowContent={true}
                 spacePrevious={5}
                 style={styles.btnContinue}
                 affix={
@@ -98,6 +99,7 @@ const IntermediationScreen = () => {
               />
               <SpaceComponent width={20} />
               <ButtonComponent
+                widthAutoFollowContent={true}
                 spaceBehind={5}
                 style={styles.btnContinue}
                 suffix={

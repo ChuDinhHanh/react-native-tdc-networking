@@ -105,6 +105,7 @@ const PrintfProfileScreen = (props: Props) => {
   const [userInfo, setUserInfo] = useState<
     Student | Faculty | Business | undefined
   >();
+
   const [typeAuthorPost, setTypeAuthorPost] = useState<string>('');
   const [showUserImage, setShowUserImage] = useState({
     visible: false,
