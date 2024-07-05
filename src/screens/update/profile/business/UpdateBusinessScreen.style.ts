@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
   },
   ipError: {
     fontSize: 18,
-    borderWidth: 2,
     borderColor: Colors.RED,
     paddingLeft: 10,
     borderRadius: 10,
@@ -33,7 +32,6 @@ const styles = StyleSheet.create({
   },
   ipFirstTime: {
     fontSize: 18,
-    borderWidth: 2,
     borderColor: Colors.GREY1,
     paddingLeft: 10,
     borderRadius: 10,
@@ -93,7 +91,6 @@ const styles = StyleSheet.create({
   },
   ipUnError: {
     borderColor: Colors.GREEN,
-    borderWidth: 2,
   },
   spinner: {
     position: 'absolute',

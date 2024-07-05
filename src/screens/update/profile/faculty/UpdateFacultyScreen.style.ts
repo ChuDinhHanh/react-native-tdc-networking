@@ -23,20 +23,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   ipError: {
-    fontSize: 18,
-    borderWidth: 2,
     borderColor: Colors.RED,
-    paddingLeft: 10,
-    borderRadius: 10,
-    marginTop: 10,
   },
   ipFirstTime: {
-    fontSize: 18,
-    borderWidth: 2,
     borderColor: Colors.GREY1,
-    paddingLeft: 10,
-    borderRadius: 10,
-    marginTop: 10,
   },
   btnRegister: {
     alignItems: 'center',
@@ -92,7 +82,6 @@ const styles = StyleSheet.create({
   },
   ipUnError: {
     borderColor: Colors.GREEN,
-    borderWidth: 2,
   },
   spinner: {
     position: 'absolute',

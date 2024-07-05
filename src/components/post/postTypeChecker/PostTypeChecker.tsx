@@ -1,17 +1,17 @@
-import React, {memo, useCallback, useMemo, useState} from 'react';
-import {Variable} from '../../../constants/Variables';
-import {Post} from '../../../types/Post';
+import React, { memo, useCallback, useMemo, useState } from 'react';
+import { Variable } from '../../../constants/Variables';
+import { Post } from '../../../types/Post';
 
-import {ParamListBase, useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { ParamListBase, useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import {
   setDefaultLanguage,
   setTranslations,
   useTranslation,
 } from 'react-multi-lang';
-import {Text, View} from 'react-native';
-import {shallowEqual} from 'react-redux';
-import {RootStackParamList} from '../../../App';
+import { View } from 'react-native';
+import { shallowEqual } from 'react-redux';
+import { RootStackParamList } from '../../../App';
 import {
   CREATE_NORMAL_POST_SCREEN,
   LIST_JOB_APPLY_SCREEN,
@@ -24,17 +24,17 @@ import {
 import en from '../../../languages/en.json';
 import jp from '../../../languages/jp.json';
 import vi from '../../../languages/vi.json';
-import {useAppDispatch, useAppSelector} from '../../../redux/Hook';
+import { useAppDispatch, useAppSelector } from '../../../redux/Hook';
 import {
   setNavigateToProfileSameUser,
   setShowBottomSheet,
   setShowModalLike,
 } from '../../../redux/Slice';
-import {Like} from '../../../types/Like';
-import {LikeAction} from '../../../types/LikeAction';
-import {ModalComments} from '../../../types/ModalComments ';
-import {UpdateNormalPost} from '../../../types/UpdateNormalPost';
-import {numberDayPassed} from '../../../utils/FormatTime';
+import { Like } from '../../../types/Like';
+import { LikeAction } from '../../../types/LikeAction';
+import { ModalComments } from '../../../types/ModalComments ';
+import { UpdateNormalPost } from '../../../types/UpdateNormalPost';
+import { numberDayPassed } from '../../../utils/FormatTimeUtils';
 import Bottom from '../session/bottom/Bottom';
 import Content from '../session/content/Content';
 import Header from '../session/header/Header';
@@ -42,7 +42,7 @@ import DisplayImage from '../session/image/normalImage/DisplayImage';
 import Recruitment from '../session/recruitment/Recruitment';
 import Survey from '../session/survey/Survey';
 import styles from './PostTypeChecker.style';
-setTranslations({vi, jp, en});
+setTranslations({ vi, jp, en });
 setDefaultLanguage('vi');
 
 const PostTypeChecker = (props: Post) => {
@@ -103,11 +103,11 @@ const PostTypeChecker = (props: Post) => {
   });
 
   const handleSeeListCvPost = () => {
-    navigation.navigate(LIST_JOB_APPLY_SCREEN, {postId: id});
+    navigation.navigate(LIST_JOB_APPLY_SCREEN, { postId: id });
   };
 
   const handleSeeResultSurveyPost = () => {
-    navigation.navigate(SURVEY_RESULT_SCREEN, {surveyPostId: id});
+    navigation.navigate(SURVEY_RESULT_SCREEN, { surveyPostId: id });
   };
 
   const handleUpdateNormalPostEvent = () => {
@@ -117,7 +117,7 @@ const PostTypeChecker = (props: Post) => {
       images: props.images,
     };
     navigation.navigate(CREATE_NORMAL_POST_SCREEN, {
-      updatePostData: updateNormalPost,
+      updateNormalPost
     });
   };
 
@@ -153,7 +153,7 @@ const PostTypeChecker = (props: Post) => {
       if (flag === Variable.GO_TO_PROFILE_ACTIONS) {
         if (userIdOfProfileScreen !== userId) {
           if (userId !== userLogin?.id) {
-            navigation.navigate(PROFILE_SCREEN, {userId: userId, group: group});
+            navigation.navigate(PROFILE_SCREEN, { userId: userId, group: group });
           } else {
             navigationTopTab.navigate(MY_PROFILE_SCREEN);
           }
@@ -168,7 +168,7 @@ const PostTypeChecker = (props: Post) => {
   const handleClickIntoAnyImageEvent = (
     imageId: number,
     listImageError: number[],
-  ) => {};
+  ) => { };
 
   const handleCheckLiked = useMemo(() => {
     let result = false;
@@ -190,7 +190,7 @@ const PostTypeChecker = (props: Post) => {
         handleClickIntoListUserReactions();
       }
     },
-    [commentQty, comments],
+    [commentQty, comments, likes],
   );
 
   const handleClickIntoBtnIconLikeEvent = () => {
@@ -226,11 +226,11 @@ const PostTypeChecker = (props: Post) => {
   }, [typeAuthor]);
 
   const handleClickBtnRecruitmentDetailEvent = useCallback((idPost: number) => {
-    navigation.navigate(RECRUITMENT_DETAIL_SCREEN, {postId: idPost});
+    navigation.navigate(RECRUITMENT_DETAIL_SCREEN, { postId: idPost });
   }, []);
 
   const handleClickBtnSurveyDetailEvent = (idPost: number) => {
-    navigation.navigate(SURVEY_CONDUCT_SCREEN, {surveyPostId: idPost});
+    navigation.navigate(SURVEY_CONDUCT_SCREEN, { surveyPostId: idPost });
   };
 
   switch (type) {

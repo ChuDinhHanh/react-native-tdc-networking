@@ -1,4 +1,4 @@
-import React, {ReactNode, useEffect, useMemo, useRef, useState} from 'react';
+import React, { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import {
   KeyboardType,
   KeyboardTypeOptions,
@@ -8,11 +8,10 @@ import {
 } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Entypo from 'react-native-vector-icons/Entypo';
-import {Colors} from '../../constants/Colors';
-import ButtonComponent from '../buttons/ButtonComponent';
-import SpaceComponent from '../space/SpaceComponent';
-import TextComponent from '../text/TextComponent';
-import TextValidate from '../validation/TextValidate';
+import { Colors } from '../../../constants/Colors';
+import ButtonComponent from '../../buttons/ButtonComponent';
+import TextComponent from '../../text/TextComponent';
+import TextValidate from '../../validation/TextValidate';
 
 interface Props {
   allowClear?: boolean;
@@ -38,7 +37,7 @@ interface Props {
   validateTextError: string;
   isError?: boolean;
 }
-const InputComponent = (props: Props) => {
+const InputComponentWithTextError = (props: Props) => {
   const {
     allowClear,
     typePassword,
@@ -104,8 +103,9 @@ const InputComponent = (props: Props) => {
       )}
       {/* TextError */}
       <TextValidate
-        visible={validateVisible ?? false}
-        text={validateTextError ?? ''}
+        isVisible={validateVisible ?? false}
+        textError={validateTextError ?? ''}
+        isError={false}
       />
       {/* Input */}
       <View
@@ -127,7 +127,7 @@ const InputComponent = (props: Props) => {
           autoCapitalize="none"
           onEndEditing={onEnd}
           onBlur={onBlur}
-          style={{flex: 1}}
+          style={{ flex: 1 }}
         />
         {typePassword && (
           <ButtonComponent
@@ -161,4 +161,4 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-export default InputComponent;
+export default InputComponentWithTextError;

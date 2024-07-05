@@ -180,7 +180,7 @@
     "RecruitmentPost": {
         "recruitmentPostType": "Tuyển dụng",
         "recruitmentPostButtonSeeDetail": "Xem chi tiết",
-        "recruitmentPostCurrency": "vnd/Tháng"
+        "recruitmentPostCurrency": "/Tháng"
     },
     "SurveyPost": {
         "surveyPostType": "Khảo sát",
@@ -406,5 +406,117 @@
         "businessUpdateCompanyAddressPlaceholder": "Nhập địa chỉ",
         "businessUpdateCompanyPhoneNumberPlaceholder": "Nhập số điện thoại",
         "businessUpdateTimeActive": "Đến"
+    },
+    "CreateNormalPost": {
+        "createNormalPostTitle": "Thêm bài viết",
+        "updateNormalPostTitle": "Cập nhật bài viết",
+        "createNormalPostPlaceholder": "Hãy nhập nội dung bài viết",
+        "createNormalPostButtonText": "Thêm hình ảnh",
+        "createNormalPostButtonFinish": "Hoàn tất",
+        "createNormalPostAllertButton": "đồng ý",
+        "createNormalPostAllertTextChar": "ký tự",
+        "createNormalPostAllertQuestion": "Bạn có thực sự muốn xóa bức ảnh này chứ",
+        "createNormalPostAllerTitle": "Cảnh báo"
+    },
+    "AlertNotify": {
+        "alertNotifyTitle": "Thông báo",
+        "alertNotifyCreateNewPostFail": "Tạo bài viết không thành công",
+        "alertNotifyCreateNewPostSuccess": "Đã tạo bài viết thành công",
+        "alertNotifyUpdatePostFail": "Cập nhật bài viết không thành công",
+        "alertNotifyUpdatePostSuccess": "Cập nhật bài viết thành công",
+        "alertNotifyPostContentCannotNull": "nội dung bài viết không thể để trống",
+        "alertNotifyCharacter": "Ký tự",
+        "alertNotifyTextAccept": "Đồng ý",
+        "alertNotifyTextReject": "Hủy bỏ",
+        "alertNotifyPostContentHaveNumberCharacterGreaterThanLimitedNumber": "số lượng ký tự không được vượt quá"
+    },
+    "RecruitmentScreen": {
+        "recruitmentBenefitEmptyValidate": "Quyền lợi không được để trống",
+        "recruitmentBenefitPlaceholder": "Quyền lợi...",
+        "recruitmentBenefitTitle": "Quyền lợi",
+        "recruitmentDescEmptyValidate": "Mô tả không được để trống",
+        "recruitmentEmploymentTypeEmptyValidate": "Hình thức làm việc không được để trống",
+        "recruitmentExpirationValidate": "Thời hạn không được chọn ở thời điểm trong quá khứ",
+        "recruitmentLocationEmptyValidate": "Địa điểm làm việc không được để trống",
+        "recruitmentRequirementEmptyValidate": "Yêu cầu không được để trống",
+        "recruitmentSalaryEmptyValidate": "Tiền lương không được để trống",
+        "recruitmentSaveDescPlaceholder": "Mô tả công việc...",
+        "recruitmentSaveDescTitle": "Mô tả công việc",
+        "recruitmentSaveEmploymentTypePlaceholder": "Hình thức làm việc...",
+        "recruitmentSaveExpirationPickerLocale": "vi",
+        "recruitmentSaveExpirationTitle": "Thời hạn ứng tuyển",
+        "recruitmentSaveLocationPlaceholder": "Địa điểm làm việc...",
+        "recruitmentSaveLocationTitle": "Địa điểm làm việc",
+        "recruitmentSaveRequirementPlaceholder": "Yêu cầu...",
+        "recruitmentSaveRequirementTitle": "Yêu cầu công việc",
+        "recruitmentSaveSallaryPlaceholder": "Lương...",
+        "recruitmentSaveSallaryTitle": "Lương",
+        "recruitmentSaveSaveEmploymentTypeTitle": "Hình thức làm việc",
+        "recruitmentSaveSuccessContent": "Tin tuyển dụng đã được đăng",
+        "recruitmentSaveSuccessTitle": "Thành công !!!",
+        "recruitmentUpdateSuccessTitle": "Thành công !!!",
+        "recruitmentUpdateSuccessContent": "Tin tuyển dụng đã được cập nhật",
+        "recruitmentSaveTitlePlaceholder": "Nhập tiêu đề...",
+        "recruitmentSaveTitleTitle": "Tiêu đề",
+        "recruitmentTitleEmptyValidate": "Tiêu đề không được để trống",
+        "recruitmentSaveCompleteButton": "Hoàn tất"
+    },
+    "ErrorTitle": {
+        "SystemError": "Lỗi hệ thống vui lòng thử lại sau!"
+    },
+    "CreateSurveyPostScreen": {
+        "surveySaveButtonGoNext": "Tiếp theo",
+        "surveySaveDescEmptyValidate": "Mô tả không được để trống",
+        "surveySaveDescOver255CharactersValidate": "Mô tả không được quá 255 ký tự",
+        "surveySaveDescPlaceholder": "Nhập mô tả",
+        "surveySaveDescTitle": "Mô tả",
+        "surveySaveTitleEmptyValidate": "Tiêu đề không được để trống",
+        "surveySaveTitleOver255CharactersValidate": "Tiêu đề không được quá 255 ký tự",
+        "surveySaveTitlePlaceholder": "Nhập tiêu đề",
+        "surveySaveTitleTitle": "Tiêu đề"
+    },
+    "AddQuestionView": {
+        "addQuestionViewStartAddQuestion": "Thêm",
+        "addQuestionViewComponentButtonComplete": "Hoàn tất",
+        "addQuestionViewComponentShortAnswer": "Trả lời ngắn",
+        "addQuestionViewComponentChoiceInputPlaceholder": "Lựa chọn",
+        "addQuestionViewComponentMultiChoiceQuestion": "Nhiều lựa chọn",
+        "addQuestionViewComponentOneChoiceQuestion": "Trắc nghiệm",
+        "addQuestionViewComponentQuestionEmptyErrorContent": "Vui lòng chọn loại câu hỏi",
+        "addQuestionViewComponentQuestionTypeDropdownSearch": "Tìm kiếm...",
+        "addQuestionViewComponentQuestionEmptyErrorTitle": "Lỗi !!!",
+        "addQuestionViewComponentQuestionTypeDropdownTitle": "Chọn loại câu hỏi",
+        "addQuestionViewComponentTitleContainsSpecialCharacterValidate": "Tiêu đề không được chứa ký tự đặc biệt",
+        "addQuestionViewComponentTitleEmptyValidate": "Tiêu đề không được để trống",
+        "addQuestionViewComponentTitleInputPlaceholder": "Nhập tiêu đề câu hỏi...",
+        "addQuestionViewComponentTitleOver255CharacterValidate": "Tiêu đề không vượt quá 255 ký tự",
+        "addChoiceValidateErrorTitle": "Thông báo",
+        "addChoiceValidateErrorContent": "Vui lòng thêm ít nhất một lựa chọn cho câu hỏi"
+    },
+    "AddQuestionScreen": {
+        "textButtonGoBack": "Quay lại",
+        "textButtonGoNext": "Tiếp theo",
+        "textEmptyQuestionErrorTitle": "Lỗi",
+        "textEmptyQuestionErrorContent": "Thêm ít nhất 1 câu hỏi cho bài khảo sát"
+    },
+    "MultiChoiceQuestion": {
+        "questionComponentAddTextTitle": "Câu hỏi"
+    },
+    "ShortAnswerQuestion": {
+        "shortAnswerQuestionComponentTitlePlaceholder": "Nhập câu trả lời..."
+    },
+    "QuestonBottomBarOptions": {
+        "questionBottomBarQuestionRequireToggle": "Bắt buộc"
+    },
+    "ReviewSurveyPostScreen": {
+        "reviewSurveyScreenAnswerTitle": "Câu hỏi",
+        "reviewSurveyScreenButtonComplete": "Hoàn tất",
+        "reviewSurveyScreenButtonGoBack": "Quay lại",
+        "reviewSurveyScreenSaveFailContent": "Lưu thất bại",
+        "reviewSurveyScreenSaveFailTitle": "Lỗi",
+        "reviewSurveyScreenSaveSuccessTitle": "Thành công",
+        "reviewSurveyScreenSaveSuccessContent": "Thêm khảo sát thành công",
+        "reviewSurveyScreenUpdateSuccessTitle": "Thành công",
+        "reviewSurveyScreenUpdateSuccessContent": "Cập nhật khảo sát thành công"
     }
 }

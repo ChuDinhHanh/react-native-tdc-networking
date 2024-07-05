@@ -1,33 +1,27 @@
-import axios from 'axios';
-import React, {memo, useMemo, useState} from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import {
   setDefaultLanguage,
   setTranslations,
   useTranslation,
 } from 'react-multi-lang';
-import {View} from 'react-native';
+import { View } from 'react-native';
 import IconFeather from 'react-native-vector-icons/Feather';
-import {Colors} from '../../../../constants/Colors';
-import {SERVER_ADDRESS} from '../../../../constants/SystemConstant';
+import { Colors } from '../../../../constants/Colors';
 import en from '../../../../languages/en.json';
 import jp from '../../../../languages/jp.json';
 import vi from '../../../../languages/vi.json';
-import {useAppSelector} from '../../../../redux/Hook';
+import { useAppSelector } from '../../../../redux/Hook';
 import {
-  useFollowMutation,
-  useGetFollowingUserQuery,
+  useFollowMutation
 } from '../../../../redux/Service';
 import ContainerComponent from '../../../../screens/container/ContainerComponent';
-import InputComponent from '../../../input/InputComponent';
+import { FollowRequest } from '../../../../types/request/FollowRequest';
+import InputComponentWithTextError from '../../../input/inputComponentWithTextError/InputComponentWithTextError';
 import UserItem from '../../../items/userItem/UserItem';
 import SessionComponent from '../../../session/SessionComponent';
-import {FollowRequest} from '../../../../types/request/FollowRequest';
 import styles from './FollowingAndFollowerListView.style';
-import {Text} from 'react-native';
-import SkeletonPost from '../../../skeleton/post/SkeletonPost';
-import SkeletonNotification from '../../../skeleton/notification/SkeletonNotification';
 setTranslations({vi, jp, en});
-setDefaultLanguage('en');
+setDefaultLanguage('vi');
 
 interface Props {
   flag: boolean;
@@ -91,7 +85,7 @@ const FollowingAndFollowerListView = (props: Props) => {
     <ContainerComponent isFullHeight={true} isFullWidth={true}>
       <SessionComponent>
         <View style={styles.wrapper}>
-          <InputComponent
+          <InputComponentWithTextError
             affix={
               <IconFeather name={'search'} size={25} color={Colors.BLACK} />
             }

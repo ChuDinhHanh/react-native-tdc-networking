@@ -39,9 +39,9 @@ const styles = StyleSheet.create({
     width: '100%',
     fontSize: 30,
     backgroundColor: Colors.COLOR_BTN_BLUE_PRIMARY,
-    paddingVertical: 15,
+    paddingVertical: 13,
     marginVertical: 25,
-    borderRadius: 15,
+    borderRadius: 10,
   },
   txtB: {
     fontSize: 20,

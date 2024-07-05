@@ -12,7 +12,7 @@ import TextComponent from '../text/TextComponent';
 import styles from './Loading.style';
 
 setTranslations({vi, jp, en});
-setDefaultLanguage('jp');
+setDefaultLanguage('vi');
 
 interface Props {
   colorActivityIndicator: string;

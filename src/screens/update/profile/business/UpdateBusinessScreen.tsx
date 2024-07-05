@@ -1,8 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {ParamListBase} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { ParamListBase } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import moment from 'moment';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   setDefaultLanguage,
   setTranslations,
@@ -12,32 +12,33 @@ import {
   ActivityIndicator,
   Alert,
   Image,
-  TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
 import DatePicker from 'react-native-date-picker';
-import {TextInput} from 'react-native-gesture-handler';
-import {Asset} from 'react-native-image-picker';
+import { TextInput } from 'react-native-gesture-handler';
+import { Asset } from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {useDispatch} from 'react-redux';
-import {getUserInfoByToken} from '../../../../api/CallAPI';
+import { useDispatch } from 'react-redux';
+import { getUserInfoByToken } from '../../../../api/CallAPI';
 import ButtonComponent from '../../../../components/buttons/ButtonComponent';
-import TextInputWithTitle from '../../../../components/input/TextInputWithTitle';
+import TextInputWithTitle from '../../../../components/input/textInputWithTitle/TextInputWithTitle';
+import RowComponent from '../../../../components/row/RowComponent';
 import SessionComponent from '../../../../components/session/SessionComponent';
+import SpaceComponent from '../../../../components/space/SpaceComponent';
 import TextComponent from '../../../../components/text/TextComponent';
 import ImagePicker from '../../../../components/upload/ImagePicker';
 import TextValidate from '../../../../components/validation/TextValidate';
-import {Colors} from '../../../../constants/Colors';
-import {KeyValue} from '../../../../constants/KeyValue';
-import {SERVER_ADDRESS} from '../../../../constants/SystemConstant';
+import { Colors } from '../../../../constants/Colors';
+import { KeyValue } from '../../../../constants/KeyValue';
+import { SERVER_ADDRESS } from '../../../../constants/SystemConstant';
 import en from '../../../../languages/en.json';
 import jp from '../../../../languages/jp.json';
 import vi from '../../../../languages/vi.json';
-import {useCreateOrUpdateBusinessMutation} from '../../../../redux/Service';
-import {setUserLogin} from '../../../../redux/Slice';
-import {globalStyles} from '../../../../styles/GlobalStyles';
-import {isBusiness, isFaculty, isStudent} from '../../../../utils/UserHelper';
+import { useCreateOrUpdateBusinessMutation } from '../../../../redux/Service';
+import { setUserLogin } from '../../../../redux/Slice';
+import { globalStyles } from '../../../../styles/GlobalStyles';
+import { isBusiness, isFaculty, isStudent } from '../../../../utils/UserHelper';
 import {
   InputTextValidate,
   isBlank,
@@ -48,11 +49,9 @@ import {
   isType,
 } from '../../../../utils/ValidateUtils';
 import ContainerComponent from '../../../container/ContainerComponent';
-import styles from './Business.style';
-import RowComponent from '../../../../components/row/RowComponent';
-import SpaceComponent from '../../../../components/space/SpaceComponent';
-setTranslations({vi, jp, en});
-setDefaultLanguage('jp');
+import styles from './UpdateBusinessScreen.style';
+setTranslations({ vi, jp, en });
+setDefaultLanguage('vi');
 
 interface Props {
   userData: any;
@@ -110,7 +109,7 @@ const UpdateBusinessScreen = (props: Props) => {
   const timeStartRef = useRef<TextInput | null>(null);
   const timeEndRef = useRef<TextInput | null>(null);
 
-  const [business, setBusiness] = useState({
+  const [businessModal, setBusinessModal] = useState({
     id: props.userData?.id ?? 0,
     email: props.userData?.email ?? '',
     name: props.userData?.name ?? '',
@@ -168,7 +167,7 @@ const UpdateBusinessScreen = (props: Props) => {
       isFirstRender.current = false;
       return;
     }
-    setBusiness({...business, activeTime: timeStart + '-' + timeEnd});
+    setBusinessModal({ ...businessModal, activeTime: timeStart + '-' + timeEnd });
     const textError = handleIdentifyForTimeWorking(timeStart, timeEnd);
     const result = Boolean(textError);
     setValidate(prev => ({
@@ -193,7 +192,7 @@ const UpdateBusinessScreen = (props: Props) => {
   // Name
   const handleNameChange = (value: string) => {
     // Biding data.
-    setBusiness(prev => ({
+    setBusinessModal(prev => ({
       ...prev,
       name: value,
     }));
@@ -222,9 +221,9 @@ const UpdateBusinessScreen = (props: Props) => {
   // Representor
   const handleRepresentorChange = (value: string) => {
     // Biding data.
-    setBusiness(prev => ({
+    setBusinessModal(prev => ({
       ...prev,
-      name: value,
+      representor: value,
     }));
     // Validate
     const textError = handleIdentifyErrorForRePresenTor(value);
@@ -250,7 +249,7 @@ const UpdateBusinessScreen = (props: Props) => {
 
   const handlePhoneChange = (value: string) => {
     // Biding data.
-    setBusiness(prev => ({
+    setBusinessModal(prev => ({
       ...prev,
       phone: value,
     }));
@@ -279,7 +278,7 @@ const UpdateBusinessScreen = (props: Props) => {
   // Address
   const handleAddressChange = (value: string) => {
     // Biding data.
-    setBusiness(prev => ({
+    setBusinessModal(prev => ({
       ...prev,
       address: value,
     }));
@@ -308,7 +307,7 @@ const UpdateBusinessScreen = (props: Props) => {
   // TaxCode
   const handleTaxCodeChange = (value: string) => {
     // Biding data.
-    setBusiness(prev => ({
+    setBusinessModal(prev => ({
       ...prev,
       taxCode: value,
     }));
@@ -403,12 +402,12 @@ const UpdateBusinessScreen = (props: Props) => {
     for (key in validate) {
       validate[key].firstTime = false;
     }
-    setValidate({...validate});
+    setValidate({ ...validate });
   };
 
   const handleUpdateProfile = async () => {
     try {
-      const responseUpdate = await createOrUpdateBusiness(business).unwrap();
+      const responseUpdate = await createOrUpdateBusiness(businessModal).unwrap();
       if (!(responseUpdate && 'data' in responseUpdate)) {
         showAlert('UpdateProfile.updateProfileAlertFail');
         return false;
@@ -458,16 +457,16 @@ const UpdateBusinessScreen = (props: Props) => {
       {/* Name */}
       <SessionComponent padding={10}>
         <TextInputWithTitle
-          defaultValue={business.name}
+          defaultValue={businessModal.name}
           title={t('BusinessUpdate.businessUpdateCompanyName')}
           placeholder={t('BusinessUpdate.businessUpdateCompanyNamePlaceholder')}
           onChangeText={value => handleNameChange(value)}
-          textInputStyle={
+          wrapperTextInputStyle={
             validate.name.firstTime
               ? styles.ipFirstTime
               : validate.name?.isError
-              ? styles.ipError
-              : styles.ipUnError
+                ? styles.ipError
+                : styles.ipUnError
           }
           textError={validate.name?.textError}
           isError={validate.name?.isError}
@@ -475,18 +474,18 @@ const UpdateBusinessScreen = (props: Props) => {
         />
         {/* Email */}
         <TextInputWithTitle
-          defaultValue={business.representor}
+          defaultValue={businessModal.representor}
           title={t('BusinessUpdate.businessUpdateRepresentorFullName')}
           placeholder={t(
             'BusinessUpdate.businessUpdateRepresentorFullNamePlaceholder',
           )}
           onChangeText={value => handleRepresentorChange(value)}
-          textInputStyle={
+          wrapperTextInputStyle={
             validate.representor.firstTime
               ? styles.ipFirstTime
               : validate.representor?.isError
-              ? styles.ipError
-              : styles.ipUnError
+                ? styles.ipError
+                : styles.ipUnError
           }
           textError={validate.representor?.textError}
           isError={validate.representor?.isError}
@@ -494,18 +493,18 @@ const UpdateBusinessScreen = (props: Props) => {
         />
         {/* Tax code */}
         <TextInputWithTitle
-          defaultValue={business.taxCode}
+          defaultValue={businessModal.taxCode}
           title={t('BusinessUpdate.businessUpdateCompanyTaxId')}
           placeholder={t(
             'BusinessUpdate.businessUpdateCompanyTaxIdPlaceholder',
           )}
           onChangeText={value => handleTaxCodeChange(value)}
-          textInputStyle={
+          wrapperTextInputStyle={
             validate.taxCode.firstTime
               ? styles.ipFirstTime
               : validate.taxCode?.isError
-              ? styles.ipError
-              : styles.ipUnError
+                ? styles.ipError
+                : styles.ipUnError
           }
           textError={validate.taxCode?.textError}
           isError={validate.taxCode?.isError}
@@ -513,18 +512,21 @@ const UpdateBusinessScreen = (props: Props) => {
         />
         {/* Address */}
         <TextInputWithTitle
-          defaultValue={business.address}
+          multiline
+          numberOfLine={3}
+          defaultValue={businessModal.address}
+          textInputStyle={{ textAlignVertical: 'top' }}
           title={t('BusinessUpdate.businessUpdateCompanyAddress')}
           placeholder={t(
             'BusinessUpdate.businessUpdateCompanyAddressPlaceholder',
           )}
           onChangeText={value => handleAddressChange(value)}
-          textInputStyle={
+          wrapperTextInputStyle={
             validate.address.firstTime
               ? styles.ipFirstTime
               : validate.address?.isError
-              ? styles.ipError
-              : styles.ipUnError
+                ? styles.ipError
+                : styles.ipUnError
           }
           textError={validate.address?.textError}
           isError={validate.address?.isError}
@@ -532,16 +534,16 @@ const UpdateBusinessScreen = (props: Props) => {
         />
         {/* phone number */}
         <TextInputWithTitle
-          defaultValue={business.phone}
+          defaultValue={businessModal.phone}
           title={t('Update.updatePhoneNumber')}
           placeholder={t('Update.updatePhoneNumberPlaceholder')}
           onChangeText={value => handlePhoneChange(value)}
-          textInputStyle={
+          wrapperTextInputStyle={
             validate.phone.firstTime
               ? styles.ipFirstTime
               : validate.phone?.isError
-              ? styles.ipError
-              : styles.ipUnError
+                ? styles.ipError
+                : styles.ipUnError
           }
           textError={validate.phone?.textError}
           isError={validate.phone?.isError}
@@ -556,12 +558,12 @@ const UpdateBusinessScreen = (props: Props) => {
               onFocus={() => {
                 setShowDatePickerStart(true);
               }}
-              textInputStyle={
+              wrapperTextInputStyle={
                 validate.activeTime.firstTime
                   ? styles.ipFirstTime
                   : validate.activeTime?.isError
-                  ? styles.ipError
-                  : styles.ipUnError
+                    ? styles.ipError
+                    : styles.ipUnError
               }
               title={t('BusinessUpdate.businessUpdateCompanyTimeActiveStart')}
               placeholder={moment().format('HH:mm')}
@@ -590,12 +592,12 @@ const UpdateBusinessScreen = (props: Props) => {
               onFocus={() => {
                 setShowDatePickerEnd(true);
               }}
-              textInputStyle={
+              wrapperTextInputStyle={
                 validate.activeTime.firstTime
                   ? styles.ipFirstTime
                   : validate.activeTime?.isError
-                  ? styles.ipError
-                  : styles.ipUnError
+                    ? styles.ipError
+                    : styles.ipUnError
               }
               title={t('BusinessUpdate.businessUpdateCompanyTimeActiveEnd')}
               placeholder={moment().format('HH:mm')}
@@ -620,7 +622,7 @@ const UpdateBusinessScreen = (props: Props) => {
           </View>
         </RowComponent>
         <TextValidate
-          customStyle={{marginLeft: 10}}
+          customStyle={{ marginLeft: 10 }}
           textError={validate.activeTime?.textError ?? ''}
           isError={validate.activeTime?.isError ?? false}
           isVisible={validate.activeTime?.isVisible}
@@ -649,7 +651,7 @@ const UpdateBusinessScreen = (props: Props) => {
           {Boolean(avatarPicker) ? (
             <Image
               style={styles.img}
-              source={{uri: avatarPicker?.[0]?.uri ?? ''}}
+              source={{ uri: avatarPicker?.[0]?.uri ?? '' }}
             />
           ) : (
             <Image
@@ -683,7 +685,7 @@ const UpdateBusinessScreen = (props: Props) => {
           {Boolean(avatarPicker) ? (
             <Image
               style={styles.img}
-              source={{uri: backgroundPicker?.[0]?.uri ?? ''}}
+              source={{ uri: backgroundPicker?.[0]?.uri ?? '' }}
             />
           ) : (
             <Image
@@ -696,6 +698,7 @@ const UpdateBusinessScreen = (props: Props) => {
         </View>
         {/* Button submit */}
         <ButtonComponent
+          typeButton='Pressable'
           padding={5}
           style={[
             styles.btnRegister,
@@ -705,7 +708,7 @@ const UpdateBusinessScreen = (props: Props) => {
             globalStyles.shadow,
           ]}
           isDisable={isUploading || isUploadingImage}
-          onPress={() => onSubmit(business)}
+          onPress={() => onSubmit(businessModal)}
           title={
             <TextComponent
               fontSize={18}

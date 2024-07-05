@@ -38,7 +38,7 @@ import {DeletePostRequest} from '../../../../types/request/DeletePostRequest';
 import {FollowRequest} from '../../../../types/request/FollowRequest';
 import {SavePostRequest} from '../../../../types/request/SavePostRequest';
 import {Student} from '../../../../types/Student';
-import {GetPostActive} from '../../../../utils/GetPostActive';
+import {GetPostActive} from '../../../../utils/GetPostActiveUtils';
 import ContainerComponent from '../../../container/ContainerComponent';
 import ProfileTypeChecker from '../../profileTypeChecker/ProfileTypeChecker';
 

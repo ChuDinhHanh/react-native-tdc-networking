@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   KeyboardTypeOptions,
   StyleProp,
@@ -9,10 +9,10 @@ import {
   View,
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
-import {Colors} from '../../constants/Colors';
-import ButtonComponent from '../buttons/ButtonComponent';
-import TextValidateTypeSecond from '../common/textValidate/TextValidateTypeSecond';
-import SpaceComponent from '../space/SpaceComponent';
+import { Colors } from '../../../constants/Colors';
+import ButtonComponent from '../../buttons/ButtonComponent';
+import TextValidateTypeSecond from '../../common/textValidate/TextValidateTypeSecond';
+import SpaceComponent from '../../space/SpaceComponent';
 
 interface TextInputWithTitleProps {
   allowClear?: boolean;
@@ -31,9 +31,10 @@ interface TextInputWithTitleProps {
   textError?: string;
   isError?: boolean;
   isVisible?: boolean;
+  wrapperTextInputStyle?: StyleProp<TextStyle>;
 }
 
-export default function TextInputWithTitle(props: TextInputWithTitleProps) {
+export default function TextInputWithTitle(props: Readonly<TextInputWithTitleProps>) {
   const {
     defaultValue,
     keyboardType,
@@ -51,20 +52,20 @@ export default function TextInputWithTitle(props: TextInputWithTitleProps) {
     isError,
     isVisible,
     textError,
+    wrapperTextInputStyle
   } = props;
 
   const [_isShowPass, _setIsShowPass] = useState<boolean>(isHidePass ?? false);
 
   return (
     <View style={styles.group}>
-      <Text style={[styles.txt, {display: title ? 'flex' : 'none'}]}>
+      <Text style={[styles.txt, { display: title ? 'flex' : 'none' }]}>
         {title}
       </Text>
       <View
         style={[
           styles.ip,
-          textInputStyle,
-          {flexDirection: 'row', alignItems: 'center'},
+          wrapperTextInputStyle
         ]}>
         <TextInput
           secureTextEntry={_isShowPass}
@@ -76,7 +77,7 @@ export default function TextInputWithTitle(props: TextInputWithTitleProps) {
           numberOfLines={numberOfLine ?? 1}
           multiline={multiline ?? false}
           placeholder={placeholder}
-          style={{flex: 1}}
+          style={[textInputStyle, { flex: 1 }]}
           onChangeText={value => onChangeText && onChangeText(value)}
         />
         {isHidePass ? (
@@ -121,6 +122,8 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     borderRadius: 10,
     marginTop: 10,
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   affixAndSuffix: {
     marginRight: 10,

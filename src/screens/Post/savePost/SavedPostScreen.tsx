@@ -1,25 +1,27 @@
 import axios from 'axios';
-import React, {useCallback, useEffect, useState} from 'react';
-import {useTranslation} from 'react-multi-lang';
-import {FlatList, Text} from 'react-native';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import {Client, Frame} from 'stompjs';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-multi-lang';
+import { FlatList, Text } from 'react-native';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { Client, Frame } from 'stompjs';
 import PostTypeChecker from '../../../components/post/postTypeChecker/PostTypeChecker';
-import {SERVER_ADDRESS} from '../../../constants/SystemConstant';
-import {useAppDispatch, useAppSelector} from '../../../redux/Hook';
-import {getStompClient} from '../../../sockets/getStompClient';
-import {LikeAction} from '../../../types/LikeAction';
-import {Post} from '../../../types/Post';
-import {GetPostActive} from '../../../utils/GetPostActive';
+import { SERVER_ADDRESS } from '../../../constants/SystemConstant';
+import { useAppDispatch, useAppSelector } from '../../../redux/Hook';
+import { getStompClient } from '../../../sockets/getStompClient';
+import { LikeAction } from '../../../types/LikeAction';
+import { Post } from '../../../types/Post';
+import { GetPostActive } from '../../../utils/GetPostActiveUtils';
 import ContainerComponent from '../../container/ContainerComponent';
-import {useGetSavedPostQuery} from '../../../redux/Service';
+import { useGetSavedPostQuery } from '../../../redux/Service';
 import Loading from '../../../components/loading/Loading';
 import SkeletonPost from '../../../components/skeleton/post/SkeletonPost';
+import EmptyBanner from '../../../components/banners/common/EmptyBanner';
 
 let stompClient: Client;
 const SavedPostScreen = () => {
-  const {userLogin} = useAppSelector(state => state.TDCSocialNetworkReducer);
-  const {data, error, isLoading} = useGetSavedPostQuery({
+  const t = useTranslation();
+  const { userLogin } = useAppSelector(state => state.TDCSocialNetworkReducer);
+  const { data, error, isLoading } = useGetSavedPostQuery({
     uid: userLogin?.id ?? 0,
   });
   const [posts, setPosts] = useState<Post[] | []>(data?.data ?? []);
@@ -95,7 +97,7 @@ const SavedPostScreen = () => {
             group={''}
             onUnSave={handleUnSave}
             active={item.active}
-            onDelete={() => {}}
+            onDelete={() => { }}
           />
         );
       } else {
@@ -110,17 +112,32 @@ const SavedPostScreen = () => {
       isScrollEnable={false}
       backgroundColor={Colors.WHITE}
       isFullHeight={true}
-      isFullWidth={true}>
+      isFullWidth={true}
+      isCenter={posts.length ? false : true}
+    >
       {isLoading ? (
         <SkeletonPost />
       ) : (
-        <FlatList
-          data={posts}
-          extraData={data}
-          keyExtractor={item => item.id.toString()}
-          renderItem={({item}) => renderItem(item)}
-        />
-      )}
+        <>
+          {
+            posts ?
+              <FlatList
+                data={posts}
+                extraData={posts}
+                keyExtractor={item => item.id.toString()}
+                renderItem={({ item }) => renderItem(item)}
+              />
+              :
+              <EmptyBanner
+                content={t(
+                  'FacultyDashboard.facultyDashboardNotifyNotHavePost',
+                )}
+                icon={require('../../../assets/image/post/Women.png')}
+              />
+          }
+        </>
+      )
+      }
     </ContainerComponent>
   );
 };

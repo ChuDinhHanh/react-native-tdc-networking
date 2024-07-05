@@ -1,16 +1,22 @@
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React, {useEffect} from 'react';
-import {StatusBar, Text} from 'react-native';
-import {PaperProvider} from 'react-native-paper';
-import {MenuProvider} from 'react-native-popup-menu';
+import { NetInfoState, useNetInfo } from '@react-native-community/netinfo';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React, { useEffect } from 'react';
+import { useTranslation } from 'react-multi-lang';
+import { Alert, StatusBar, Text } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { PaperProvider } from 'react-native-paper';
+import { MenuProvider } from 'react-native-popup-menu';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 import BottomSheetModalWrapper from './components/bottomSheet/BottomSheetModalWrapper';
 import DrawerContent from './components/drawer/DrawerContent';
+import ModalLike from './components/modals/Like/ModalLike';
 import ToolBar from './components/toolbars/ToolBar';
+import ToolbarWithBackPress from './components/toolbars/ToolbarWithBackPress';
+import { Colors } from './constants/Colors';
 import {
   ACCEPT_SCREEN,
   ADD_QUESTION_SCREEN,
@@ -48,11 +54,12 @@ import {
   TOP_TAB_NAVIGATOR,
   UPDATE_PROFILE,
 } from './constants/Screen';
-import {INITIAL_SCREEN} from './constants/SystemConstant';
-import {store} from './redux/Store';
+import { INITIAL_SCREEN } from './constants/SystemConstant';
+import { store } from './redux/Store';
 import AcceptScreen from './screens/Censorship/AcceptScreen';
 import ConversationScreen from './screens/Converstation/ConversationScreen';
 import DetailJobApplyScreen from './screens/Details/Post/Job/DetailJobApplyScreen';
+import DetailPost from './screens/Details/Post/Normal/DetailPost';
 import RecruitmentDetailScreen from './screens/Details/Post/Recruitment/RecruitmentDetailScreen';
 import ListFollowScreen from './screens/Follow/common/ListFollowScreen';
 import ForgottenPasswordScreen from './screens/ForgotPass/ForgottenPasswordScreen';
@@ -71,32 +78,21 @@ import CreateNormalPostScreen from './screens/Post/CreatePost/Normal/CreateNorma
 import CreateRecruitmentScreen from './screens/Post/CreatePost/Recruitment/CreateRecruitmentScreen';
 import CreateSurveyPostScreen from './screens/Post/CreatePost/Survey/CreateSurveyPostScreen';
 import FacultyDashboardScreen from './screens/Post/faculty/FacultyDashboardScreen';
+import SavedPostScreen from './screens/Post/savePost/SavedPostScreen';
 import StudentDiscussionDashboardScreen from './screens/Post/studentAndFaculty/StudentDiscussionDashboardScreen';
 import MyProfileScreen from './screens/Profile/session/myProfile/MyProfileScreen';
+import ProfileScreen from './screens/Profile/session/otherProfile/ProfileScreen';
+import UpdateProfileScreen from './screens/Profile/update/UpdateProfileScreen';
 import SearchScreen from './screens/Search/SearchScreen';
 import BusinessRegistrationScreen from './screens/SignUp/Business/BusinessRegistrationScreen';
 import StudentRegistrationScreen from './screens/SignUp/Student/StudentRegistrationScreen';
-import AddQuestionScreen from './screens/Survey/AddQuestionScreen';
-import ReviewSurveyPostScreen from './screens/Survey/ReviewSurveyPostScreen';
-import SurveyConductScreen from './screens/Survey/SurveyConductScreen';
-import SurveyResultScreen from './screens/Survey/SurveyResultScreen';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import ProfileScreen from './screens/Profile/session/otherProfile/ProfileScreen';
-import {UpdateNormalPost} from './types/UpdateNormalPost';
-import ModalLike from './components/modals/Like/ModalLike';
-import ToolbarWithBackPress from './components/toolbars/ToolbarWithBackPress';
-import DetailPost from './screens/Details/Post/Normal/DetailPost';
-import {useTranslation} from 'react-multi-lang';
-import {Colors} from './constants/Colors';
-import {useNetInfo, NetInfoState} from '@react-native-community/netinfo';
-import {Alert} from 'react-native';
-import {ToastContainer, toast} from 'react-toastify';
-import {Student} from './types/Student';
-import {Faculty} from './types/Faculty';
-import {Business} from './types/Business';
-import {UpdateProfile} from './types/screens/UpdateProfile';
-import UpdateProfileScreen from './screens/Profile/update/UpdateProfileScreen';
-import SavedPostScreen from './screens/Post/savePost/SavedPostScreen';
+import AddQuestionScreen from './screens/Survey/addQuestion/AddQuestionScreen';
+import ReviewSurveyPostScreen from './screens/Survey/reviewSurveyPost/ReviewSurveyPostScreen';
+import SurveyConductScreen from './screens/Survey/surveyConduct/SurveyConductScreen';
+import { UpdateProfile } from './types/screens/UpdateProfile';
+import { UpdateNormalPost } from './types/UpdateNormalPost';
+import { SurveyPostRequest } from './types/request/SurveyPostRequest';
+import SurveyResultScreen from './screens/Survey/surveyResult/SurveyResultScreen';
 
 export type RootStackParamList = {
   CONVERSATION_SCREEN: undefined;
@@ -114,30 +110,31 @@ export type RootStackParamList = {
   BUSINESS_REGISTER_SCREEN: undefined;
   TOP_TAB_NAVIGATOR: undefined;
   DRAWER_TAB_NAVIGATOR: undefined;
-  CREATE_RECRUITMENT_SCREEN: undefined;
+  CREATE_RECRUITMENT_SCREEN: { groupId: number };
   SPLASH_SCREEN: undefined;
   IMAGE_VIEW_SCREEN: undefined;
   LIST_FOLLOW_SCREEN: undefined;
   REVIEW_SURVEY_POST_SCREEN: undefined;
   ADD_QUESTION_SCREEN: undefined;
-  CREATE_NORMAL_POST_SCREEN: {updatePostData: UpdateNormalPost} | undefined;
-  SURVEY_CONDUCT_SCREEN: {surveyPostId: number};
-  RECRUITMENT_DETAIL_SCREEN: {postId: number};
+  CREATE_NORMAL_POST_SCREEN: { group?: number; updateNormalPost?: UpdateNormalPost };
+  SURVEY_CONDUCT_SCREEN: { surveyPostId: number };
+  RECRUITMENT_DETAIL_SCREEN: { postId: number };
   JOB_APPLY_SCREEN:
-    | {recruitmentPostId?: number; profileId?: number; cvUrl?: string}
-    | undefined;
-  DETAIL_JOB_APPLY: {cvId: number} | undefined;
-  PROFILE_SCREEN: {userId: number; group: string} | undefined;
+  | { recruitmentPostId?: number; profileId?: number; cvUrl?: string }
+  | undefined;
+  DETAIL_JOB_APPLY: { cvId: number } | undefined;
+  PROFILE_SCREEN: { userId: number; group: string } | undefined;
   LIST_POST_SAVED_SCREEN: undefined;
   OPTION_SCREEN: UpdateProfile;
-  SURVEY_RESULT_SCREEN: {surveyPostId: number};
+  SURVEY_RESULT_SCREEN: { surveyPostId: number };
   APPLICATION_OPTION_SCREEN: undefined;
   INTERMEDIATELY_SCREEN: undefined;
-  CREATE_SURVEY_SCREEN: undefined;
-  LIST_JOB_APPLY_SCREEN: {postId: number};
+  CREATE_SURVEY_SCREEN: { surveyPostId?: number; groupId: number; surveyPostRequest?: SurveyPostRequest }
+  | undefined;
+  LIST_JOB_APPLY_SCREEN: { postId: number };
   FORGOTTEN_PASSWORD_SCREEN: undefined;
   ACCEPT_SCREEN: undefined;
-  DETAIL_POST_SCREEN: {post: any; notificationType: string} | undefined;
+  DETAIL_POST_SCREEN: { post: any; notificationType: string } | undefined;
   UPDATE_PROFILE: UpdateProfile;
   SAVED_POST_SCREEN: undefined;
 };
@@ -170,7 +167,7 @@ const customDrawerLabel = (props: DrawerLabel) => {
 
 const customDrawIcon = (props: DrawIcon) => {
   <Icon
-    style={{marginStart: 5}}
+    style={{ marginStart: 5 }}
     color={props.focused ? '#0088ff' : '#757575'}
     name={props.icon}
     size={16}
@@ -189,7 +186,7 @@ export function DrawerNavigator(): JSX.Element {
         options={{
           title: 'Todo App',
           drawerType: 'back',
-          drawerItemStyle: {display: 'none'},
+          drawerItemStyle: { display: 'none' },
         }}
         component={StackNavigator}
       />
@@ -225,83 +222,87 @@ export function StackNavigator(): JSX.Element {
 
       <RootStack.Screen
         name={TOP_TAB_NAVIGATOR}
-        options={{header: () => <ToolBar />}}
+        options={{ header: () => <ToolBar /> }}
         component={TopTabNavigator}
       />
       <RootStack.Screen
         name={SEARCH_SCREEN}
-        options={{header: () => false}}
+        options={{ header: () => false }}
         component={SearchScreen}
       />
       <RootStack.Screen
         name={CONVERSATION_SCREEN}
-        options={{header: () => false}}
+        options={{ header: () => false }}
         component={ConversationScreen}
       />
       <RootStack.Screen
         name={MESSENGER_SCREEN}
-        options={{header: () => false}}
+        options={{ header: () => false }}
         component={MessengerScreen}
       />
 
       <RootStack.Screen
         name={LOGIN_SCREEN}
-        options={{header: () => null}}
+        options={{ header: () => null }}
         component={LoginScreen}
       />
 
       <RootStack.Screen
         name={STUDENT_REGISTER_SCREEN}
-        options={{header: () => null}}
+        options={{ header: () => null }}
         component={StudentRegistrationScreen}
       />
       <RootStack.Screen
         name={BUSINESS_REGISTER_SCREEN}
-        options={{header: () => null}}
+        options={{ header: () => null }}
         component={BusinessRegistrationScreen}
       />
       <RootStack.Screen
         name={INTERMEDIATELY_SCREEN}
-        options={{header: () => null}}
+        options={{ header: () => null }}
         component={IntermediationScreen}
       />
       <RootStack.Screen
         name={CREATE_RECRUITMENT_SCREEN}
-        options={{header: () => false}}
+        options={{
+          header: () => (
+            <ToolbarWithBackPress title={t('ToolbarTitle.detailPost')} />
+          )
+        }}
         component={CreateRecruitmentScreen}
       />
       <RootStack.Screen
         name={CREATE_SURVEY_SCREEN}
-        options={{header: () => false}}
+        options={{ header: () => <ToolbarWithBackPress title={t('ToolbarTitle.createSurveyScreen')} /> }}
         component={CreateSurveyPostScreen}
       />
       <RootStack.Screen
         name={IMAGE_VIEW_SCREEN}
-        options={{header: () => null}}
+        options={{ header: () => null }}
         component={ImageViewScreen}
       />
 
       <RootStack.Screen
         name={ADD_QUESTION_SCREEN}
-        options={{header: () => false}}
+        options={{ header: () => <ToolbarWithBackPress title={t('ToolbarTitle.addQuestionScreen')} /> }}
         component={AddQuestionScreen}
       />
 
       <RootStack.Screen
         name={REVIEW_SURVEY_POST_SCREEN}
-        options={{header: () => false}}
+        options={{ header: () => <ToolbarWithBackPress title={t('ToolbarTitle.reviewSurveyPostScreen')} /> }}
         component={ReviewSurveyPostScreen}
       />
 
       <RootStack.Screen
         name={SURVEY_CONDUCT_SCREEN}
-        options={{header: () => false}}
+        options={{ header: () => false }}
         component={SurveyConductScreen}
       />
 
       <RootStack.Screen
         name={JOB_APPLY_SCREEN}
-        options={{header: () => false}}
+        options={{ header: () => false }}
         component={JobApplyScreen}
       />
 
@@ -317,7 +318,7 @@ export function StackNavigator(): JSX.Element {
 
       <RootStack.Screen
         name={CREATE_NORMAL_POST_SCREEN}
-        options={{header: () => null}}
+        options={{ header: () => null }}
         component={CreateNormalPostScreen}
       />
 
@@ -377,7 +378,7 @@ export function StackNavigator(): JSX.Element {
 
       <RootStack.Screen
         name={SPLASH_SCREEN}
-        options={{header: () => null}}
+        options={{ header: () => null }}
         component={SplashScreen}
       />
 
@@ -448,8 +449,8 @@ export function StackNavigator(): JSX.Element {
 function TopTabNavigator(): JSX.Element {
   return (
     <TopTab.Navigator
-      screenOptions={({route}) => ({
-        tabBarIcon: ({focused, color}) => {
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color }) => {
           let iconName = '';
           let size = focused ? 20 : 19;
           if (route.name === BUSINESS_DASHBOARD_SCREEN) {
@@ -499,7 +500,7 @@ const App = () => {
       Alert.alert(
         'No Internet! ❌',
         'Sorry, we need an Internet connection for MY_APP to run correctly.',
-        [{text: 'Okay'}],
+        [{ text: 'Okay' }],
       );
     }
   }, [internetState.isConnected]);

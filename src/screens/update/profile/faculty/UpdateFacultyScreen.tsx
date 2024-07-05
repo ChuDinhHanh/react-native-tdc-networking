@@ -1,32 +1,35 @@
-import {ParamListBase} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {useCallback, useState} from 'react';
-import {useTranslation} from 'react-multi-lang';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ParamListBase } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-multi-lang';
 import {
   ActivityIndicator,
   Alert,
   Image,
-  TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import ActionSheet from 'react-native-actionsheet';
-import {Asset} from 'react-native-image-picker';
+import { Asset } from 'react-native-image-picker';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {useDispatch} from 'react-redux';
-import {getUserInfoByToken} from '../../../../api/CallAPI';
+import { useDispatch } from 'react-redux';
+import { getUserInfoByToken } from '../../../../api/CallAPI';
 import ButtonComponent from '../../../../components/buttons/ButtonComponent';
-import TextInputWithTitle from '../../../../components/input/TextInputWithTitle';
+import TextInputWithTitle from '../../../../components/input/textInputWithTitle/TextInputWithTitle';
+import RowComponent from '../../../../components/row/RowComponent';
 import SessionComponent from '../../../../components/session/SessionComponent';
+import SpaceComponent from '../../../../components/space/SpaceComponent';
 import TextComponent from '../../../../components/text/TextComponent';
 import ImagePicker from '../../../../components/upload/ImagePicker';
-import {Colors} from '../../../../constants/Colors';
-import {SERVER_ADDRESS} from '../../../../constants/SystemConstant';
+import { Colors } from '../../../../constants/Colors';
+import { KeyValue } from '../../../../constants/KeyValue';
+import { SERVER_ADDRESS } from '../../../../constants/SystemConstant';
 import {
-  useCreateOrUpdateFacultyMutation,
-  useCreateOrUpdateStudentMutation,
+  useCreateOrUpdateFacultyMutation
 } from '../../../../redux/Service';
-import {globalStyles} from '../../../../styles/GlobalStyles';
-import {StudentUpdateRequest} from '../../../../types/request/StudentUpdateRequest';
+import { setUserLogin } from '../../../../redux/Slice';
+import { globalStyles } from '../../../../styles/GlobalStyles';
+import { isBusiness, isFaculty, isStudent } from '../../../../utils/UserHelper';
 import {
   InputTextValidate,
   isBlank,
@@ -35,12 +38,6 @@ import {
   isPhone,
 } from '../../../../utils/ValidateUtils';
 import ContainerComponent from '../../../container/ContainerComponent';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {KeyValue} from '../../../../constants/KeyValue';
-import {setUserLogin} from '../../../../redux/Slice';
-import {isBusiness, isFaculty, isStudent} from '../../../../utils/UserHelper';
-import RowComponent from '../../../../components/row/RowComponent';
-import SpaceComponent from '../../../../components/space/SpaceComponent';
 import styles from './UpdateFacultyScreen.style';
 
 interface Props {
@@ -84,7 +81,7 @@ const UpdateFacultyScreen = (props: Props) => {
     useState<ActionSheet | null>();
   const [createOrUpdateFaculty] = useCreateOrUpdateFacultyMutation();
 
-  const [faculty, setFaculty] = useState({
+  const [facultyModal, setFacultyModal] = useState({
     id: props.userData?.id ?? 0,
     email: props.userData?.email ?? '',
     name: props.userData?.name ?? '',
@@ -116,7 +113,7 @@ const UpdateFacultyScreen = (props: Props) => {
 
   const handleNameChange = (value: string) => {
     // Biding data.
-    setFaculty(prev => ({
+    setFacultyModal(prev => ({
       ...prev,
       name: value,
     }));
@@ -144,7 +141,7 @@ const UpdateFacultyScreen = (props: Props) => {
 
   const handlePhoneChange = (value: string) => {
     // Biding data.
-    setFaculty(prev => ({
+    setFacultyModal(prev => ({
       ...prev,
       phone: value,
     }));
@@ -173,7 +170,7 @@ const UpdateFacultyScreen = (props: Props) => {
   // Address
   const handleAddressChange = (value: string) => {
     // Biding data.
-    setFaculty(prev => ({
+    setFacultyModal(prev => ({
       ...prev,
       address: value,
     }));
@@ -240,7 +237,7 @@ const UpdateFacultyScreen = (props: Props) => {
 
   const handleUpdateProfile = async () => {
     try {
-      const responseUpdate = await createOrUpdateFaculty(faculty).unwrap();
+      const responseUpdate = await createOrUpdateFaculty(facultyModal).unwrap();
       if (!(responseUpdate && 'data' in responseUpdate)) {
         showAlert('UpdateProfile.updateProfileAlertFail');
         return false;
@@ -290,11 +287,11 @@ const UpdateFacultyScreen = (props: Props) => {
       <SessionComponent padding={10}>
         {/* Name */}
         <TextInputWithTitle
-          defaultValue={faculty.name}
+          defaultValue={facultyModal.name}
           title={t('StudentUpdate.studentUpdateName')}
           placeholder={t('StudentUpdate.facultyUpdateNamePlaceholder')}
           onChangeText={value => handleNameChange(value)}
-          textInputStyle={
+          wrapperTextInputStyle={
             validate.name.firstTime
               ? styles.ipFirstTime
               : validate.name?.isError
@@ -307,11 +304,11 @@ const UpdateFacultyScreen = (props: Props) => {
         />
         {/* Phone */}
         <TextInputWithTitle
-          defaultValue={faculty.phone}
+          defaultValue={facultyModal.phone}
           title={t('Update.updatePhoneNumber')}
           placeholder={t('Update.updatePhoneNumberPlaceholder')}
           onChangeText={value => handlePhoneChange(value)}
-          textInputStyle={
+          wrapperTextInputStyle={
             validate.phone.firstTime
               ? styles.ipFirstTime
               : validate.phone?.isError
@@ -402,7 +399,7 @@ const UpdateFacultyScreen = (props: Props) => {
             globalStyles.shadow,
           ]}
           isDisable={isUploading || isUploadingImage}
-          onPress={() => onSubmit(faculty)}
+          onPress={() => onSubmit(facultyModal)}
           title={
             <TextComponent
               fontSize={18}

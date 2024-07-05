@@ -1,17 +1,17 @@
-import {useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {useMemo, useState} from 'react';
-import {ActivityIndicator, Image, SafeAreaView, ScrollView} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useMemo, useState } from 'react';
+import { ActivityIndicator, Image, SafeAreaView, ScrollView } from 'react-native';
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import {RootStackParamList} from '../../App';
+import { RootStackParamList } from '../../App';
 import ButtonComponent from '../../components/buttons/ButtonComponent';
-import InputComponent from '../../components/input/InputComponent';
+import InputComponent from '../../components/input/inputComponentWithTextError/InputComponentWithTextError';
 import RowComponent from '../../components/row/RowComponent';
 import SessionComponent from '../../components/session/SessionComponent';
 import SpaceComponent from '../../components/space/SpaceComponent';
 import TextComponent from '../../components/text/TextComponent';
-import {Colors} from '../../constants/Colors';
+import { Colors } from '../../constants/Colors';
 import {
   FORGOTTEN_PASSWORD_SCREEN,
   INTERMEDIATELY_SCREEN,
@@ -28,30 +28,29 @@ import styles from './LoginScreen.style';
 
 // Language
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios, {AxiosResponse} from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import {
   setDefaultLanguage,
   setTranslations,
   useTranslation,
 } from 'react-multi-lang';
-import {Alert} from 'react-native';
-import {appInfo} from '../../constants/Infos';
-import {KeyValue} from '../../constants/KeyValue';
-import {SERVER_ADDRESS} from '../../constants/SystemConstant';
+import { Alert } from 'react-native';
+import { appInfo } from '../../constants/Infos';
+import { KeyValue } from '../../constants/KeyValue';
+import { SERVER_ADDRESS } from '../../constants/SystemConstant';
 import en from '../../languages/en.json';
 import jp from '../../languages/jp.json';
 import vi from '../../languages/vi.json';
-import {useAppDispatch} from '../../redux/Hook';
-import {setUserLogin} from '../../redux/Slice';
-import {Business} from '../../types/Business';
-import {Data} from '../../types/Data';
-import {Faculty} from '../../types/Faculty';
-import {UserLoginRequest} from '../../types/request/UserLoginRequest';
-import {Student} from '../../types/Student';
-import {Token} from '../../types/Token';
-import ButtonFullWith from '../../components/buttons/ButtonFullWith';
+import { useAppDispatch } from '../../redux/Hook';
+import { setUserLogin } from '../../redux/Slice';
+import { Business } from '../../types/Business';
+import { Data } from '../../types/Data';
+import { Faculty } from '../../types/Faculty';
+import { UserLoginRequest } from '../../types/request/UserLoginRequest';
+import { Student } from '../../types/Student';
+import { Token } from '../../types/Token';
 
-setTranslations({vi, jp, en});
+setTranslations({ vi, jp, en });
 setDefaultLanguage('vi');
 
 interface Validate {
@@ -86,7 +85,6 @@ const LoginScreen = () => {
   });
 
   // Validation functions
-
   function validateEmail(email: string): string {
     if (isBlank(email) || !isEmail(email)) {
       return t('LoginComponent.errorEmail');
@@ -102,7 +100,7 @@ const LoginScreen = () => {
   }
 
   const handleOnTextChangeEvent = (key: string, val: string | boolean) => {
-    const data = {...userLoginRequest, [key]: val};
+    const data = { ...userLoginRequest, [key]: val };
     setUserLoginRequest(data);
   };
 
@@ -242,10 +240,10 @@ const LoginScreen = () => {
               suffix={
                 <ActivityIndicator
                   color={Colors.WHITE}
-                  style={{display: isLoading ? 'flex' : 'none'}}
+                  style={{ display: isLoading ? 'flex' : 'none' }}
                 />
               }
-              style={[styles.btnLogin, {opacity: isBtnDisabled ? 0.5 : 1}]}
+              style={[styles.btnLogin, { opacity: isBtnDisabled ? 0.5 : 1 }]}
               onPress={() => onSubmit()}
               title={
                 <TextComponent

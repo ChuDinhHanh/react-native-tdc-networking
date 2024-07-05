@@ -18,7 +18,7 @@ import en from '../../../languages/en.json';
 import jp from '../../../languages/jp.json';
 import vi from '../../../languages/vi.json';
 setTranslations({vi, jp, en});
-setDefaultLanguage('jp');
+setDefaultLanguage('vi');
 
 interface Props {
   comments: any;

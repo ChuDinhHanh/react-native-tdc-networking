@@ -5,6 +5,9 @@ import {Faculty} from '../types/Faculty';
 import {Business} from '../types/Business';
 import {ModalComments} from '../types/ModalComments ';
 import {ModalLike} from '../types/ModalLike';
+import {SurveyPostRequest} from '../types/request/SurveyPostRequest';
+import {stat} from 'react-native-fs';
+import {Question} from '../types/Question';
 
 export interface TDCSocialNetworkState {
   userLogin: User | null;
@@ -15,6 +18,7 @@ export interface TDCSocialNetworkState {
   userIdOfProfileScreen: number;
   isNavigateToSame: {flag: boolean; result: boolean};
   timeoutId: any;
+  surveyPostRequest: SurveyPostRequest | null;
 }
 
 const initialState: TDCSocialNetworkState = {
@@ -29,6 +33,7 @@ const initialState: TDCSocialNetworkState = {
     flag: false,
     result: false,
   },
+  surveyPostRequest: null,
 };
 
 export const TDCSocialNetworkSlice = createSlice({
@@ -70,6 +75,50 @@ export const TDCSocialNetworkSlice = createSlice({
         state.isNavigateToSame.result = true;
       }
     },
+    setSurveyPostRequest: (
+      state,
+      action: PayloadAction<SurveyPostRequest | null>,
+    ) => {
+      state.surveyPostRequest = action.payload;
+    },
+    updateSurveyTitle: (state, action: PayloadAction<string>) => {
+      if (state.surveyPostRequest) {
+        state.surveyPostRequest.title = action.payload;
+      }
+    },
+    updateSurveyDescription: (state, action: PayloadAction<string>) => {
+      if (state.surveyPostRequest) {
+        state.surveyPostRequest.description = action.payload;
+      }
+    },
+    updateQuestion: (
+      state,
+      action: PayloadAction<{index: number; question: Question}>,
+    ) => {
+      if (state.surveyPostRequest) {
+        state.surveyPostRequest.questions[action.payload.index] =
+          action.payload.question;
+      }
+    },
+    addQuestion: (state, action: PayloadAction<Question>) => {
+      if (state.surveyPostRequest) {
+        state.surveyPostRequest.questions = [
+          ...state.surveyPostRequest.questions,
+          action.payload,
+        ];
+      }
+    },
+    deleteQuestion: (state, action: PayloadAction<number | undefined>) => {
+      if (state.surveyPostRequest && action.payload !== undefined) {
+        state.surveyPostRequest.questions.splice(action.payload, 1);
+      }
+    },
+    setSurveyPostUpdated: (
+      state,
+      action: PayloadAction<SurveyPostRequest | null>,
+    ) => {
+      state.surveyPostRequest = action.payload;
+    },
   },
   extraReducers: builder => {},
 });
@@ -82,5 +131,12 @@ export const {
   setShowModalLike,
   setUserIdOfProfileScreen,
   setNavigateToProfileSameUser,
+  setSurveyPostRequest,
+  updateSurveyDescription,
+  updateSurveyTitle,
+  updateQuestion,
+  addQuestion,
+  deleteQuestion,
+  setSurveyPostUpdated,
 } = TDCSocialNetworkSlice.actions;
 export default TDCSocialNetworkSlice.reducer;

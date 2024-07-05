@@ -7,7 +7,7 @@ import {
   useSaveOrUnSavePostMutation,
 } from '../../../redux/Service';
 import {useAppSelector} from '../../../redux/Hook';
-import {GetPostActive} from '../../../utils/GetPostActive';
+import {GetPostActive} from '../../../utils/GetPostActiveUtils';
 import PostTypeChecker from '../../../components/post/postTypeChecker/PostTypeChecker';
 import {Variable} from '../../../constants/Variables';
 import {LikeAction} from '../../../types/LikeAction';
@@ -22,6 +22,7 @@ import {Client, Frame} from 'stompjs';
 import {getStompClient} from '../../../sockets/getStompClient';
 import {DeletePostRequest} from '../../../types/request/DeletePostRequest';
 import CreatePostToolbar from '../../../components/toolbars/post/CreatePostToolbar';
+import { STUDENT_DISCUSSION_DASHBOARD_SCREEN } from '../../../constants/Screen';
 
 let stompClient: Client;
 const StudentDiscussionDashboardScreen = () => {
@@ -114,7 +115,7 @@ const StudentDiscussionDashboardScreen = () => {
 
   const renderItem = useCallback(
     (item: any) => {
-      if (GetPostActive(item.active)) {
+      // if (GetPostActive(item.active)) {
         return (
           <PostTypeChecker
             id={item.id}
@@ -146,9 +147,9 @@ const StudentDiscussionDashboardScreen = () => {
             active={item.active}
           />
         );
-      } else {
-        return null;
-      }
+      // } else {
+      //   return null;
+      // }
     },
     [data],
   );
@@ -161,6 +162,7 @@ const StudentDiscussionDashboardScreen = () => {
             role={userLogin.roleCodes}
             image={''}
             name={userLogin.name}
+            screens={STUDENT_DISCUSSION_DASHBOARD_SCREEN}
           />
         )}
         <FlatList

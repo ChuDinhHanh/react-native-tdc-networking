@@ -1,38 +1,40 @@
-import {useIsFocused} from '@react-navigation/native';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import { useIsFocused } from '@react-navigation/native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   setDefaultLanguage,
   setTranslations,
   useTranslation,
 } from 'react-multi-lang';
-import {FlatList, View} from 'react-native';
-import {Client, Frame} from 'stompjs';
+import { FlatList, ScrollView, View } from 'react-native';
+import { Client, Frame } from 'stompjs';
 import EmptyBanner from '../../../components/banners/common/EmptyBanner';
 import PostTypeChecker from '../../../components/post/postTypeChecker/PostTypeChecker';
 import SelectFacultyToolbar from '../../../components/toolbars/faculty/SelectFacultyToolbar';
-import {Variable} from '../../../constants/Variables';
-import {Data} from '../../../data/Data';
+import { Variable } from '../../../constants/Variables';
+import { Data } from '../../../data/Data';
 import en from '../../../languages/en.json';
 import jp from '../../../languages/jp.json';
 import vi from '../../../languages/vi.json';
-import {useAppSelector} from '../../../redux/Hook';
+import { useAppSelector } from '../../../redux/Hook';
 import {
   useDeletePostMutation,
   useGetFacultyPostQuery,
   useSaveOrUnSavePostMutation,
 } from '../../../redux/Service';
-import {getStompClient} from '../../../sockets/getStompClient';
-import {LikeAction} from '../../../types/LikeAction';
-import {Post} from '../../../types/Post';
-import {DeletePostRequest} from '../../../types/request/DeletePostRequest';
-import {SavePostRequest} from '../../../types/request/SavePostRequest';
-import {GetPostActive} from '../../../utils/GetPostActive';
-import {isFaculty, isStudent} from '../../../utils/UserHelper';
+import { getStompClient } from '../../../sockets/getStompClient';
+import { LikeAction } from '../../../types/LikeAction';
+import { Post } from '../../../types/Post';
+import { DeletePostRequest } from '../../../types/request/DeletePostRequest';
+import { SavePostRequest } from '../../../types/request/SavePostRequest';
+import { GetPostActive } from '../../../utils/GetPostActiveUtils';
+import { isFaculty, isStudent } from '../../../utils/UserHelper';
 import ContainerComponent from '../../container/ContainerComponent';
 import CreatePostToolbar from '../../../components/toolbars/post/CreatePostToolbar';
+import styles from './FacultyDashboardScreen.style';
+import { FACULTY_DASHBOARD_SCREEN } from '../../../constants/Screen';
 
-setTranslations({vi, jp, en});
-setDefaultLanguage('jp');
+setTranslations({ vi, jp, en });
+setDefaultLanguage('vi');
 
 let stompClient: Client;
 const FacultyDashboardScreen = () => {
@@ -44,7 +46,7 @@ const FacultyDashboardScreen = () => {
   );
   const [
     deletePost,
-    {isLoading: isDelete, isError: deleteError, error: deleteErrorMessage},
+    { isLoading: isDelete, isError: deleteError, error: deleteErrorMessage },
   ] = useDeletePostMutation();
   const [
     saveOrUnSavePost,
@@ -58,7 +60,7 @@ const FacultyDashboardScreen = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const latestDataRef = useRef<Post[]>([]);
   const [isLoading, setLoading] = useState(false);
-  const {data, isFetching} = useGetFacultyPostQuery(
+  const { data, isFetching } = useGetFacultyPostQuery(
     {
       faculty: code,
       id: userLogin?.id ?? 0,
@@ -203,7 +205,7 @@ const FacultyDashboardScreen = () => {
     viewAreaCoveragePercentThreshold: 100,
   });
 
-  const onViewableItemsChanged = useRef(({viewableItems, changed}: any) => {
+  const onViewableItemsChanged = useRef(({ viewableItems, changed }: any) => {
     if (viewableItems.length === posts.length) {
       setLoading(false);
     }
@@ -212,12 +214,15 @@ const FacultyDashboardScreen = () => {
   return (
     <ContainerComponent isFull={true}>
       {
-        <>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+        >
           {userLogin?.roleCodes === Variable.TYPE_POST_FACULTY && (
             <CreatePostToolbar
               role={userLogin.roleCodes}
               image={''}
               name={userLogin.name}
+              screens={FACULTY_DASHBOARD_SCREEN}
             />
           )}
           {userLogin?.roleCodes === Variable.TYPE_POST_BUSINESS && (
@@ -226,19 +231,16 @@ const FacultyDashboardScreen = () => {
             />
           )}
           <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
+            style={styles.container}>
             {Boolean(code) ? (
               <>
                 {Boolean(posts.length) ? (
                   <FlatList
+                    scrollEnabled={false}
                     showsVerticalScrollIndicator={false}
                     extraData={posts}
                     data={posts}
-                    renderItem={({item}) => renderItem(item)}
+                    renderItem={({ item }) => renderItem(item)}
                   />
                 ) : (
                   <EmptyBanner
@@ -258,7 +260,7 @@ const FacultyDashboardScreen = () => {
               />
             )}
           </View>
-        </>
+        </ScrollView>
       }
     </ContainerComponent>
   );

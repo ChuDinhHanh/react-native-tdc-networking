@@ -1,6 +1,6 @@
-import React, {ReactNode} from 'react';
-import {FlexAlignType, TouchableOpacity, View} from 'react-native';
-import {globalStyles} from '../../styles/GlobalStyles';
+import React, { ReactNode } from 'react';
+import { FlexAlignType, LayoutChangeEvent, TouchableOpacity, View } from 'react-native';
+import { globalStyles } from '../../styles/GlobalStyles';
 
 interface Props {
   alignItems?: FlexAlignType | undefined;
@@ -14,14 +14,16 @@ interface Props {
   paddingHorizontal?: number;
   padding?: number;
   justifyContent?:
-    | 'flex-start'
-    | 'flex-end'
-    | 'center'
-    | 'space-between'
-    | 'space-around'
-    | 'space-evenly'
-    | undefined;
+  | 'flex-start'
+  | 'flex-end'
+  | 'center'
+  | 'space-between'
+  | 'space-around'
+  | 'space-evenly'
+  | undefined;
   marginLeft?: number;
+  onLayout?: (event: LayoutChangeEvent, isBottom: boolean) => void;
+  flexWrap?: "wrap" | "nowrap" | "wrap-reverse"
 }
 
 const RowComponent = (props: Props) => {
@@ -38,6 +40,8 @@ const RowComponent = (props: Props) => {
     marginHorizontal,
     paddingHorizontal,
     padding,
+    onLayout,
+    flexWrap
   } = props;
   const style = [
     {
@@ -51,6 +55,7 @@ const RowComponent = (props: Props) => {
       marginHorizontal,
       paddingHorizontal,
       padding,
+      flexWrap
     },
     globalStyles.row,
   ];
@@ -61,7 +66,9 @@ const RowComponent = (props: Props) => {
           {children}
         </TouchableOpacity>
       ) : (
-        <View style={style}>{children}</View>
+        <View
+          onLayout={onLayout ? event => onLayout(event, false) : undefined}
+          style={style}>{children}</View>
       )}
     </React.Fragment>
   );

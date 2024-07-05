@@ -8,9 +8,11 @@ export const store = configureStore({
     TDCSocialNetworkReducer: TDCSocialNetworkSlice.reducer,
     [TDCSocialNetworkAPI.reducerPath]: TDCSocialNetworkAPI.reducer,
   },
-  // middleware: getDefaultMiddleware => getDefaultMiddleware(),
+  // middleware: getDefaultMiddleware => getDefaultMiddleware(), dung de enable cac tinh nang nhu caching, polling, invalidation cua rtk-query.
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(TDCSocialNetworkAPI.middleware),
+    getDefaultMiddleware({serializableCheck: false}).concat(
+      TDCSocialNetworkAPI.middleware,
+    ),
 });
 
 setupListeners(store.dispatch);

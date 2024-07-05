@@ -21,7 +21,7 @@ import SessionComponent from '../../session/SessionComponent';
 import TextComponent from '../../text/TextComponent';
 import styles from './InputCommentModal.style';
 setTranslations({vi, jp, en});
-setDefaultLanguage('jp');
+setDefaultLanguage('vi');
 
 interface Props {
   userReply: string;

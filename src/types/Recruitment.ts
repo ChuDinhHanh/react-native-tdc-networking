@@ -10,3 +10,4 @@ export interface Recruitment {
   title: string;
   isApplyJob: number;
 }
+

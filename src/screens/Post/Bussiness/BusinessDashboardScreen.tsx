@@ -1,32 +1,27 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {FlatList, SafeAreaView, ScrollView} from 'react-native';
-import {Client, Frame} from 'stompjs';
+import { useIsFocused } from '@react-navigation/native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { FlatList, ScrollView } from 'react-native';
+import { shallowEqual } from 'react-redux';
+import { Client, Frame } from 'stompjs';
 import PostTypeChecker from '../../../components/post/postTypeChecker/PostTypeChecker';
-import SkeletonPost from '../../../components/skeleton/post/SkeletonPost';
-import {Variable} from '../../../constants/Variables';
-import {Data} from '../../../data/Data';
-import {useAppSelector} from '../../../redux/Hook';
+import CreatePostToolbar from '../../../components/toolbars/post/CreatePostToolbar';
+import { Colors } from '../../../constants/Colors';
+import { BUSINESS_DASHBOARD_SCREEN } from '../../../constants/Screen';
+import { Variable } from '../../../constants/Variables';
+import { Data } from '../../../data/Data';
+import { useAppSelector } from '../../../redux/Hook';
 import {
   useDeletePostMutation,
   useGetBusinessPostQuery,
   useSaveOrUnSavePostMutation,
 } from '../../../redux/Service';
-import {LikeAction} from '../../../types/LikeAction';
-import {GetPostActive} from '../../../utils/GetPostActive';
-import {Post} from '../../../types/Post';
-import axios from 'axios';
-import Path from '../../../constants/Path';
-import {SavePostRequest} from '../../../types/request/SavePostRequest';
-import {shallowEqual} from 'react-redux';
-import {useIsFocused} from '@react-navigation/native';
+import { getStompClient } from '../../../sockets/getStompClient';
+import { LikeAction } from '../../../types/LikeAction';
+import { Post } from '../../../types/Post';
+import { DeletePostRequest } from '../../../types/request/DeletePostRequest';
+import { SavePostRequest } from '../../../types/request/SavePostRequest';
+import { GetPostActive } from '../../../utils/GetPostActiveUtils';
 import ContainerComponent from '../../container/ContainerComponent';
-import {Colors} from '../../../constants/Colors';
-import {Text} from 'react-native';
-import SessionComponent from '../../../components/session/SessionComponent';
-import {getStompClient} from '../../../sockets/getStompClient';
-import {SERVER_ADDRESS} from '../../../constants/SystemConstant';
-import {DeletePostRequest} from '../../../types/request/DeletePostRequest';
-import CreatePostToolbar from '../../../components/toolbars/post/CreatePostToolbar';
 
 let stompClient: Client;
 const BusinessDashboardScreen = () => {
@@ -38,7 +33,7 @@ const BusinessDashboardScreen = () => {
   );
   const [
     deletePost,
-    {isLoading: isDelete, isError: deleteError, error: deleteErrorMessage},
+    { isLoading: isDelete, isError: deleteError, error: deleteErrorMessage },
   ] = useDeletePostMutation();
   const [
     saveOrUnSavePost,
@@ -51,7 +46,7 @@ const BusinessDashboardScreen = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const latestDataRef = useRef<Post[]>([]);
   const code = Variable.GROUP_BUSINESS;
-  const {data, isFetching} = useGetBusinessPostQuery(
+  const { data, isFetching } = useGetBusinessPostQuery(
     {
       id: userLogin?.id ?? 0,
     },
@@ -118,37 +113,37 @@ const BusinessDashboardScreen = () => {
 
   const renderItem = useCallback(
     (item: any) => {
-      return GetPostActive(item.active) ? (
-        <PostTypeChecker
-          id={item.id}
-          userId={item.user['id']}
-          name={item.user['name']}
-          avatar={item.user['image']}
-          typeAuthor={item.user['roleCodes']}
-          available={null}
-          timeCreatePost={item.createdAt}
-          content={item.content}
-          type={item.type}
-          likes={item.likes}
-          comments={item.comment}
-          commentQty={item.commentQuantity}
-          images={Data.image}
-          // images={item.images}
-          role={item.user['roleCodes']}
-          likeAction={likeAction}
-          location={item.location ?? null}
-          title={item.title ?? null}
-          expiration={item.expiration ?? null}
-          salary={item.salary ?? null}
-          employmentType={item.employmentType ?? null}
-          description={item.description ?? null}
-          isSave={item.isSave}
-          group={code}
-          onUnSave={handleSavePost}
-          onDelete={handleDeletePost}
-          active={item.active}
-        />
-      ) : null;
+      // return GetPostActive(item.active) ? (
+      return <PostTypeChecker
+        id={item.id}
+        userId={item.user['id']}
+        name={item.user['name']}
+        avatar={item.user['image']}
+        typeAuthor={item.user['roleCodes']}
+        available={null}
+        timeCreatePost={item.createdAt}
+        content={item.content}
+        type={item.type}
+        likes={item.likes}
+        comments={item.comment}
+        commentQty={item.commentQuantity}
+        images={Data.image}
+        // images={item.images}
+        role={item.user['roleCodes']}
+        likeAction={likeAction}
+        location={item.location ?? null}
+        title={item.title ?? null}
+        expiration={item.expiration ?? null}
+        salary={item.salary ?? null}
+        employmentType={item.employmentType ?? null}
+        description={item.description ?? null}
+        isSave={item.isSave}
+        group={code}
+        onUnSave={handleSavePost}
+        onDelete={handleDeletePost}
+        active={item.active}
+      />
+      // ) : null;
     },
     [posts],
   );
@@ -172,6 +167,7 @@ const BusinessDashboardScreen = () => {
             role={userLogin.roleCodes}
             image={''}
             name={userLogin.name}
+            screens={BUSINESS_DASHBOARD_SCREEN}
           />
         )}
         <FlatList
@@ -179,7 +175,7 @@ const BusinessDashboardScreen = () => {
           scrollEnabled={false}
           extraData={posts}
           data={posts}
-          renderItem={({item}) => renderItem(item)}
+          renderItem={({ item }) => renderItem(item)}
         />
       </ScrollView>
     </ContainerComponent>

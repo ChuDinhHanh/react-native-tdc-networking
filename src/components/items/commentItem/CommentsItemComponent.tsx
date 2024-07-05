@@ -15,7 +15,7 @@ import jp from '../../../languages/jp.json';
 import vi from '../../../languages/vi.json';
 import {useAppDispatch, useAppSelector} from '../../../redux/Hook';
 import {setHiddenBottomSheet} from '../../../redux/Slice';
-import {numberDayPassed} from '../../../utils/FormatTime';
+import {numberDayPassed} from '../../../utils/FormatTimeUtils';
 import ButtonComponent from '../../buttons/ButtonComponent';
 import DefaultAvatar from '../../common/defaultAvatar/DefaultAvatar';
 import Content from '../../post/session/content/Content';

@@ -23,7 +23,7 @@ import vi from '../../../../languages/vi.json';
 import {useAppSelector} from '../../../../redux/Hook';
 import {useGetDetailRecruitmentQuery} from '../../../../redux/Service';
 import {Recruitment} from '../../../../types/Recruitment';
-import {formatCurrency} from '../../../../utils/FormatCurrency';
+import {formatCurrency} from '../../../../utils/FormatCurrencyUtils';
 import ContainerComponent from '../../../container/ContainerComponent';
 import styles from './RecruitmentDetailScreen.style';
 import {globalStyles} from '../../../../styles/GlobalStyles';

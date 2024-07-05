@@ -46,4 +46,11 @@ export const Variable = {
   INPUT_OF_COMMENT: 1,
   NUMBER_MAX_CHARACTER: 1024,
   NUMBER_MIN_CHARACTER: 0,
+  BUSINESS_CONNECT_GROUP: 2,
+  SHORT_ANSWER: 'tra-loi-ngan',
+  ONE_CHOICE_QUESTION: 'chon-mot-dap-an',
+  MULTI_CHOICE_QUESTION: 'chon-nhieu-dap-an',
+  CONDUCT_MODE: 0,
+  EDIT_MODE: 1,
+  REVIEW_MODE: 2,
 };

@@ -32,7 +32,7 @@ interface Props {
 }
 
 setTranslations({vi, jp, en});
-setDefaultLanguage('jp');
+setDefaultLanguage('vi');
 
 const SelectFacultyToolbar = (props: Props) => {
   console.log('===============SelectFacultyToolbar=====================');

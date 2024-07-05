@@ -180,7 +180,7 @@
     "RecruitmentPost": {
         "recruitmentPostType": "求人",
         "recruitmentPostButtonSeeDetail": "詳細を見る",
-        "recruitmentPostCurrency": "vnd/月"
+        "recruitmentPostCurrency": "/月"
     },
     "SurveyPost": {
         "surveyPostType": "アンケート",
@@ -403,5 +403,114 @@
         "businessUpdateCompanyAddressPlaceholder": "住所を入力してください",
         "businessUpdateCompanyPhoneNumberPlaceholder": "電話番号を入力してください",
         "businessUpdateTimeActive": "まで"
+    },
+    "CreateNormalPost": {
+        "createNormalPostTitle": "投稿を追加",
+        "updateNormalPostTitle": "投稿を更新",
+        "createNormalPostPlaceholder": "投稿内容を入力してください",
+        "createNormalPostButtonText": "画像を追加",
+        "createNormalPostButtonFinish": "完了",
+        "createNormalPostAllertButton": "同意する",
+        "createNormalPostAllertTextChar": "文字",
+        "createNormalPostAllertQuestion": "本当にこの画像を削除しますか？",
+        "createNormalPostAllerTitle": "警告"
+    },
+    "AlertNotify": {
+        "alertNotifyTitle": "通知",
+        "alertNotifyCreateNewPostFail": "新しい投稿の作成に失敗しました",
+        "alertNotifyCreateNewPostSuccess": "新しい投稿が成功裏に作成されました",
+        "alertNotifyUpdatePostFail": "投稿の更新に失敗しました",
+        "alertNotifyUpdatePostSuccess": "投稿の更新に成功しました",
+        "alertNotifyPostContentCannotNull": "投稿内容は空にできません",
+        "alertNotifyCharacter": "文字",
+        "alertNotifyTextAccept": "同意",
+        "alertNotifyTextReject": "キャンセル",
+        "alertNotifyPostContentHaveNumberCharacterGreaterThanLimitedNumber": "文字数は超えてはいけません"
+    },
+    "RecruitmentScreen": {
+        "recruitmentBenefitEmptyValidate": "給与を入力してください",
+        "recruitmentBenefitPlaceholder": "給与...",
+        "recruitmentBenefitTitle": "給与",
+        "recruitmentDescEmptyValidate": "説明を入力してください",
+        "recruitmentEmploymentTypeEmptyValidate": "雇用形態を選択してください",
+        "recruitmentExpirationValidate": "終了日は過去の日付を選択できません",
+        "recruitmentLocationEmptyValidate": "勤務地を入力してください",
+        "recruitmentRequirementEmptyValidate": "要件を入力してください",
+        "recruitmentSalaryEmptyValidate": "給与を入力してください",
+        "recruitmentSaveDescPlaceholder": "仕事の説明...",
+        "recruitmentSaveDescTitle": "仕事の説明",
+        "recruitmentSaveEmploymentTypePlaceholder": "雇用形態...",
+        "recruitmentSaveExpirationPickerLocale": "ja",
+        "recruitmentSaveExpirationTitle": "応募締切",
+        "recruitmentSaveLocationPlaceholder": "勤務地...",
+        "recruitmentSaveLocationTitle": "勤務地",
+        "recruitmentSaveRequirementPlaceholder": "要件...",
+        "recruitmentSaveRequirementTitle": "仕事の要件",
+        "recruitmentSaveSallaryPlaceholder": "給与...",
+        "recruitmentSaveSallaryTitle": "給与",
+        "recruitmentSaveSaveEmploymentTypeTitle": "雇用形態",
+        "recruitmentSaveSuccessContent": "求人が投稿されました",
+        "recruitmentSaveSuccessTitle": "成功しました！",
+        "recruitmentUpdateSuccessTitle": "成功しました！",
+        "recruitmentUpdateSuccessContent": "求人が更新されました",
+        "recruitmentSaveTitlePlaceholder": "タイトルを入力...",
+        "recruitmentSaveTitleTitle": "タイトル",
+        "recruitmentTitleEmptyValidate": "タイトルを入力してください",
+        "recruitmentSaveCompleteButton": "完了"
+    },
+    "CreateSurveyPostScreen": {
+        "surveySaveButtonGoNext": "次へ",
+        "surveySaveDescEmptyValidate": "説明を入力してください",
+        "surveySaveDescOver255CharactersValidate": "説明は255文字以内で入力してください",
+        "surveySaveDescPlaceholder": "説明を入力",
+        "surveySaveDescTitle": "説明",
+        "surveySaveTitleEmptyValidate": "タイトルを入力してください",
+        "surveySaveTitleOver255CharactersValidate": "タイトルは255文字以内で入力してください",
+        "surveySaveTitlePlaceholder": "タイトルを入力",
+        "surveySaveTitleTitle": "タイトル"
+    },
+    "AddQuestionView": {
+        "addQuestionViewStartAddQuestion": "追加",
+        "addQuestionViewComponentButtonComplete": "完了",
+        "addQuestionViewComponentShortAnswer": "簡略回答",
+        "addQuestionViewComponentChoiceInputPlaceholder": "選択",
+        "addQuestionViewComponentMultiChoiceQuestion": "複数選択",
+        "addQuestionViewComponentOneChoiceQuestion": "単一選択",
+        "addQuestionViewComponentQuestionEmptyErrorContent": "質問タイプを選択してください",
+        "addQuestionViewComponentQuestionEmptyErrorTitle": "エラー!!!",
+        "addQuestionViewComponentQuestionTypeDropdownSearch": "検索...",
+        "addQuestionViewComponentQuestionTypeDropdownTitle": "質問タイプを選択",
+        "addQuestionViewComponentTitleContainsSpecialCharacterValidate": "タイトルに特殊文字を含めることはできません",
+        "addQuestionViewComponentTitleEmptyValidate": "タイトルは空白にできません",
+        "addQuestionViewComponentTitleInputPlaceholder": "質問タイトルを入力...",
+        "addQuestionViewComponentTitleOver255CharacterValidate": "タイトルは255文字を超えることはできません",
+        "addChoiceValidateErrorTitle": "通知",
+        "addChoiceValidateErrorContent": "質問に少なくとも1つの選択肢を追加してください"
+    },
+    "AddQuestionScreen": {
+        "textButtonGoBack": "戻る",
+        "textButtonGoNext": "次へ",
+        "textEmptyQuestionErrorTitle": "エラー",
+        "textEmptyQuestionErrorContent": "アンケートには少なくとも1つの質問を追加してください"
+    },
+    "MultiChoiceQuestion": {
+        "questionComponentAddTextTitle": "質問"
+    },
+    "ShortAnswerQuestion": {
+        "shortAnswerQuestionComponentTitlePlaceholder": "回答を入力..."
+    },
+    "QuestonBottomBarOptions": {
+        "questionBottomBarQuestionRequireToggle": "必須"
+    },
+    "ReviewSurveyPostScreen": {
+        "reviewSurveyScreenAnswerTitle": "質問",
+        "reviewSurveyScreenButtonComplete": "完了",
+        "reviewSurveyScreenButtonGoBack": "戻る",
+        "reviewSurveyScreenSaveFailContent": "保存に失敗しました",
+        "reviewSurveyScreenSaveFailTitle": "エラー",
+        "reviewSurveyScreenSaveSuccessTitle": "成功",
+        "reviewSurveyScreenSaveSuccessContent": "アンケートが成功裏に追加されました",
+        "reviewSurveyScreenUpdateSuccessTitle": "成功",
+        "reviewSurveyScreenUpdateSuccessContent": "アンケートが成功裏に更新されました"
     }
 }

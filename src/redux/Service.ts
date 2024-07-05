@@ -2,38 +2,39 @@ import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {SERVER_ADDRESS} from '../constants/SystemConstant';
 import {Data} from '../types/Data';
 import {Post} from '../types/Post';
-import {SavePostRequest} from '../types/request/SavePostRequest';
-import {StudentRequest} from '../types/request/StudentRequest';
-import {MessageResponseData} from '../types/response/MessageResponseData ';
-import {NotificationModel} from '../types/response/NotificationModel ';
+import {RecruitmentPost} from '../types/RecruitmentPost';
+import {BusinessUpdateRequest} from '../types/request/BusinessUpdateRequest';
+import {ChangeStatusNotificationRequest} from '../types/request/ChangeStatusNotificationRequest';
+import {ChangeUserToInactiveStateRequest} from '../types/request/ChangeUserToInactiveStateRequest';
+import {CreateNormalPostRequest} from '../types/request/CreateNormalPostRequest';
+import {DeleteNotificationRequest} from '../types/request/DeleteNotificationRequest';
+import {DeletePostRequest} from '../types/request/DeletePostRequest';
+import {DetailRecruitmentRequest} from '../types/request/DetailRecruitmentRequest';
+import {FacultyUpdateRequest} from '../types/request/FacultyUpdateRequest';
+import {FollowRequest} from '../types/request/FollowRequest';
+import {GetBusinessPostRequest} from '../types/request/GetBusinessPostRequest';
+import {GetFacultyPostRequest} from '../types/request/GetFacultyPostRequest';
+import {GetNotificationsUserRequest} from '../types/request/GetNotificationsUserRequest';
+import {GetPostRequest} from '../types/request/GetPostRequest';
+import {GetStudentPostRequest} from '../types/request/GetStudentPostRequest';
 import {JobApplyRequest} from '../types/request/JobApplyRequest';
 import {JobApplyUpdateRequest} from '../types/request/JobApplyUpdateRequest';
 import {JobUpdateStatus} from '../types/request/JobUpdateStatus';
-import {FollowRequest} from '../types/request/FollowRequest';
 import {LikeActionRequest} from '../types/request/LikeActionRequest';
-import {DetailRecruitmentRequest} from '../types/request/DetailRecruitmentRequest';
-import {ChangeStatusNotificationRequest} from '../types/request/ChangeStatusNotificationRequest';
-import {DeleteNotificationRequest} from '../types/request/DeleteNotificationRequest';
-import {DeletePostRequest} from '../types/request/DeletePostRequest';
-import {GetPostRequest} from '../types/request/GetPostRequest';
-import {GetNotificationsUserRequest} from '../types/request/GetNotificationsUserRequest';
-import {GetStudentPostRequest} from '../types/request/GetStudentPostRequest';
-import {GetFacultyPostRequest} from '../types/request/GetFacultyPostRequest';
-import {GetBusinessPostRequest} from '../types/request/GetBusinessPostRequest';
-import {ChangeUserToInactiveStateRequest} from '../types/request/ChangeUserToInactiveStateRequest';
-import {FollowUserModel} from '../types/response/FollowUserModel';
+import {NormalPostUpdateRequest} from '../types/request/NormalPostUpdateRequest';
+import {SavePostRequest} from '../types/request/SavePostRequest';
+import {StudentRequest} from '../types/request/StudentRequest';
 import {StudentUpdateRequest} from '../types/request/StudentUpdateRequest';
+import {FollowUserModel} from '../types/response/FollowUserModel';
+import {MessageResponseData} from '../types/response/MessageResponseData ';
+import {NotificationModel} from '../types/response/NotificationModel ';
 import {Token} from '../types/Token';
-import {Student} from '../types/Student';
-import {Faculty} from '../types/Faculty';
-import {Business} from '../types/Business';
-import {BusinessUpdateRequest} from '../types/request/BusinessUpdateRequest';
-import {FacultyUpdateRequest} from '../types/request/FacultyUpdateRequest';
+import {SurveyPostRequest} from '../types/request/SurveyPostRequest';
 
 export const TDCSocialNetworkAPI = createApi({
   reducerPath: 'TDCSocialNetworkAPI',
   baseQuery: fetchBaseQuery({baseUrl: SERVER_ADDRESS, timeout: 10000}),
-  tagTypes: [''],
+  tagTypes: ['Posts'],
   endpoints: builder => ({
     addStudent: builder.mutation<MessageResponseData, StudentRequest>({
       query: data => ({
@@ -264,6 +265,58 @@ export const TDCSocialNetworkAPI = createApi({
         },
       }),
     }),
+    updateNormalPost: builder.mutation<
+      MessageResponseData,
+      NormalPostUpdateRequest
+    >({
+      query: data => ({
+        url: 'api/posts/normal',
+        method: 'PUT',
+        body: data,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      }),
+      invalidatesTags: (result, error, data) =>
+        error ? [] : [{type: 'Posts' as const, id: data.postId}],
+    }),
+    createNormalPost: builder.mutation<Data<void>, CreateNormalPostRequest>({
+      query: data => ({
+        url: 'api/posts/normal',
+        method: 'POST',
+        body: data,
+      }),
+    }),
+    createRecruitmentPost: builder.mutation<Data<void>, RecruitmentPost>({
+      query: data => ({
+        url: 'api/posts/recruitment',
+        method: 'POST',
+        body: data,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      }),
+    }),
+    addSurveyPost: builder.mutation<MessageResponseData, SurveyPostRequest>({
+      query: data => ({
+        url: 'api/posts/survey',
+        method: 'POST',
+        body: data,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      }),
+    }),
+    updateSurveyPost: builder.mutation<MessageResponseData, SurveyPostRequest>({
+      query: data => ({
+        url: 'api/posts/survey',
+        method: 'PUT',
+        body: data,
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+        },
+      }),
+    }),
   }),
 });
 
@@ -296,4 +349,9 @@ export const {
   useGetUserByTokenQuery,
   useCreateOrUpdateBusinessMutation,
   useCreateOrUpdateFacultyMutation,
+  useUpdateNormalPostMutation,
+  useCreateNormalPostMutation,
+  useCreateRecruitmentPostMutation,
+  useAddSurveyPostMutation,
+  useUpdateSurveyPostMutation,
 } = TDCSocialNetworkAPI;
