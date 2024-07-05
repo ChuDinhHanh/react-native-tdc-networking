@@ -1,41 +1,121 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {FlatList, ScrollView, View} from 'react-native';
 import SkeletonPost from '../../../components/skeleton/post/SkeletonPost';
-import {useGetStudentPostQuery} from '../../../redux/Service';
+import {
+  useDeletePostMutation,
+  useGetStudentPostQuery,
+  useSaveOrUnSavePostMutation,
+} from '../../../redux/Service';
 import {useAppSelector} from '../../../redux/Hook';
-import {GetPostActive} from '../../../utils/GetPostActive';
+import {GetPostActive} from '../../../utils/GetPostActiveUtils';
 import PostTypeChecker from '../../../components/post/postTypeChecker/PostTypeChecker';
 import {Variable} from '../../../constants/Variables';
 import {LikeAction} from '../../../types/LikeAction';
 import {Data} from '../../../data/Data';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {SavePostRequest} from '../../../types/request/SavePostRequest';
+import {Post} from '../../../types/Post';
+import {useIsFocused} from '@react-navigation/native';
+import ContainerComponent from '../../container/ContainerComponent';
+import {Colors} from '../../../constants/Colors';
+import {Client, Frame} from 'stompjs';
+import {getStompClient} from '../../../sockets/getStompClient';
+import {DeletePostRequest} from '../../../types/request/DeletePostRequest';
+import CreatePostToolbar from '../../../components/toolbars/post/CreatePostToolbar';
+import { STUDENT_DISCUSSION_DASHBOARD_SCREEN } from '../../../constants/Screen';
 
+let stompClient: Client;
 const StudentDiscussionDashboardScreen = () => {
-  const {userLogin} = useAppSelector(state => state.TDCSocialNetworkReducer);
+  console.log(
+    '====================StudentDiscussionDashboardScreen================',
+  );
+  const isFocused = useIsFocused();
+  const userLogin = useAppSelector(
+    state => state.TDCSocialNetworkReducer.userLogin,
+  );
+  const [
+    deletePost,
+    {isLoading: isDelete, isError: deleteError, error: deleteErrorMessage},
+  ] = useDeletePostMutation();
+  const [
+    saveOrUnSavePost,
+    {
+      isLoading: isSaveOrUnSave,
+      isError: saveOrUnSaveError,
+      error: saveOrUnSaveMessage,
+    },
+  ] = useSaveOrUnSavePostMutation();
   const code = Variable.GROUP_STUDENT;
+  const [posts, setPosts] = useState<Post[]>([]);
+  const latestDataRef = useRef<Post[]>([]);
   const {data, isFetching} = useGetStudentPostQuery(
     {
       id: userLogin?.id ?? 0,
     },
     {
-      // pollingInterval: 1000
+      pollingInterval: isFocused ? 2000 : 86400000,
     },
   );
 
-  const handleSavePost = async (id: number) => {};
+  useEffect(() => {
+    if (data) {
+      latestDataRef.current = data.data || [];
+      setPosts(latestDataRef.current);
+    }
+  }, [data]);
 
-  const handleDeletePost = async (id: number) => {};
+  const handleSavePost = useCallback(async (id: number) => {
+    const dataSaveOrUnSavePost: SavePostRequest = {
+      userId: userLogin?.id ?? 0,
+      postId: id,
+    };
+    try {
+      const response = await saveOrUnSavePost(dataSaveOrUnSavePost);
+    } catch (error) {
+      console.log('Fail to save or un save post', error);
+    }
+  }, []);
+
+  const handleDeletePost = useCallback(async (postId: number) => {
+    const DeletePostData: DeletePostRequest = {
+      postId: postId,
+    };
+    try {
+      const response = await deletePost(DeletePostData);
+      console.log(response);
+    } catch (error) {
+      console.error('Failed to delete post:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    stompClient = getStompClient();
+    const onConnected = () => {
+      stompClient.subscribe(`/topic/posts/group/${code}`, onMessageReceived);
+      stompClient.send(`/app/posts/group/${code}/listen/${userLogin?.id}`);
+    };
+    const onMessageReceived = (payload: any) => {
+      setPosts(JSON.parse(payload.body));
+    };
+
+    const onError = (err: string | Frame) => {
+      console.log(err);
+    };
+    stompClient.connect({}, onConnected, onError);
+  }, []);
 
   const likeAction = (likeData: LikeAction) => {
-    likeData.code = Variable.TYPE_POST_BUSINESS;
-    console.log('====================================');
-    console.log(code, JSON.stringify(likeData));
-    console.log('====================================');
+    likeData.code = Variable.TYPE_POST_STUDENT;
+    stompClient.send(
+      `/app/posts/group/${code}/like`,
+      {},
+      JSON.stringify(likeData),
+    );
   };
 
   const renderItem = useCallback(
     (item: any) => {
-      if (GetPostActive(item.active)) {
+      // if (GetPostActive(item.active)) {
         return (
           <PostTypeChecker
             id={item.id}
@@ -62,34 +142,38 @@ const StudentDiscussionDashboardScreen = () => {
             description={item.description ?? null}
             isSave={item.isSave}
             group={code}
-            handleUnSave={handleSavePost}
-            handleDelete={handleDeletePost}
+            onUnSave={handleSavePost}
+            onDelete={handleDeletePost}
             active={item.active}
           />
         );
-      } else {
-        return null;
-      }
+      // } else {
+      //   return null;
+      // }
     },
     [data],
   );
 
   return (
-    <SafeAreaView>
+    <ContainerComponent backgroundColor={Colors.COLOR_GREY_FEEBLE}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {isFetching ? (
-          <SkeletonPost />
-        ) : (
-          <FlatList
-            showsVerticalScrollIndicator={false}
-            scrollEnabled={false}
-            extraData={data?.data}
-            data={data?.data}
-            renderItem={({item}) => renderItem(item)}
+        {userLogin?.roleCodes === Variable.TYPE_POST_STUDENT && (
+          <CreatePostToolbar
+            role={userLogin.roleCodes}
+            image={''}
+            name={userLogin.name}
+            screens={STUDENT_DISCUSSION_DASHBOARD_SCREEN}
           />
         )}
+        <FlatList
+          showsVerticalScrollIndicator={false}
+          scrollEnabled={false}
+          extraData={posts}
+          data={posts}
+          renderItem={({item}) => renderItem(item)}
+        />
       </ScrollView>
-    </SafeAreaView>
+    </ContainerComponent>
   );
 };
 

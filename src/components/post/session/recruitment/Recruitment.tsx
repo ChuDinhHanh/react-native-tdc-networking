@@ -1,12 +1,12 @@
-import {View, Text, TouchableOpacity} from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import React from 'react';
 import styles from './Recruitment.style';
 import FontAwesome6Icon from 'react-native-vector-icons/FontAwesome6';
 import AntDesignIcon from 'react-native-vector-icons/AntDesign';
 import FeatherIcon from 'react-native-vector-icons/Feather';
-import {Colors} from '../../../../constants/Colors';
-import {numberDayPassed} from '../../../../utils/FormatTime';
-import {formatCurrency} from '../../../../utils/FormatCurrency';
+import { Colors } from '../../../../constants/Colors';
+import { numberDayPassed } from '../../../../utils/FormatTimeUtils';
+import { formatCurrency } from '../../../../utils/FormatCurrencyUtils';
 import TextComponent from '../../../text/TextComponent';
 import ButtonComponent from '../../../buttons/ButtonComponent';
 
@@ -78,7 +78,7 @@ const Recruitment = (props: Props) => {
                   color={Colors.GREY1}
                 />
               }
-              text={`\xa0${formatCurrency(salary)} ${current}`}
+              text={`\xa0${formatCurrency(parseInt(salary), 'VND')} ${current}`}
             />
             <TextComponent
               style={styles.rowAndCenter}

@@ -1,14 +1,15 @@
-import React, {useMemo} from 'react';
-import {Text, View} from 'react-native';
+import React, {memo, useMemo, useState} from 'react';
+import {Image, Text, View} from 'react-native';
 import IconAntDesign from 'react-native-vector-icons/AntDesign';
 import IconMaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Colors} from '../../../../constants/Colors';
+import {Variable} from '../../../../constants/Variables';
 import {Like} from '../../../../types/Like';
 import ButtonComponent from '../../../buttons/ButtonComponent';
+import DefaultAvatar from '../../../common/defaultAvatar/DefaultAvatar';
 import RowComponent from '../../../row/RowComponent';
 import TextComponent from '../../../text/TextComponent';
 import styles from './Bottom.style';
-import {Variable} from '../../../../constants/Variables';
 
 interface Props {
   onClickBottomBtnEvent: (a: number | null) => void;
@@ -20,6 +21,8 @@ interface Props {
 
 const Bottom = (props: Props) => {
   // Constant
+  const [isDisableLikeBtn, setIsDisableLikeBtn] = useState(false);
+
   const BOTTOM_ICON_SIZE = 30;
 
   const {commentQty, isLike, likes, onClickBottomBtnEvent, textLikeBy} = props;
@@ -31,16 +34,53 @@ const Bottom = (props: Props) => {
   }, [likes]);
 
   const printfUserHadLiked = useMemo(() => {
-    return <Text>123</Text>;
+    setIsDisableLikeBtn(false);
+    const userLikedQty = likes.length;
+    return likes
+      .slice(0, userLikedQty > 3 ? 3 : userLikedQty)
+      .map((item, index) => (
+        <>
+          {/* {Boolean(item.image) ? (
+            <Image
+              key={item.id}
+              style={[styles.avatarUserReacted, { marginLeft: -10 }]}
+              source={{ uri: item.image }}
+            />
+          ) : ( */}
+          <DefaultAvatar
+            key={item.id}
+            size={30}
+            identifer={item.name[0]}
+            marginLeft={-10}
+          />
+          {/* )} */}
+          {userLikedQty > 3 && index === 2 && (
+            <DefaultAvatar
+              key={likes[3].id}
+              size={30}
+              identifer={`+${userLikedQty - 3}`}
+              marginLeft={-10}
+            />
+          )}
+        </>
+      ));
   }, [likes]);
 
   return (
-    <View style={styles.wrapBottom}>
+    <RowComponent
+      justifyContent="space-between"
+      alignItems="center"
+      marginVertical={15}>
       <RowComponent justifyContent="space-between" alignItems="center">
         <ButtonComponent
           spacePrevious={3}
           title={<TextComponent fontSize={15} text={formatLikeQty} />}
-          onPress={() => onClickBottomBtnEvent(Variable.LIKE_ACTION)}
+          onPress={() => {
+            if (!isDisableLikeBtn) {
+              onClickBottomBtnEvent(Variable.LIKE_ACTION);
+            }
+            !isDisableLikeBtn && setIsDisableLikeBtn(true);
+          }}
           affix={
             <IconAntDesign
               name={isLike ? 'like1' : 'like2'}
@@ -53,7 +93,7 @@ const Bottom = (props: Props) => {
       <RowComponent justifyContent="space-between" alignItems="center">
         <ButtonComponent
           spacePrevious={3}
-          title={<TextComponent fontSize={15} text={formatLikeQty} />}
+          title={<TextComponent fontSize={15} text={`${commentQty}`} />}
           onPress={() => onClickBottomBtnEvent(Variable.COMMENT_ACTION)}
           affix={
             <IconMaterialCommunityIcons
@@ -70,8 +110,8 @@ const Bottom = (props: Props) => {
         alignItems="center">
         {printfUserHadLiked}
       </RowComponent>
-    </View>
+    </RowComponent>
   );
 };
 
-export default Bottom;
+export default memo(Bottom);

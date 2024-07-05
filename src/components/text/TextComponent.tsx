@@ -31,6 +31,7 @@ interface Props {
   marginTop?: number;
   suffix?: ReactNode;
   spaceSuffix?: number;
+  numberOfLines?: number;
 }
 
 const TextComponent = (props: Props) => {
@@ -50,10 +51,12 @@ const TextComponent = (props: Props) => {
     style,
     suffix,
     spaceSuffix,
+    numberOfLines,
   } = props;
 
   const textContainer = (
     <Text
+      numberOfLines={numberOfLines}
       style={[
         globalStyles.text,
         {
@@ -73,6 +76,7 @@ const TextComponent = (props: Props) => {
       {text}
     </Text>
   );
+
   return (
     <>
       {suffix ? (

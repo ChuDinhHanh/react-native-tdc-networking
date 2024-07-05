@@ -1,42 +1,52 @@
-import React, {useCallback, useMemo, useState} from 'react';
-import {Variable} from '../../../constants/Variables';
-import {Post} from '../../../types/Post';
+import React, { memo, useCallback, useMemo, useState } from 'react';
+import { Variable } from '../../../constants/Variables';
+import { Post } from '../../../types/Post';
 
-import {useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import { ParamListBase, useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import {
   setDefaultLanguage,
   setTranslations,
   useTranslation,
 } from 'react-multi-lang';
-import {View} from 'react-native';
-import {RootStackParamList} from '../../../App';
+import { View } from 'react-native';
+import { shallowEqual } from 'react-redux';
+import { RootStackParamList } from '../../../App';
 import {
+  CREATE_NORMAL_POST_SCREEN,
+  LIST_JOB_APPLY_SCREEN,
+  MY_PROFILE_SCREEN,
   PROFILE_SCREEN,
   RECRUITMENT_DETAIL_SCREEN,
   SURVEY_CONDUCT_SCREEN,
+  SURVEY_RESULT_SCREEN,
 } from '../../../constants/Screen';
 import en from '../../../languages/en.json';
 import jp from '../../../languages/jp.json';
 import vi from '../../../languages/vi.json';
-import {useAppDispatch, useAppSelector} from '../../../redux/Hook';
-import {setShowBottomSheet} from '../../../redux/Slice';
-import {Like} from '../../../types/Like';
-import {LikeAction} from '../../../types/LikeAction';
-import {ModalComments} from '../../../types/ModalComments ';
-import {numberDayPassed} from '../../../utils/FormatTime';
+import { useAppDispatch, useAppSelector } from '../../../redux/Hook';
+import {
+  setNavigateToProfileSameUser,
+  setShowBottomSheet,
+  setShowModalLike,
+} from '../../../redux/Slice';
+import { Like } from '../../../types/Like';
+import { LikeAction } from '../../../types/LikeAction';
+import { ModalComments } from '../../../types/ModalComments ';
+import { UpdateNormalPost } from '../../../types/UpdateNormalPost';
+import { numberDayPassed } from '../../../utils/FormatTimeUtils';
 import Bottom from '../session/bottom/Bottom';
 import Content from '../session/content/Content';
 import Header from '../session/header/Header';
 import DisplayImage from '../session/image/normalImage/DisplayImage';
-import styles from './PostTypeChecker.style';
 import Recruitment from '../session/recruitment/Recruitment';
 import Survey from '../session/survey/Survey';
-
-setTranslations({vi, jp, en});
+import styles from './PostTypeChecker.style';
+setTranslations({ vi, jp, en });
 setDefaultLanguage('vi');
 
 const PostTypeChecker = (props: Post) => {
+  console.log('=================PostTypeChecker===================');
   const {
     active,
     available,
@@ -48,8 +58,8 @@ const PostTypeChecker = (props: Post) => {
     employmentType,
     expiration,
     group,
-    handleDelete,
-    handleUnSave,
+    onDelete,
+    onUnSave,
     id,
     images,
     isSave,
@@ -69,11 +79,22 @@ const PostTypeChecker = (props: Post) => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
+  const navigationTopTab =
+    useNavigation<NativeStackNavigationProp<ParamListBase>>();
+
   const dispatch = useAppDispatch();
 
   const t = useTranslation();
 
-  const {userLogin} = useAppSelector(state => state.TDCSocialNetworkReducer);
+  const userLogin = useAppSelector(
+    state => state.TDCSocialNetworkReducer.userLogin,
+    shallowEqual,
+  );
+
+  const userIdOfProfileScreen = useAppSelector(
+    state => state.TDCSocialNetworkReducer.userIdOfProfileScreen,
+    shallowEqual,
+  );
 
   const [likeData, setLikeData] = useState<LikeAction>({
     code: '',
@@ -81,19 +102,64 @@ const PostTypeChecker = (props: Post) => {
     userId: userLogin?.id ?? 0,
   });
 
-  const [commentData, setCommentData] = useState<ModalComments>({
-    id: id,
-    userCreatedPostId: userId,
-    group: group,
-    commentFather: [],
-  });
+  const handleSeeListCvPost = () => {
+    navigation.navigate(LIST_JOB_APPLY_SCREEN, { postId: id });
+  };
 
-  const handleClickMenuOption = useCallback((flag: number) => {}, []);
+  const handleSeeResultSurveyPost = () => {
+    navigation.navigate(SURVEY_RESULT_SCREEN, { surveyPostId: id });
+  };
+
+  const handleUpdateNormalPostEvent = () => {
+    const updateNormalPost: UpdateNormalPost = {
+      postId: props.id,
+      content: props.content,
+      images: props.images,
+    };
+    navigation.navigate(CREATE_NORMAL_POST_SCREEN, {
+      updateNormalPost
+    });
+  };
+
+  const handleClickMenuOption = useCallback((flag: number) => {
+    switch (flag) {
+      case Variable.CLICK_SAVE_POST_EVENT:
+        onUnSave(id);
+        break;
+      case Variable.CLICK_DELETE_POST_EVENT:
+        onDelete(id);
+        break;
+      case Variable.CLICK_UN_SAVE_POST:
+        onUnSave(id);
+        break;
+      case Variable.CLICK_SEE_LIST_CV_POST_EVENT:
+        handleSeeListCvPost();
+        break;
+      case Variable.CLICK_SEE_RESULT_POST_EVENT:
+        handleSeeResultSurveyPost();
+        break;
+      case Variable.CLICK_UPDATE_POST:
+        if (type.includes(Variable.TYPE_NORMAL_POST)) {
+          handleUpdateNormalPostEvent();
+        }
+        break;
+      default:
+        return null;
+    }
+  }, []);
 
   const handleClickIntoAvatarAndNameAndMenuEvent = useCallback(
     (flag: number | null) => {
       if (flag === Variable.GO_TO_PROFILE_ACTIONS) {
-        navigation.navigate(PROFILE_SCREEN);
+        if (userIdOfProfileScreen !== userId) {
+          if (userId !== userLogin?.id) {
+            navigation.navigate(PROFILE_SCREEN, { userId: userId, group: group });
+          } else {
+            navigationTopTab.navigate(MY_PROFILE_SCREEN);
+          }
+        } else {
+          dispatch(setNavigateToProfileSameUser(userId));
+        }
       }
     },
     [],
@@ -102,7 +168,7 @@ const PostTypeChecker = (props: Post) => {
   const handleClickIntoAnyImageEvent = (
     imageId: number,
     listImageError: number[],
-  ) => {};
+  ) => { };
 
   const handleCheckLiked = useMemo(() => {
     let result = false;
@@ -114,26 +180,40 @@ const PostTypeChecker = (props: Post) => {
     return result;
   }, [likes, userLogin?.id]);
 
-  const handleClickBottomBtnEvent = useCallback((flag: number | null) => {
-    if (flag === Variable.LIKE_ACTION) {
-      handleClickIntoBtnIconLikeEvent();
-    } else if (flag === Variable.COMMENT_ACTION) {
-      handleClickIntoBtnIconComments();
-    } else {
-      handleClickIntoListUserReactions();
-    }
-  }, []);
+  const handleClickBottomBtnEvent = useCallback(
+    (flag: number | null) => {
+      if (flag === Variable.LIKE_ACTION) {
+        handleClickIntoBtnIconLikeEvent();
+      } else if (flag === Variable.COMMENT_ACTION) {
+        handleClickIntoBtnIconComments();
+      } else {
+        handleClickIntoListUserReactions();
+      }
+    },
+    [commentQty, comments, likes],
+  );
 
   const handleClickIntoBtnIconLikeEvent = () => {
     likeAction(likeData);
   };
 
   const handleClickIntoBtnIconComments = () => {
-    dispatch(setShowBottomSheet(commentData));
+    const newComment: ModalComments = {
+      id: id,
+      userCreatedPostId: userId,
+      group: group,
+      comments: comments,
+    };
+    dispatch(setShowBottomSheet(newComment));
   };
 
   const handleClickIntoListUserReactions = () => {
-    console.log('open user reaction');
+    dispatch(
+      setShowModalLike({
+        group: group,
+        likes: likes,
+      }),
+    );
   };
 
   const identifyTypeAuthor = useMemo(() => {
@@ -146,11 +226,11 @@ const PostTypeChecker = (props: Post) => {
   }, [typeAuthor]);
 
   const handleClickBtnRecruitmentDetailEvent = useCallback((idPost: number) => {
-    navigation.navigate(RECRUITMENT_DETAIL_SCREEN, {postId: idPost});
+    navigation.navigate(RECRUITMENT_DETAIL_SCREEN, { postId: idPost });
   }, []);
 
   const handleClickBtnSurveyDetailEvent = (idPost: number) => {
-    navigation.navigate(SURVEY_CONDUCT_SCREEN, {surveyPostId: idPost});
+    navigation.navigate(SURVEY_CONDUCT_SCREEN, { surveyPostId: idPost });
   };
 
   switch (type) {
@@ -270,4 +350,4 @@ const PostTypeChecker = (props: Post) => {
   }
 };
 
-export default PostTypeChecker;
+export default memo(PostTypeChecker);

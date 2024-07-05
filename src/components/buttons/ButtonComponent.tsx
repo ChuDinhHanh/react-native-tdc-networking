@@ -1,14 +1,16 @@
-import React, {ReactNode} from 'react';
+import React, { ReactNode } from 'react';
 import {
   DimensionValue,
   FlexAlignType,
+  Pressable,
   StyleProp,
   StyleSheet,
   TouchableOpacity,
   View,
-  ViewStyle,
+  ViewStyle
 } from 'react-native';
-import {globalStyles} from '../../styles/GlobalStyles';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import { globalStyles } from '../../styles/GlobalStyles';
 import SpaceComponent from '../space/SpaceComponent';
 
 interface Props {
@@ -30,6 +32,16 @@ interface Props {
   style?: StyleProp<ViewStyle>;
   colorDisable?: string;
   widthAutoFollowContent?: boolean;
+  justifyContent?:
+  | 'flex-start'
+  | 'flex-end'
+  | 'center'
+  | 'space-between'
+  | 'space-around'
+  | 'space-evenly'
+  | undefined;
+  padding?: number;
+  typeButton?: 'Pressable' | 'TouchableOpacity' | 'TouchableWithoutFeedback';
 }
 const ButtonComponent = (props: Props) => {
   const {
@@ -51,19 +63,30 @@ const ButtonComponent = (props: Props) => {
     style,
     colorDisable,
     widthAutoFollowContent,
+    justifyContent,
+    padding,
+    typeButton = 'TouchableOpacity'
   } = props;
 
+  const ButtonComponent = typeButton === 'TouchableOpacity'
+    ? TouchableOpacity
+    : typeButton === 'TouchableWithoutFeedback'
+      ? TouchableWithoutFeedback
+      : Pressable;
+
+
   return (
-    <TouchableOpacity
+    <ButtonComponent
       disabled={isDisable}
       onPress={() => onPress()}
-      style={{
-        flexDirection: widthAutoFollowContent ? 'row' : undefined,
-      }}>
+      style={[
+        {
+          flexDirection: widthAutoFollowContent ? 'row' : undefined,
+        },
+      ]}>
       <View
         style={[
           globalStyles.row,
-          boxShadow && globalStyles.shadow,
           styles.wrapper_content,
           {
             backgroundColor: isDisable ? colorDisable : backgroundColor,
@@ -72,6 +95,8 @@ const ButtonComponent = (props: Props) => {
             borderRadius,
             marginVertical,
             alignSelf,
+            justifyContent: justifyContent ?? 'center',
+            padding,
           },
           style,
         ]}>
@@ -80,18 +105,17 @@ const ButtonComponent = (props: Props) => {
         {title}
         <SpaceComponent width={spaceBehind ?? 0} />
         {type && type === 'primary' ? (
-          <View style={{position: 'absolute', right: 14}}>{suffix}</View>
+          <View style={{ position: 'absolute', right: 14 }}>{suffix}</View>
         ) : (
           suffix
         )}
       </View>
-    </TouchableOpacity>
+    </ButtonComponent>
   );
 };
 
 const styles = StyleSheet.create({
   wrapper_content: {
-    justifyContent: 'center',
     alignItems: 'center',
   },
 });

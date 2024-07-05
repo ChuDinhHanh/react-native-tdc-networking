@@ -29,4 +29,90 @@ export const Data = {
       uri: 'https://kynguyenlamdep.com/wp-content/uploads/2022/06/anh-gai-xinh-cuc-dep.jpg',
     },
   ],
+  Likes: [
+    {
+      id: 2,
+      name: 'Nguyen Thi Hong',
+      image:
+        'https://kynguyenlamdep.com/wp-content/uploads/2022/06/anh-gai-xinh-cuc-dep.jpg',
+    },
+    {
+      id: 3,
+      name: 'Nguyen Thi Hong',
+      image:
+        'https://kynguyenlamdep.com/wp-content/uploads/2022/06/anh-gai-xinh-cuc-dep.jpg',
+    },
+    {
+      id: 4,
+      name: 'Nguyen Thi Hong',
+      image:
+        'https://kynguyenlamdep.com/wp-content/uploads/2022/06/anh-gai-xinh-cuc-dep.jpg',
+    },
+    {
+      id: 5,
+      name: 'Nguyen Thi Hong',
+      image:
+        'https://kynguyenlamdep.com/wp-content/uploads/2022/06/anh-gai-xinh-cuc-dep.jpg',
+    },
+    {
+      id: 6,
+      name: 'Nguyen Thi Hong',
+      image:
+        'https://kynguyenlamdep.com/wp-content/uploads/2022/06/anh-gai-xinh-cuc-dep.jpg',
+    },
+    {
+      id: 8,
+      name: 'Nguyen Thi Hong',
+      image:
+        'https://kynguyenlamdep.com/wp-content/uploads/2022/06/anh-gai-xinh-cuc-dep.jpg',
+    },
+    {
+      id: 8,
+      name: 'Nguyen Thi Hong',
+      image:
+        'https://kynguyenlamdep.com/wp-content/uploads/2022/06/anh-gai-xinh-cuc-dep.jpg',
+    },
+    {
+      id: 8,
+      name: 'Nguyen Thi Hong',
+      image:
+        'https://kynguyenlamdep.com/wp-content/uploads/2022/06/anh-gai-xinh-cuc-dep.jpg',
+    },
+    {
+      id: 8,
+      name: 'Nguyen Thi Hong',
+      image:
+        'https://kynguyenlamdep.com/wp-content/uploads/2022/06/anh-gai-xinh-cuc-dep.jpg',
+    },
+    {
+      id: 8,
+      name: 'Nguyen Thi Hong',
+      image:
+        'https://kynguyenlamdep.com/wp-content/uploads/2022/06/anh-gai-xinh-cuc-dep.jpg',
+    },
+    {
+      id: 8,
+      name: 'Nguyen Thi Hong',
+      image:
+        'https://kynguyenlamdep.com/wp-content/uploads/2022/06/anh-gai-xinh-cuc-dep.jpg',
+    },
+    {
+      id: 8,
+      name: 'Nguyen Thi Hong',
+      image:
+        'https://kynguyenlamdep.com/wp-content/uploads/2022/06/anh-gai-xinh-cuc-dep.jpg',
+    },
+    {
+      id: 8,
+      name: 'Nguyen Thi Hong',
+      image:
+        'https://kynguyenlamdep.com/wp-content/uploads/2022/06/anh-gai-xinh-cuc-dep.jpg',
+    },
+    {
+      id: 8,
+      name: 'Nguyen Thi Hong',
+      image:
+        'https://kynguyenlamdep.com/wp-content/uploads/2022/06/anh-gai-xinh-cuc-dep.jpg',
+    },
+  ],
 };

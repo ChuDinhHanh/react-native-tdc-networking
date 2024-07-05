@@ -17,7 +17,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import {RootStackParamList} from '../../../App';
 import ButtonComponent from '../../../components/buttons/ButtonComponent';
 import TextValidateTypeSecond from '../../../components/common/textValidate/TextValidateTypeSecond';
-import TextInputWithTitle from '../../../components/input/TextInputWithTitle';
+import TextInputWithTitle from '../../../components/input/textInputWithTitle/TextInputWithTitle';
 import RowComponent from '../../../components/row/RowComponent';
 import SessionComponent from '../../../components/session/SessionComponent';
 import SpaceComponent from '../../../components/space/SpaceComponent';
@@ -50,7 +50,7 @@ import {
 } from 'react-multi-lang';
 
 setTranslations({vi, jp, en});
-setDefaultLanguage('jp');
+setDefaultLanguage('vi');
 
 interface RegisterBusiness {
   name: InputTextValidate;

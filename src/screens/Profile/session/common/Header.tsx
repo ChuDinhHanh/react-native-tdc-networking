@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Pressable, View} from 'react-native';
+import {Image, Pressable, Text, TouchableOpacity, View} from 'react-native';
 import IconEntypo from 'react-native-vector-icons/Entypo';
 import DefaultAvatar from '../../../../components/common/defaultAvatar/DefaultAvatar';
 import {Colors} from '../../../../constants/Colors';
@@ -49,42 +49,42 @@ const Header = (props: Props) => {
           )}
         </View>
       </Pressable>
-      <View>
+      {/* Avatar */}
+      {Boolean(avatar) ? (
         <Pressable
-          onPress={() => onClickIntoHeaderComponentEvent(Variable.SEE_AVATAR)}>
-          {Boolean(avatar) ? (
-            <View style={[styles.imageAvatarWrapper, styles.border]}>
-              <Image
-                style={styles.avatar}
-                // source={{ uri: SERVER_ADDRESS + `api/images/${avatar}` }}
-                source={{uri: `${avatar}`}}
-              />
-              <Pressable
-                onPress={() =>
-                  onClickIntoHeaderComponentEvent(
-                    Variable.CLICK_CAMERA_AVATAR_EVENT,
-                  )
-                }
-                style={[styles.btnUploadImageAvatar, styles.border]}>
-                <IconEntypo name="camera" size={15} color={Colors.BLACK} />
-              </Pressable>
-            </View>
-          ) : (
-            <View style={styles.imageAvatarWrapper}>
-              <DefaultAvatar identifer={name[0]} size={120} />
-              <Pressable
-                onPress={() =>
-                  onClickIntoHeaderComponentEvent(
-                    Variable.CLICK_CAMERA_AVATAR_EVENT,
-                  )
-                }
-                style={[styles.btnUploadImageAvatar, styles.border]}>
-                <IconEntypo name="camera" size={15} color={Colors.BLACK} />
-              </Pressable>
-            </View>
-          )}
+          onPress={() => onClickIntoHeaderComponentEvent(Variable.SEE_AVATAR)}
+          style={[styles.imageAvatarWrapper, styles.border]}>
+          <Image
+            style={styles.avatar}
+            // source={{ uri: SERVER_ADDRESS + `api/images/${avatar}` }}
+            source={{uri: `${avatar}`}}
+          />
+          <Pressable
+            onPress={() =>
+              onClickIntoHeaderComponentEvent(
+                Variable.CLICK_CAMERA_AVATAR_EVENT,
+              )
+            }
+            style={[styles.btnUploadImageAvatar, styles.border]}>
+            <IconEntypo name="camera" size={15} color={Colors.BLACK} />
+          </Pressable>
         </Pressable>
-      </View>
+      ) : (
+        <Pressable
+          style={styles.imageAvatarWrapper}
+          onPress={() => onClickIntoHeaderComponentEvent(Variable.SEE_AVATAR)}>
+          <DefaultAvatar identifer={name[0]} size={120} />
+          <Pressable
+            onPress={() =>
+              onClickIntoHeaderComponentEvent(
+                Variable.CLICK_CAMERA_AVATAR_EVENT,
+              )
+            }
+            style={[styles.btnUploadImageAvatar, styles.border]}>
+            <IconEntypo name="camera" size={15} color={Colors.BLACK} />
+          </Pressable>
+        </Pressable>
+      )}
     </View>
   );
 };
