@@ -35,7 +35,6 @@ import {DETAIL_JOB_APPLY, DETAIL_POST_SCREEN} from '../../constants/Screen';
 setTranslations({vi, jp, en});
 setDefaultLanguage('vi');
 const NotificationScreen = () => {
-  console.log('==================NotificationScreen==================');
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
   const isFocused = useIsFocused();

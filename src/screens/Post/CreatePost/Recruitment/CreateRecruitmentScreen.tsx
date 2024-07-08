@@ -71,7 +71,6 @@ const error: CreateRecruitmentPostError = {
 }
 
 const CreateRecruitmentScreen = () => {
-  console.log('===============CreateRecruitmentScreen==================');
   const t = useTranslation();
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const { userLogin } = useAppSelector((state) => state.TDCSocialNetworkReducer);

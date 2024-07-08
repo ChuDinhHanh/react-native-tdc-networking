@@ -35,9 +35,6 @@ const DrawerContent = (props: DrawerContentComponentProps) => {
     state => state.TDCSocialNetworkReducer.userLogin,
     shallowEqual,
   );
-  console.log('====================================');
-  console.log(userLogin?.image);
-  console.log('====================================');
 
   const handleLogoutEvent = () => {
     if (userLogin) {

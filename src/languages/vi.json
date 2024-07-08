@@ -518,5 +518,9 @@
         "reviewSurveyScreenSaveSuccessContent": "Thêm khảo sát thành công",
         "reviewSurveyScreenUpdateSuccessTitle": "Thành công",
         "reviewSurveyScreenUpdateSuccessContent": "Cập nhật khảo sát thành công"
+    },
+    "DetailPost":{
+        "detailPostWasNotApproved":"Bài viết của bạn không được duyệt vì",
+        "detailPostWasNotExist":"Bài viết này không tồn tại"
     }
 }

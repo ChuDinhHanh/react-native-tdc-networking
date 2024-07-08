@@ -39,7 +39,6 @@ setDefaultLanguage('vi');
 let stompClient: Client;
 const FacultyDashboardScreen = () => {
   const t = useTranslation();
-  console.log('==================FacultyDashboardScreen==================');
   const isFocused = useIsFocused();
   const userLogin = useAppSelector(
     state => state.TDCSocialNetworkReducer.userLogin,
@@ -126,9 +125,6 @@ const FacultyDashboardScreen = () => {
       setCode('');
       setPosts([]);
     }
-    console.log('====================================');
-    console.log(code);
-    console.log('====================================');
   }, [userLogin]);
 
   const handleSavePost = useCallback(async (id: number) => {

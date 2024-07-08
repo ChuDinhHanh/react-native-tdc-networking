@@ -29,7 +29,6 @@ interface Props {
 }
 
 const FollowingAndFollowerListView = (props: Props) => {
-  console.log('==================FollowingListViews==================');
   const t = useTranslation();
   const {flag, data} = props;
   const {userLogin} = useAppSelector(state => state.TDCSocialNetworkReducer);

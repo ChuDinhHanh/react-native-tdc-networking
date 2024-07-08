@@ -35,7 +35,6 @@ setTranslations({vi, jp, en});
 setDefaultLanguage('vi');
 
 const SelectFacultyToolbar = (props: Props) => {
-  console.log('===============SelectFacultyToolbar=====================');
   const t = useTranslation();
   const {data, error, isLoading} = useGetFacultyQuery();
 

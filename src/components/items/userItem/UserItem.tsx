@@ -59,9 +59,6 @@ export default function UserItem(props: UserItemType) {
   }, [isFollow, id]);
 
   const handleMoveToProfileScreen = () => {
-    console.log(
-      '===================handleMoveToProfileScreen=================',
-    );
     navigation.navigate(PROFILE_SCREEN, {userId: id, group: group});
   };
 

@@ -25,7 +25,6 @@ import ContainerComponent from '../../container/ContainerComponent';
 
 let stompClient: Client;
 const BusinessDashboardScreen = () => {
-  console.log('===============BusinessDashboardScreen=====================');
   const isFocused = useIsFocused();
   const userLogin = useAppSelector(
     state => state.TDCSocialNetworkReducer.userLogin,

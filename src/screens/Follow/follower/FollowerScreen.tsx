@@ -18,7 +18,6 @@ import FollowingAndFollowerListView from '../../../components/listviews/follow/c
 setDefaultLanguage('vi');
 
 const FollowerScreen = () => {
-  console.log('==================FollowerScreen==================');
   const t = useTranslation();
   const {userLogin} = useAppSelector(state => state.TDCSocialNetworkReducer);
   const [search, setSearch] = useState('');
@@ -36,7 +35,6 @@ const FollowerScreen = () => {
 
   useEffect(() => {
     if (data) {
-      console.log('================set lai user====================');
       latestDataRef.current = data.data || [];
       setUsers(latestDataRef.current);
     }

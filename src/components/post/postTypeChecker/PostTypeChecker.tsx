@@ -46,7 +46,6 @@ setTranslations({ vi, jp, en });
 setDefaultLanguage('vi');
 
 const PostTypeChecker = (props: Post) => {
-  console.log('=================PostTypeChecker===================');
   const {
     active,
     available,

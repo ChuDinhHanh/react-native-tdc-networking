@@ -104,7 +104,6 @@ const AddQuestionModal = (props: AddQuestionModalProps) => {
             let choices: Choice[] = [];
             if (question.choices) {
                 choices = question.choices.filter(question => question.content.trim().length != 0);
-                console.log((question.type !== Variable.SHORT_ANSWER && questionUpdate?.data.type !== Variable.SHORT_ANSWER) && choices.length === 0);
                 if ((question.type !== Variable.SHORT_ANSWER && questionUpdate?.data.type !== Variable.SHORT_ANSWER) && choices.length === 0) {
                     Alert.alert(t('AddQuestionView.addChoiceValidateErrorTitle'), t('AddQuestionView.addChoiceValidateErrorContent'));
                     return

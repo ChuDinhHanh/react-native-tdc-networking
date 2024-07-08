@@ -15,7 +15,6 @@ import FollowingAndFollowerListView from '../../../components/listviews/follow/c
 setDefaultLanguage('vi');
 
 const FollowingScreen = () => {
-  console.log('==================FollowingScreen==================');
   const t = useTranslation();
   const {userLogin} = useAppSelector(state => state.TDCSocialNetworkReducer);
   const [search, setSearch] = useState('');

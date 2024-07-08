@@ -32,7 +32,6 @@ interface Props {
 
 const InputCommentModal = (props: Props) => {
   const t = useTranslation();
-  console.log('===============InputCommentModalComponent=====================');
   const {onCreateNewComment, inputRef, userReply, onCancelReply} = props;
   const userLogin = useAppSelector(
     state => state.TDCSocialNetworkReducer.userLogin,

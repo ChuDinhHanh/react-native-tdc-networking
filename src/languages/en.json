@@ -515,5 +515,9 @@
         "reviewSurveyScreenSaveSuccessContent": "Survey successfully added",
         "reviewSurveyScreenUpdateSuccessTitle": "Success",
         "reviewSurveyScreenUpdateSuccessContent": "Survey updated successfully"
+    },
+    "DetailPost": {
+        "detailPostWasNotApproved": "Your post was not approved because",
+        "detailPostWasNotExist": "This post does not exist"
     }
 }

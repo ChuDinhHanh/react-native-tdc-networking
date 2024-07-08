@@ -52,5 +52,5 @@ export const Variable = {
   MULTI_CHOICE_QUESTION: 'chon-nhieu-dap-an',
   CONDUCT_MODE: 0,
   EDIT_MODE: 1,
-  REVIEW_MODE: 2,
+  REVIEW_MODE: 2
 };

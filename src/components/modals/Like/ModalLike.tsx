@@ -43,7 +43,6 @@ interface User {
 }
 
 const ModalLike = (props: {children: ReactNode}) => {
-  console.log('==================ModalLike==================');
   const isFocused = useIsFocused();
 
   const navigation =

@@ -45,7 +45,6 @@ interface Props {
 }
 
 const CreatePostToolbar = (props: Props) => {
-  console.log('==================CreatePostToolbar==================');
   const { image, name, role, screens } = props;
   const navigationTopTab =
     useNavigation<NativeStackNavigationProp<ParamListBase>>();

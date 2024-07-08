@@ -512,5 +512,9 @@
         "reviewSurveyScreenSaveSuccessContent": "アンケートが成功裏に追加されました",
         "reviewSurveyScreenUpdateSuccessTitle": "成功",
         "reviewSurveyScreenUpdateSuccessContent": "アンケートが成功裏に更新されました"
-    }
+    },
+    "DetailPost": {
+    "detailPostWasNotApproved": "あなたの投稿は承認されませんでした。理由は",
+    "detailPostWasNotExist": "この投稿は存在しません"
+}
 }

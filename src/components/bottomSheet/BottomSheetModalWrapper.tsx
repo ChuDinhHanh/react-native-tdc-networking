@@ -50,7 +50,6 @@ interface DeleteCommentForm {
 }
 
 const BottomSheetModalWrapper = (props: Props) => {
-  console.log('================BottomSheetModalWrapper====================');
   const {children} = props;
   const inputRef = useRef<TextInput>(null);
   const [replyComment, setReplyComment] = useState({postId: 0, name: ''});
@@ -160,9 +159,6 @@ const BottomSheetModalWrapper = (props: Props) => {
     };
     const onMessageReceived = (payload: any) => {
       setComments(JSON.parse(payload.body));
-      console.log('================vv====================');
-      console.log(JSON.parse(payload.body));
-      console.log('===============vv=====================');
     };
     const onError = (err: string | Frame) => {};
     stompClient.connect({}, onConnected, onError);
