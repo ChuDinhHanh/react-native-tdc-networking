@@ -1,8 +1,8 @@
-import {useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import React, {useMemo} from 'react';
-import {useTranslation} from 'react-multi-lang';
-import {Text, View} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useMemo } from 'react';
+import { useTranslation } from 'react-multi-lang';
+import { Text, View } from 'react-native';
 import {
   Menu,
   MenuOption,
@@ -11,9 +11,9 @@ import {
 } from 'react-native-popup-menu';
 import Icon1 from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {RootStackParamList} from '../../../App';
-import {Colors} from '../../../constants/Colors';
-import {PROFILE_SCREEN} from '../../../constants/Screen';
+import { RootStackParamList } from '../../../App';
+import { Colors } from '../../../constants/Colors';
+import { PROFILE_SCREEN } from '../../../constants/Screen';
 import ButtonComponent from '../../buttons/ButtonComponent';
 import DefaultAvatar from '../../common/defaultAvatar/DefaultAvatar';
 import RowComponent from '../../row/RowComponent';
@@ -36,8 +36,8 @@ interface OptionItem {
   visible: boolean;
 }
 
-export default function UserItem(props: UserItemType) {
-  const {group, onFollow, id, image, isFollow, name} = props;
+export default function UserItem(props: Readonly<UserItemType>) {
+  const { group, onFollow, id, image, isFollow, name } = props;
   const t = useTranslation();
   const navigation =
     useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -59,14 +59,14 @@ export default function UserItem(props: UserItemType) {
   }, [isFollow, id]);
 
   const handleMoveToProfileScreen = () => {
-    navigation.navigate(PROFILE_SCREEN, {userId: id, group: group});
+    navigation.navigate(PROFILE_SCREEN, { userId: id, group: group });
   };
 
   const isFollowed = () => {
     return (
       <Menu key={id}>
         <MenuTrigger>
-          <View style={{paddingTop: 10}}>
+          <View style={{ paddingTop: 10 }}>
             <Icon1 name="dots-three-vertical" size={18} color="#000000" />
           </View>
         </MenuTrigger>

@@ -89,10 +89,10 @@ import StudentRegistrationScreen from './screens/SignUp/Student/StudentRegistrat
 import AddQuestionScreen from './screens/Survey/addQuestion/AddQuestionScreen';
 import ReviewSurveyPostScreen from './screens/Survey/reviewSurveyPost/ReviewSurveyPostScreen';
 import SurveyConductScreen from './screens/Survey/surveyConduct/SurveyConductScreen';
+import SurveyResultScreen from './screens/Survey/surveyResult/SurveyResultScreen';
+import { SurveyPostRequest } from './types/request/SurveyPostRequest';
 import { UpdateProfile } from './types/screens/UpdateProfile';
 import { UpdateNormalPost } from './types/UpdateNormalPost';
-import { SurveyPostRequest } from './types/request/SurveyPostRequest';
-import SurveyResultScreen from './screens/Survey/surveyResult/SurveyResultScreen';
 
 export type RootStackParamList = {
   CONVERSATION_SCREEN: undefined;
@@ -227,7 +227,7 @@ export function StackNavigator(): JSX.Element {
       />
       <RootStack.Screen
         name={SEARCH_SCREEN}
-        options={{ header: () => false }}
+        options={{ header: () => <ToolbarWithBackPress title={t('ToolbarTitle.searchScreen')} /> }}
         component={SearchScreen}
       />
       <RootStack.Screen

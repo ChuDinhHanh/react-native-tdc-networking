@@ -514,7 +514,18 @@
         "reviewSurveyScreenUpdateSuccessContent": "アンケートが成功裏に更新されました"
     },
     "DetailPost": {
-    "detailPostWasNotApproved": "あなたの投稿は承認されませんでした。理由は",
-    "detailPostWasNotExist": "この投稿は存在しません"
-}
+        "detailPostWasNotApproved": "あなたの投稿は承認されませんでした。理由は",
+        "detailPostWasNotExist": "この投稿は存在しません"
+    },
+    "SearchComponent": {
+        "user": "ユーザー",
+        "student": "学生",
+        "business": "ビジネス",
+        "faculty": "学部",
+        "post": "投稿",
+        "normal": "通常",
+        "survey": "アンケート",
+        "recruitment": "求人",
+        "search": "検索内容を入力..."
+    }
 }

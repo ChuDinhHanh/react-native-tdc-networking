@@ -519,8 +519,19 @@
         "reviewSurveyScreenUpdateSuccessTitle": "Thành công",
         "reviewSurveyScreenUpdateSuccessContent": "Cập nhật khảo sát thành công"
     },
-    "DetailPost":{
-        "detailPostWasNotApproved":"Bài viết của bạn không được duyệt vì",
-        "detailPostWasNotExist":"Bài viết này không tồn tại"
+    "DetailPost": {
+        "detailPostWasNotApproved": "Bài viết của bạn không được duyệt vì",
+        "detailPostWasNotExist": "Bài viết này không tồn tại"
+    },
+    "SearchComponent": {
+        "user": "Người dùng",
+        "student": "Sinh viên",
+        "business": "Doanh nghiệp",
+        "faculty": "Khoa",
+        "post": "Bài viết",
+        "normal": "Bài viết",
+        "survey": "Khảo sát",
+        "recruitment": "Tin tuyển dụng",
+        "search": "Nhập nội dung tìm kiếm..."
     }
 }

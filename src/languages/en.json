@@ -519,5 +519,16 @@
     "DetailPost": {
         "detailPostWasNotApproved": "Your post was not approved because",
         "detailPostWasNotExist": "This post does not exist"
+    },
+    "SearchComponent": {
+        "user": "User",
+        "student": "Student",
+        "business": "Business",
+        "faculty": "Faculty",
+        "post": "Post",
+        "normal": "Post",
+        "survey": "Survey",
+        "recruitment": "Recruitment",
+        "search": "Enter search content..."
     }
 }
